@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">E-CardHolders</string>
+    <string name="headerTwo">We digitize your school certificates</string>
+    <string name="Madewith">Made with</string>
+    <string name="forKVT">for KVT</string>
+    <string name="Contactus">Contact us</string>
+    <string name="Sendanemail">Send an email:</string>
+    <string name="Callus">Call us:</string>
+    <string name="Terms">Terms</string>
+    <string name="Picture">Picture</string>
+    <string name="termsdescription1">The app will display the name, campus and if you have paid the semester. The app will also display photo of your choosing. The app serves as student ID, and can be used as legitmasjon with public transport companies in Norway.</string>
+    <string name="termsdescription2">At first use the app must be connected to the Internet to download the information. This is stored locally and does not need to be online to use the app later.</string>
+    <string name="termsdescription3">E-CardHolder assumes no responsibility for any fines, abuse, etc.</string>
+    <string name="title_activity_main4">Main4Activity</string>
+    <string name="title_activity_test">test</string>
+    <string name="barcode">Barcode</string>
+    <string name="studentcard">Student card</string>
+    <string name="closeSettings">Cancel</string>
+    <string name="Loggout">Log out</string>
+
+
+
+
+
+
+</resources>

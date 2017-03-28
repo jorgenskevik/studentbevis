@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="headerTwo">Vi digitaliserer ditt skolebevis</string>
+    <string name="Madewith">Laget med</string>
+    <string name="forKVT">for KVT</string>
+    <string name="Contactus">Kontakt oss</string>
+    <string name="Sendanemail">Send en mail:</string>
+    <string name="Callus">Ring oss:</string>
+    <string name="Terms">Vilkår</string>
+    <string name="Picture">Bilde</string>
+    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og om du har betalt semesteravgift. Appen vil også vise bilde av deg som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitmasjon hos kollektivtransportselskaper i Norge.</string>
+    <string name="termsdescription2">Ved førstegang bruk må appen være tilkoblet internett for å kunne last ned informasjonen. Denne blirlagret lokalt og trenger derfor ikke være på nett for å bruke appen senere.</string>
+    <string name="termsdescription3"> E-CardHolder tar ikke ansvar for bøter, misbruk og lignende.</string>
+    <string name="barcode">Barkode</string>
+    <string name="studentcard">Studentbevis</string>
+    <string name="digitsfail">Digits innlogging feilet</string>
+    <string name="closeSettings">Avbryt</string>
+    <string name="Loggout">Logg ut</string>
+
+
+</resources>
