@@ -11,8 +11,16 @@ public class LoginModel {
     @SerializedName("token")
     @Expose
     public String token;
+
     @SerializedName("user")
     @Expose
     public User user;
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

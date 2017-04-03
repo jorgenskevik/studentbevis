@@ -13,6 +13,7 @@ import java.util.Date;
 
 public class User {
 
+    //@SerializedName(value="id", alternate={"id", "_id"})
     @SerializedName("id")
     @Expose
     private String id;
@@ -44,6 +45,12 @@ public class User {
     @SerializedName("expirationDate")
     @Expose
     private Date expirationDate;
+
+//
+    @SerializedName("studentNumber")
+    @Expose
+    private String studentNumber;
+
 
     public String getId() {
         return id;
@@ -107,6 +114,14 @@ public class User {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 }
 

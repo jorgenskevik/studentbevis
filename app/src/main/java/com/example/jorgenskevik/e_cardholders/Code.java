@@ -2,16 +2,37 @@ package com.example.jorgenskevik.e_cardholders;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+
+
+import java.util.EnumMap;
+import java.util.Map;
+
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -45,11 +66,17 @@ public class Code extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        LinearLayout l = new LinearLayout(this);
+        l.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        l.setOrientation(LinearLayout.VERTICAL);
+
+        setContentView(l);
+
         // Session class instance
         session = new SessionManager(getApplicationContext());
 
 
-        setContentView(R.layout.codepopup);
+        //setContentView(R.layout.codepopup);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -64,17 +91,22 @@ public class Code extends Activity{
         HashMap<String, String> user = session.getUserDetails();
 
         // name
-        String name = user.get(SessionManager.KEY_NAME);
+        String id = user.get(SessionManager.KEY_STUDENTNUMBER);
 
-        // id
-        String id = user.get(SessionManager.KEY_ID);
+        // barcode image
+        Bitmap bitmap = null;
+        ImageView iv = new ImageView(this);
+        try {
 
-        // email
-        String email = user.get(SessionManager.KEY_EMAIL);
+            bitmap = encodeAsBitmap(id, BarcodeFormat.CODE_39, 600, 300);
+            iv.setImageBitmap(bitmap);
 
-        // displaying user data
-        tv1.setText(name);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
 
+
+        l.addView(iv);
 
 
         getWindow().setLayout((int) (width*.9) ,(int) (height*.7));
@@ -84,5 +116,55 @@ public class Code extends Activity{
         Intent intent = new Intent(Code.this, Main3Activity.class);
         startActivity(intent);
     }
+
+    private static final int WHITE = 0xFFFFFFFF;
+    private static final int BLACK = 0xFF000000;
+
+    Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
+        String contentsToEncode = contents;
+        if (contentsToEncode == null) {
+            return null;
+        }
+        Map<EncodeHintType, Object> hints = null;
+        String encoding = guessAppropriateEncoding(contentsToEncode);
+        if (encoding != null) {
+            hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+            hints.put(EncodeHintType.CHARACTER_SET, encoding);
+        }
+        MultiFormatWriter writer = new MultiFormatWriter();
+        BitMatrix result;
+        try {
+            result = writer.encode(contentsToEncode, format, img_width, img_height, hints);
+        } catch (IllegalArgumentException iae) {
+            // Unsupported format
+            return null;
+        }
+        int width = result.getWidth();
+        int height = result.getHeight();
+        int[] pixels = new int[width * height];
+        for (int y = 0; y < height; y++) {
+            int offset = y * width;
+            for (int x = 0; x < width; x++) {
+                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+            }
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
+    }
+
+    private static String guessAppropriateEncoding(CharSequence contents) {
+        // Very crude at the moment
+        for (int i = 0; i < contents.length(); i++) {
+            if (contents.charAt(i) > 0xFF) {
+                return "UTF-8";
+            }
+        }
+        return null;
+    }
+
 }
+
 

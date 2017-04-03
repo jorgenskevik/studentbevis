@@ -6,10 +6,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,28 +20,31 @@
             android:name="io.fabric.ApiKey"
             android:value="dd8e0d523d478b9ae90a3175b642f076a3d36d87" />
 
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".SecondActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".Main3Activity" />
         <activity
             android:name=".Code"
             android:theme="@style/AppTheme.Custom" />
-
         <activity
             android:name=".Settings"
             android:theme="@style/AppTheme.Custom" />
-
-
+        <activity
+            android:name=".picturepopup"
+            android:theme="@style/AppTheme.Custom" />
+        <activity
+            android:name=".Main4Activity"
+            android:label="@string/title_activity_main4"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

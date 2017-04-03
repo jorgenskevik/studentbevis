@@ -31,6 +31,12 @@ import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterCore;
 
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,6 +65,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JodaTimeAndroid.init(this);
 
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
@@ -113,9 +120,14 @@ public class MainActivity extends Activity {
                           .create();
 
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(KVTVariables.getBaseUrl())
+                            .baseUrl(KVTVariables.getLocal_URL())
                             .addConverterFactory(GsonConverterFactory.create(gson))
                             .build();
+
+
+
+
+
 
                     UserAPI userapi = retrofit.create(UserAPI.class);
                     userapi.userLogin(authHeader.get("X-Verify-Credentials-Authorization"), authHeader.get("X-Auth-Service-Provider"), authHeader.get("client_key"), authHeader.get("phoneNumber"), authHeader.get("accept-version")).enqueue(new Callback<LoginModel>() {
@@ -131,19 +143,22 @@ public class MainActivity extends Activity {
 
                                 String username = LoginList.user.getName();
                                 String email = LoginList.user.getEmail();
-                                String token = LoginList.token;
+                                String token1 = LoginList.token;
+
+
+                                String studentNumber = LoginList.user.getStudentNumber();
                                 String id = LoginList.user.getId();
+
                                 String picture = LoginList.user.getPicture();
                                 String role = LoginList.user.getRole();
                                 String pictureToken = LoginList.user.getPictureToken();
-                                Date dateExperatonDate = LoginList.user.getExpirationDate();
-                                long mills = dateExperatonDate.getTime();
-                                //DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                //String SexpirationDate = df.format(DexpirationDate);
-                                //System.out.println(SexpirationDate);
+                                java.util.Date juDate = LoginList.user.getExpirationDate();
+                                DateTime dt = new DateTime(juDate);
 
+                                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                                String dtStr = fmt.print(dt);
 
-                                sessionManager.createLoginSession(username,email,token,id,role, pictureToken, mills);//SexpirationDate);
+                                sessionManager.createLoginSession(username,email, token1, studentNumber, id,role, pictureToken, dtStr);
 
 
 
@@ -215,5 +230,9 @@ public class MainActivity extends Activity {
    // public AuthCallback getAuthCallback(){
     //    return authCallback;
     //}
+
+    public void av(View v){
+        Digits.logout();
+    }
 
 }

@@ -56,7 +56,15 @@ public class SessionManager {
     public static final String KEY_PICTURETOKEN = "picturetoken";
 
     // picturetoken address (make variable public to access from outside)
-    public static final long KEY_EXPERATIONDATE = 123;
+    public static final String KEY_EXPERATIONDATE = "EXPERATIONDATE";
+
+    // studentNumber address (make variable public to access from outside)
+    public static final String KEY_STUDENTNUMBER = "studentNumber";
+
+
+
+
+
 
 
 
@@ -70,7 +78,7 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String name, String email, String token, String id, String role, String pictureToken, long experationDate){
+    public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -92,8 +100,13 @@ public class SessionManager {
         // Storing role in pref
         editor.putString(KEY_PICTURETOKEN, pictureToken);
 
+        // Storing studentnumber in pref
+
+        editor.putString(KEY_STUDENTNUMBER, studentNumber);
+
         // Storing role in pref
-        editor.putLong("time", experationDate);
+        editor.putString(KEY_EXPERATIONDATE, experationDate);
+
 
         // commit changes
         editor.commit();
@@ -138,8 +151,18 @@ public class SessionManager {
         // user token id
         user.put(KEY_TOKEN, pref.getString(KEY_TOKEN, null));
 
+        // user token studentnumber
+        user.put(KEY_STUDENTNUMBER, pref.getString(KEY_STUDENTNUMBER, null));
+
         // user role id
         user.put(KEY_ROLE, pref.getString(KEY_ROLE, null));
+
+        // user role expertaiondate
+        user.put(KEY_EXPERATIONDATE, pref.getString(KEY_EXPERATIONDATE, null));
+
+        // user role picturetoken
+        user.put(KEY_PICTURETOKEN, pref.getString(KEY_PICTURETOKEN, null));
+
 
         // return user
         return user;

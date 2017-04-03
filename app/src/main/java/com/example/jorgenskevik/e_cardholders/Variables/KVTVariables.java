@@ -11,7 +11,8 @@ public class KVTVariables {
     private static String Local_URL = "http://10.0.2.2:9000/";
     private static String TWITTER_KEY = "OwT8vAGt92TMSDRK3O9naZznW";
     private static String TWITTER_SECRET = "PfC1rhbLQ8WSnmJCgqKwyfPZJyjyAoLHzx61sClci42tiiA38R";
-    private static String Appkey = "2f420246b8e596658bb1e407988a7dd9";
+
+    private static String Appkey = "SF6y36FZ698y7oqUCbB6uvr0o2yaHW2H";
     private static String AcceptVersion = "V1";
     private static String BASE_URL = "http://ec2-34-249-6-7.eu-west-1.compute.amazonaws.com:6900/";
     private static String tokenlogin = "";

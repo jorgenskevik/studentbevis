@@ -14,7 +14,6 @@
     </style>
 
 
-
     <style name="ActionSheetStyleiOS7">
         <item name="actionSheetBackground">@android:color/transparent</item>
         <item name="cancelButtonBackground">@drawable/slt_as_ios7_cancel_bt</item>
