@@ -55,11 +55,13 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +81,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
     String mediaPath;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,11 +99,10 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         view2.getLayoutParams().width = width;
 
 
+
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-
-
 
         //View barcode
         ImageButton codebutton = (ImageButton) findViewById(R.id.imageButton3);
@@ -116,7 +118,15 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         String name3 = userDetails.get(SessionManager.KEY_EMAIL);
         String name4 = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
 
+        String path = userDetails.get(SessionManager.KEY_PATH);
 
+        System.out.println("her skjer det noe " + path);
+
+        if(path == null){
+            view2.setImageResource(R.drawable.jogga2);
+        }else{
+            loadImageFromStorage(path);
+        }
 
 
         nameview1.setText(name);
@@ -136,10 +146,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         });
     }
 
-    public void testCam(View view) {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivity(intent);
-    }
+
 
     public void openSettings(View v) {
         setTheme(R.style.ActionSheetStyleiOS7);
@@ -349,7 +356,18 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         }
     }
 
+    private void loadImageFromStorage(String path) {
 
+        try {
+            File f=new File(path, "profile.jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            ImageView img=(ImageView)findViewById(R.id.window1);
+            img.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

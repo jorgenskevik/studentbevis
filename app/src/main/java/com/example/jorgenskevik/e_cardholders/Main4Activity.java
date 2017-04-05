@@ -1,6 +1,8 @@
 package com.example.jorgenskevik.e_cardholders;
 
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +30,8 @@ import com.google.gson.GsonBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -52,8 +56,8 @@ public class Main4Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
         view2 = (ImageView) findViewById(R.id.imageView4);
-        sessionManager = new SessionManager(getApplicationContext());
 
+        sessionManager = new SessionManager(getApplicationContext());
 
         byte[] bytes = getIntent().getByteArrayExtra("bitmapbytes");
 
@@ -65,7 +69,7 @@ public class Main4Activity extends AppCompatActivity {
     public void addPictureButton(View v) {
 
         byte[] bytes = getIntent().getByteArrayExtra("bitmapbytes");
-        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        final Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
         HashMap<String, String> userDetails = sessionManager.getUserDetails();
 
@@ -101,74 +105,36 @@ public class Main4Activity extends AppCompatActivity {
             UserAPI userapi = retrofit.create(UserAPI.class);
             String bearertoken = "Bearer " + authToken.toString();
 
-            //File file = new File(String.valueOf(bmp));
             Uri tempUri = getImageUri(getApplicationContext(), bmp);
 
             File finalFile = new File(getRealPathFromURI(tempUri));
 
-            System.out.println(finalFile);
-
-            System.out.println(getMimeType(finalFile));
-
-            RequestBody requestFile =
-                    RequestBody.create(MediaType.parse("multipart/form-data"), finalFile);
-
-            System.out.println(requestFile);
-
-            //multipartFormData.append(imageDataAndMimeType.0, withName: "photo", fileName: "profile_picture"+NSUUID().uuidString, mimeType: imageDataAndMimeType.1)
-
-
+            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(tempUri)), finalFile);
 
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("photo", finalFile.getName(), requestFile);
+                    MultipartBody.Part.createFormData("photo", finalFile.getName(),requestFile);
 
             RequestBody CodeToken =
-                    RequestBody.create(
-                            MediaType.parse("multipart/form-data"), fourDigits);
-
+                    RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
 
 
             userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), body, CodeToken).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()){
-                        System.out.println("This is good");
+                        saveToInternalStorage(bmp);
+                        String path = saveToInternalStorage(bmp);
+                        System.out.println("dette prøver jeg å lagre " + saveToInternalStorage(bmp));
+                        sessionManager.updatePath(path);
+                        sessionManager.updatePictureToken("BRUKT");
+                        Intent intent = new Intent(Main4Activity.this, Main3Activity.class);
+                        startActivity(intent);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     System.out.println("This is nicht good");
-
-                }
-            });
-
-
-
-            //File file1 = new File("/storage/emulated/0/Download/Corrections 6.jpg");
-            //System.out.println("start " + String.valueOf(bmp) + " slutt");
-            //RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), finalFile);
-
-
-           // MultipartBody.Part imagePart = MultipartBody.Part.createFormData("photo", finalFile.getName(), RequestBody.create(MediaType.parse("image/*"), finalFile));
-            //Call<ResponseBody> call = UserAPI.getmInstance().getService().postPicture(imagePart,RequestBody.create(MediaType.parse("text/plain"), UserAPI.class.getUserID()));
-
-
-            //System.out.println("hei " + encodeToBase64(bmp, Bitmap.CompressFormat.JPEG, 100) + " hade");
-
-           // PictureModel pictureModel = new PictureModel(fourDigits, encodeToBase64(bmp, Bitmap.CompressFormat.JPEG, 100));
-
-           /* userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(),).enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    System.out.println("dette gikk bra");
-
-
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    System.out.println("dette gikk ikke så bra");
 
                 }
             });
@@ -180,15 +146,6 @@ public class Main4Activity extends AppCompatActivity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
-        }
-    }
-
-    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality)
-    {
-        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-        image.compress(compressFormat, quality, byteArrayOS);
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-    }*/
         }
     }
 
@@ -213,5 +170,29 @@ public class Main4Activity extends AppCompatActivity {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         }
         return type;
+    }
+
+    private String saveToInternalStorage(Bitmap bitmapImage){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
     }
 }

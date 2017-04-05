@@ -42,7 +42,7 @@ public interface UserAPI {
 
     @Multipart
     @POST("Users/{id}/changePicture")
-    Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth, @Header("accept-version") String version, @Header("client_key") String clientkey, @Part MultipartBody.Part photo, @Part("photoToken") RequestBody photoToken);
+    Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth, @Header("accept-version") String version, @Header("client_key") String clientkey, @Part MultipartBody.Part photo, @Part("pictureToken") RequestBody pictureToken);
 
     @GET("Users/me")
     Call<User> getUser(@Header("accept-version") String version, @Header("Authorization") String auth);

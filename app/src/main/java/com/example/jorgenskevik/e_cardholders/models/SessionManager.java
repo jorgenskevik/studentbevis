@@ -61,10 +61,8 @@ public class SessionManager {
     // studentNumber address (make variable public to access from outside)
     public static final String KEY_STUDENTNUMBER = "studentNumber";
 
-
-
-
-
+    // path address (make variable public to access from outside)
+    public static final String KEY_PATH = "path";
 
 
 
@@ -108,6 +106,8 @@ public class SessionManager {
         editor.putString(KEY_EXPERATIONDATE, experationDate);
 
 
+
+
         // commit changes
         editor.commit();
     }
@@ -124,7 +124,6 @@ public class SessionManager {
 
         // Storing id in pref
         editor.putString(KEY_ID, id);
-
 
         // Storing role in pref
         editor.putString(KEY_ROLE, role);
@@ -143,6 +142,34 @@ public class SessionManager {
         // commit changes
         editor.commit();
     }
+
+    public void updatePictureToken(String pictureToken){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing role in pref
+        editor.putString(KEY_PICTURETOKEN, pictureToken);
+
+        // commit changes
+        editor.commit();
+    }
+
+    public void updatePath(String path){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+        System.out.println("før" + path);
+
+        // Storing role in pref
+        editor.putString(KEY_PATH, path);
+
+        System.out.println("midt" + path);
+
+        // commit changes
+        editor.apply();
+        System.out.println("etter" + path);
+    }
+
+
 
     /**
      * Check login method wil check user login status
@@ -194,6 +221,9 @@ public class SessionManager {
 
         // user role picturetoken
         user.put(KEY_PICTURETOKEN, pref.getString(KEY_PICTURETOKEN, null));
+
+        // user role path
+        user.put(KEY_PATH, pref.getString(KEY_PATH, null));
 
 
         // return user

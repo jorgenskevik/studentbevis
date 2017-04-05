@@ -57,24 +57,38 @@
         android:id="@+id/test1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_above="@+id/test2"
+        android:layout_alignLeft="@+id/test2"
+        android:layout_alignStart="@+id/test2"
+        android:layout_marginBottom="31dp" />
 
     <TextView
         android:id="@+id/test2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/test3"
+        android:layout_alignStart="@+id/test3" />
 
     <TextView
         android:id="@+id/test3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@+id/test4"
+        android:layout_alignLeft="@+id/test4"
+        android:layout_alignStart="@+id/test4" />
 
     <TextView
         android:id="@+id/test4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_above="@+id/textView7"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp" />
 
 </RelativeLayout>
