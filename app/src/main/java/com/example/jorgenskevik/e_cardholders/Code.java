@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.EnumMap;
@@ -65,18 +67,22 @@ public class Code extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.codepopup);
+       // RelativeLayout.LayoutParams imParams =
+        //        new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+
+        //ImageView imageView = (ImageView)findViewById(R.id.imageView5);
+
+
 
         LinearLayout l = new LinearLayout(this);
         l.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
 
+
         setContentView(l);
-
-        // Session class instance
         session = new SessionManager(getApplicationContext());
-
-
-        //setContentView(R.layout.codepopup);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -84,14 +90,18 @@ public class Code extends Activity{
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        TextView tv1 = (TextView)findViewById(R.id.textView6);
-        //tv1.setText(userIdPrefs.getString("id",null));
+        TextView tv1 = new TextView(this);
+
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
 
         // name
         String id = user.get(SessionManager.KEY_STUDENTNUMBER);
+        tv1.setText(id);
+        tv1.setGravity(Gravity.CENTER);
+        tv1.setTextSize(18);
+        tv1.setTextColor(BLACK);
 
         // barcode image
         Bitmap bitmap = null;
@@ -106,8 +116,24 @@ public class Code extends Activity{
         }
 
 
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000, 1000);
+        iv.setLayoutParams(layoutParams);
+        layoutParams.gravity=Gravity.CENTER;
         l.addView(iv);
+        l.addView(tv1);
 
+        Button cancel = new Button(this);
+        cancel.setText("OK");
+
+        cancel.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View view) {
+                Intent intent = new Intent(Code.this, Main3Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        l.addView(cancel);
 
         getWindow().setLayout((int) (width*.9) ,(int) (height*.7));
     }

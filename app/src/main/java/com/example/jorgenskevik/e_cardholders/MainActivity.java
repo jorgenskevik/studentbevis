@@ -124,11 +124,6 @@ public class MainActivity extends Activity {
                             .addConverterFactory(GsonConverterFactory.create(gson))
                             .build();
 
-
-
-
-
-
                     UserAPI userapi = retrofit.create(UserAPI.class);
                     userapi.userLogin(authHeader.get("X-Verify-Credentials-Authorization"), authHeader.get("X-Auth-Service-Provider"), authHeader.get("client_key"), authHeader.get("phoneNumber"), authHeader.get("accept-version")).enqueue(new Callback<LoginModel>() {
                         @Override

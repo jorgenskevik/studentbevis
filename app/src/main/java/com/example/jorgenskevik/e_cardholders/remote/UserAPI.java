@@ -17,7 +17,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -28,7 +30,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HEAD;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 import static android.content.ContentValues.TAG;
@@ -36,11 +40,12 @@ import static android.content.ContentValues.TAG;
 public interface UserAPI {
 
 
+    @Multipart
     @POST("Users/{id}/changePicture")
-    Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth, @Header("accept-version") String version, @Header("client_key") String clientkey, @Body PictureModel pictureModel);
+    Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth, @Header("accept-version") String version, @Header("client_key") String clientkey, @Part MultipartBody.Part photo, @Part("photoToken") RequestBody photoToken);
 
     @GET("Users/me")
-    Call<User> getUser();
+    Call<User> getUser(@Header("accept-version") String version, @Header("Authorization") String auth);
 
     @POST("auth")
     Call<LoginModel> userLogin(@Header("X-Verify-Credentials-Authorization") String auth, @Header("X-Auth-Service-Provider") String link,

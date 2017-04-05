@@ -97,7 +97,7 @@ public class picturepopup extends Activity {
 
             PictureModel pictureModel = new PictureModel(fourDigits, "");
 
-            userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), pictureModel).enqueue(new Callback<User>() {
+            /*userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), pictureModel).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     System.out.println("dette gikk bra");
@@ -118,6 +118,8 @@ public class picturepopup extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+        }
+    }*/
         }
     }
 }

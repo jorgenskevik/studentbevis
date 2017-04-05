@@ -112,6 +112,38 @@ public class SessionManager {
         editor.commit();
     }
 
+    public void createUpdtaeLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String experationDate){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing name in pref
+        editor.putString(KEY_NAME, name);
+
+        // Storing email in pref
+        editor.putString(KEY_EMAIL, email);
+
+        // Storing id in pref
+        editor.putString(KEY_ID, id);
+
+
+        // Storing role in pref
+        editor.putString(KEY_ROLE, role);
+
+        // Storing role in pref
+        editor.putString(KEY_PICTURETOKEN, pictureToken);
+
+        // Storing studentnumber in pref
+
+        editor.putString(KEY_STUDENTNUMBER, studentNumber);
+
+        // Storing role in pref
+        editor.putString(KEY_EXPERATIONDATE, experationDate);
+
+
+        // commit changes
+        editor.commit();
+    }
+
     /**
      * Check login method wil check user login status
      * If false it will redirect user to login page

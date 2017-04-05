@@ -23,6 +23,11 @@ public class Main2Activity extends Activity {
         setContentView(R.layout.activity_main2);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void opencard(View view) {
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
