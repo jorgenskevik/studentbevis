@@ -36,7 +36,7 @@ public class Main2Activity extends Activity {
         }else{
             String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
             requestPermissions(permissionRequest, CAM_REQUEST_CODE);
-            Toast.makeText(this, "Gi appen tilgang: settings/apps/Ecardholder/Storage", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_SHORT).show();
         }
     }
 }

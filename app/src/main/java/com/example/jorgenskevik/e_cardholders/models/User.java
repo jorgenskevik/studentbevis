@@ -13,7 +13,6 @@ import java.util.Date;
 
 public class User {
 
-    //@SerializedName(value="id", alternate={"id", "_id"})
     @SerializedName("id")
     @Expose
     private String id;
@@ -46,10 +45,13 @@ public class User {
     @Expose
     private Date expirationDate;
 
-//
     @SerializedName("studentNumber")
     @Expose
     private String studentNumber;
+
+    @SerializedName("dateOfBirth")
+    @Expose
+    private Date dateOfBirth;
 
 
     public String getId() {
@@ -122,6 +124,14 @@ public class User {
 
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }
 

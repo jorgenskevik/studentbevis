@@ -3,6 +3,7 @@ package com.example.jorgenskevik.e_cardholders;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.Html;
@@ -69,17 +70,10 @@ public class Code extends Activity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.codepopup);
-       // RelativeLayout.LayoutParams imParams =
-        //        new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-
-        //ImageView imageView = (ImageView)findViewById(R.id.imageView5);
-
-
 
         LinearLayout l = new LinearLayout(this);
         l.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
-
 
         setContentView(l);
         session = new SessionManager(getApplicationContext());
@@ -87,10 +81,14 @@ public class Code extends Activity{
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         TextView tv1 = new TextView(this);
+        tv1.setText(R.string.barcode);
+        tv1.setGravity(Gravity.CENTER);
+        tv1.setTextSize(32);
+        tv1.setTextColor(BLACK);
+
 
 
         // get user data from session
@@ -98,10 +96,7 @@ public class Code extends Activity{
 
         // name
         String id = user.get(SessionManager.KEY_STUDENTNUMBER);
-        tv1.setText(id);
-        tv1.setGravity(Gravity.CENTER);
-        tv1.setTextSize(18);
-        tv1.setTextColor(BLACK);
+
 
         // barcode image
         Bitmap bitmap = null;
@@ -116,14 +111,17 @@ public class Code extends Activity{
         }
 
 
+
+
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000, 1000);
         iv.setLayoutParams(layoutParams);
         layoutParams.gravity=Gravity.CENTER;
-        l.addView(iv);
         l.addView(tv1);
+        l.addView(iv);
+
 
         Button cancel = new Button(this);
-        cancel.setText("OK");
+        cancel.setText(R.string.CancelBarCode);
 
         cancel.setOnClickListener(new View.OnClickListener()
         {

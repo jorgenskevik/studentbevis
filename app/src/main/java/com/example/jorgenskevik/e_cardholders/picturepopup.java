@@ -39,7 +39,9 @@ public class picturepopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picturepopup);
-        sessionManager = new SessionManager(getApplicationContext());
+
+
+        /*sessionManager = new SessionManager(getApplicationContext());
 
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -90,37 +92,13 @@ public class picturepopup extends Activity {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
-            String id = userDetails.get(SessionManager.KEY_ID);
 
-            UserAPI userapi = retrofit.create(UserAPI.class);
-            String bearertoken = "Bearer " + authToken.toString();
 
-            PictureModel pictureModel = new PictureModel(fourDigits, "");
 
-            /*userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), pictureModel).enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    System.out.println("dette gikk bra");
 
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    System.out.println("dette gikk ikke så bra");
-
-                }
-            });
-
-        } else if (!fourDigits.trim().equals(codeString)) {
-            Context context = getApplicationContext();
-            CharSequence text = "Feil kode, kontakt IKT";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
         }
-    }*/
-        }
+    }
+}*/
     }
 }
 

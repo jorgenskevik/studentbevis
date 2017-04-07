@@ -6,6 +6,7 @@ package com.example.jorgenskevik.e_cardholders.models;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -64,6 +65,10 @@ public class SessionManager {
     // path address (make variable public to access from outside)
     public static final String KEY_PATH = "path";
 
+    // path address (make variable public to access from outside)
+    public static final String KEY_BIRTHDATE = "birthdate";
+
+
 
 
     // Constructor
@@ -76,7 +81,7 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate){
+    public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate, String birthday){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -105,14 +110,15 @@ public class SessionManager {
         // Storing role in pref
         editor.putString(KEY_EXPERATIONDATE, experationDate);
 
-
+        // Storing birthdate in pref
+        editor.putString(KEY_BIRTHDATE, birthday);
 
 
         // commit changes
         editor.commit();
     }
 
-    public void createUpdtaeLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String experationDate){
+    public void createUpdtaeLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String dateOfBirth ,String experationDate){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -132,8 +138,10 @@ public class SessionManager {
         editor.putString(KEY_PICTURETOKEN, pictureToken);
 
         // Storing studentnumber in pref
-
         editor.putString(KEY_STUDENTNUMBER, studentNumber);
+
+        // Storing dateofbirth in pref
+        editor.putString(KEY_BIRTHDATE, dateOfBirth);
 
         // Storing role in pref
         editor.putString(KEY_EXPERATIONDATE, experationDate);
@@ -157,16 +165,13 @@ public class SessionManager {
     public void updatePath(String path){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
-        System.out.println("før" + path);
 
         // Storing role in pref
         editor.putString(KEY_PATH, path);
 
-        System.out.println("midt" + path);
-
         // commit changes
         editor.apply();
-        System.out.println("etter" + path);
+
     }
 
 
@@ -225,6 +230,8 @@ public class SessionManager {
         // user role path
         user.put(KEY_PATH, pref.getString(KEY_PATH, null));
 
+        // user role path
+        user.put(KEY_BIRTHDATE, pref.getString(KEY_BIRTHDATE, null));
 
         // return user
         return user;
@@ -235,20 +242,20 @@ public class SessionManager {
      * */
     public void logoutUser(){
         // Clearing all data from Shared Preferences
-        editor.clear();
+        //editor.clear();
+        editor.remove(KEY_BIRTHDATE);
+        editor.remove(IS_LOGIN);
+        editor.remove(KEY_NAME);
+        editor.remove(KEY_EMAIL);
+        editor.remove(KEY_ID);
+        editor.remove(KEY_ROLE);
+        editor.remove(KEY_TOKEN);
+        editor.remove(KEY_PICTURETOKEN);
+        editor.remove(KEY_EXPERATIONDATE);
+        editor.remove(KEY_STUDENTNUMBER);
+        editor.remove(KEY_BIRTHDATE);
         editor.commit();
 
-
-        // After logout redirect user to Loing Activity
-         //  Intent i = new Intent(_context, MainActivity.class);
-        // Closing all the Activities
-        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        // Add new Flag to start new Activity
-      //  i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        // Staring Login Activity
-        //  _context.startActivity(i);
     }
 
     /**

@@ -17,6 +17,30 @@
     <string name="digitsfail">Digits innlogging feilet</string>
     <string name="closeSettings">Avbryt</string>
     <string name="Loggout">Logg ut</string>
+    <string name="LogginButton">Logg inn</string>
+    <string name="GiveAccess">"Gi appen tilgang: settings/apps/Ecardholder/Storage"</string>
+    <string name="setPicture">Sett bilde</string>
+    <string name="updateProfile">Oppdater</string>
+    <string name="DenyPicture">Du har allerede valgt et bilde</string>
+    <string name="userUpdated">Bruker Oppdatert</string>
+    <string name="userNotUpdated">Kunne ikke oppdatere bruker</string>
+    <string name="pictureNotAvailable">Bildet ikke tilgjengelig</string>
+    <string name="PictureNotUpdated">Kunne ikke oppdatere bilde</string>
+    <string name="wrongCode">Feil kode, kontakt IT-avdelingen</string>
+    <string name="youareadmin">Du er admin, bruk web-applikasjonen</string>
+    <string name="contactIT">Ta kontakt med IT-avdelingen</string>
+    <string name="studentbevis">STUDENTBEVIS</string>
+    <string name="companyname">Kristen Videregående skole Trøndelag</string>
+    <string name="GyldigTil">Gyldig til</string>
+    <string name="expired">UTGÅTT</string>
+    <string name="studentnumber">Studentnr:</string>
+    <string name="Barcode">Barkode:</string>
+
+
+
+
+
+
 
 
 </resources>

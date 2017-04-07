@@ -17,6 +17,30 @@
     <string name="studentcard">Student card</string>
     <string name="closeSettings">Cancel</string>
     <string name="Loggout">Log out</string>
+    <string name="LogginButton">Login</string>
+    <string name="CancelBarCode">OK</string>
+    <string name="GiveAccess">"Give the app access: settings/apps/Ecardholder/Storage"</string>
+    <string name="setPicture">Set picture</string>
+    <string name="updateProfile">Oppdater</string>
+    <string name="DenyPicture">You have already picked a photo</string>
+    <string name="userUpdated">User updated</string>
+    <string name="userNotUpdated">Could not update user</string>
+    <string name="pictureNotAvailable">Picture not available</string>
+    <string name="PictureNotUpdated">Could not update picture</string>
+    <string name="wrongCode">Wrong code, contact IT support</string>
+    <string name="youareadmin">You are admin, use the web app</string>
+    <string name="contactIT">Contact IT support</string>
+    <string name="signInDigiFail">Login failed</string>
+    <string name="studentbevis">STUDENT CARD</string>
+    <string name="companyname">Kristen Videregående skole Trøndelag</string>
+    <string name="GyldigTil">Valid until</string>
+    <string name="expired">EXPIRED</string>
+    <string name="studentnumber">Studentnr:</string>
+    <string name="Barcode">Barcode:</string>
+
+
+
+
 
 
 </resources>

@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +48,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
+
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,20 +60,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends Activity {
-    //private AuthCallback authCallback;
-
+    private AuthCallback authCallback;
     public TwitterAuthConfig authConfig = new TwitterAuthConfig(KVTVariables.getTwitterKey(), KVTVariables.getTwitterSecret());
-
-
-
-    // Session Manager Class
     SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JodaTimeAndroid.init(this);
-
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
 
@@ -82,10 +83,8 @@ public class MainActivity extends Activity {
         //token
         String token = user.get(SessionManager.KEY_TOKEN);
 
-
         if(name == null || id == null || email == null || token == null){
             super.onCreate(savedInstanceState);
-
 
             //Digits logged in setup
             Fabric.with(this, new TwitterCore(authConfig), new Digits.Builder().build(), new Crashlytics());
@@ -96,15 +95,11 @@ public class MainActivity extends Activity {
             //setting style for the digits button
             DigitsAuthButton digitsButton = (DigitsAuthButton) findViewById(R.id.auth_button);
             digitsButton.setAuthTheme(android.R.style.Theme_Material);
-
-           // AuthConfig.Builder authConfigBuilder = new AuthConfig.Builder()
-             //       .withAuthCallBack(callback)
-              //      .withPhoneNumber("+34111111111")
-
-          //  Digits.authenticate(authConfigBuilder.build());
+            digitsButton.setText(R.string.LogginButton);
+            digitsButton.setBackgroundColor(Color.TRANSPARENT);
+            digitsButton.setTextSize(14);
 
             digitsButton.setCallback(new AuthCallback() {
-
 
                 @Override
                 public void success(DigitsSession session, String phoneNumber) {
@@ -129,9 +124,9 @@ public class MainActivity extends Activity {
                         @Override
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             if (response.isSuccessful()) {
+                                Digits.logout();
 
                                 LoginModel LoginList = response.body();
-
 
                                 // Session Manager
                                 sessionManager = new SessionManager(getApplicationContext());
@@ -140,45 +135,51 @@ public class MainActivity extends Activity {
                                 String email = LoginList.user.getEmail();
                                 String token1 = LoginList.token;
 
-
                                 String studentNumber = LoginList.user.getStudentNumber();
                                 String id = LoginList.user.getId();
 
-                                String picture = LoginList.user.getPicture();
                                 String role = LoginList.user.getRole();
                                 String pictureToken = LoginList.user.getPictureToken();
-                                java.util.Date juDate = LoginList.user.getExpirationDate();
-                                DateTime dt = new DateTime(juDate);
+
+                                java.util.Date dateToExp = LoginList.user.getExpirationDate();
+                                java.util.Date birtday = LoginList.user.getDateOfBirth();
+                                System.out.println(" første som kommer inn født " + LoginList.user.getDateOfBirth());
+                                System.out.println(" første som kommer inn exp " + LoginList.user.getExpirationDate());
+
+
+                                DateTime timeToexp = new DateTime(dateToExp);
+                                DateTime dateBirtday = new DateTime(birtday);
+
 
                                 DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-                                String dtStr = fmt.print(dt);
+                                DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-                                sessionManager.createLoginSession(username,email, token1, studentNumber, id,role, pictureToken, dtStr);
+                                String experation = fmt1.print(timeToexp);
+                                String birthdate = fmt.print(dateBirtday);
 
 
+                                sessionManager.createLoginSession(username,email, token1, studentNumber, id, role, pictureToken, experation, birthdate);
 
                                 if (role.equals("admin")) {
-
                                 Context context = getApplicationContext();
-                                CharSequence text = "Du er admin bruker, bruk web-appen";
                                 int duration = Toast.LENGTH_LONG;
-
-                                Toast toast = Toast.makeText(context, text, duration);
+                                Toast toast = Toast.makeText(context, R.string.youareadmin, duration);
                                 toast.show();
 
 
                                 } else if (email.trim().equals("") || id.trim().equals("") || username.trim().equals("") || role.trim().equals("") || pictureToken.trim().equals("")) {
                                     Context context = getApplicationContext();
-                                    CharSequence text = "Ta kontakt med IT-gutta";
                                     int duration = Toast.LENGTH_SHORT;
-                                    Toast toast = Toast.makeText(context, text, duration);
+                                    Toast toast = Toast.makeText(context, R.string.contactIT, duration);
                                     toast.show();
                                     Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                                     startActivity(intent);
 
                                 } else {
+                                    Digits.logout();
                                     Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                                     startActivity(intent);
+
                                 }
                             } else {
                                 Context context1 = getApplicationContext();
@@ -186,7 +187,6 @@ public class MainActivity extends Activity {
                                 int duration1 = Toast.LENGTH_SHORT;
                                 Toast toast1 = Toast.makeText(context1, text1, duration1);
                                 toast1.show();
-
                             }
                         }
 
@@ -204,30 +204,30 @@ public class MainActivity extends Activity {
                 @Override
                 public void failure(DigitsException exception) {
                     Context context1 = getApplicationContext();
-                    CharSequence text1 = "Sign in with Digits failure";
                     int duration1 = Toast.LENGTH_SHORT;
-                    Toast toast1 = Toast.makeText(context1, text1, duration1);
+                    Toast toast1 = Toast.makeText(context1, R.string.signInDigiFail, duration1);
                     toast1.show();
                 }
             });
+
         } else{
             Intent intent = new Intent(MainActivity.this, Main3Activity.class);
             startActivity(intent);
         }
     }
 
-
     public void sendToSecondActivity(View view) {
         Intent intent = new Intent(MainActivity.this, SecondActivity.class);
         startActivity(intent);
     }
 
-   // public AuthCallback getAuthCallback(){
-    //    return authCallback;
-    //}
-
-    public void av(View v){
-        Digits.logout();
+    public AuthCallback getAuthCallback(){
+        return authCallback;
     }
 
+    public void logout(View w){
+        System.out.println("tissen te brage");
+        Digits.logout();
+
+    }
 }

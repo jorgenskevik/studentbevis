@@ -67,7 +67,6 @@ public class Settings extends Activity{
                 startActivity(intent);
             }
         });
-
     }
 
     public void closeSettings(View v){

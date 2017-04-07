@@ -10,74 +10,67 @@
     tools:context="com.example.jorgenskevik.e_cardholders.Main3Activity">
 
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/jogga2"
-            android:adjustViewBounds="true"
-            android:id="@+id/window1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+    <ImageView
+        android:id="@+id/window1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/jogga2"
+        android:layout_above="@+id/test2" />
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:onClick="openBarCode"
-            android:src="@drawable/strekkode"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="13dp" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:onClick="openSettings"
-            android:src="@drawable/innstillinger"
-            android:layout_below="@+id/imageButton3"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="18dp"
-            android:layout_alignRight="@+id/imageButton3"
-            android:layout_alignEnd="@+id/imageButton3" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/whitetaketwo"
+        android:layout_below="@+id/window1"
+        android:layout_alignParentBottom="true" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="@string/studentcard"
+        android:text=""
+        android:layout_marginBottom="106dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="101dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/test1"
+        android:id="@+id/studentbevis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_above="@+id/test2"
-        android:layout_alignLeft="@+id/test2"
-        android:layout_alignStart="@+id/test2"
-        android:layout_marginBottom="31dp" />
+        android:layout_marginBottom="39dp"
+        android:fontFamily="sans-serif"
+        android:includeFontPadding="false"
+        android:text="@string/studentbevis"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:layout_above="@+id/test3"
+        android:layout_alignLeft="@+id/navnstring"
+        android:layout_alignStart="@+id/navnstring" />
 
     <TextView
         android:id="@+id/test2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/test3"
-        android:layout_alignStart="@+id/test3" />
+        android:text=""
+        android:layout_above="@+id/studentbevis"
+        android:layout_alignLeft="@+id/studentbevis"
+        android:layout_alignStart="@+id/studentbevis" />
 
     <TextView
         android:id="@+id/test3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginBottom="8dp"
         android:layout_above="@+id/test4"
         android:layout_alignLeft="@+id/test4"
         android:layout_alignStart="@+id/test4" />
@@ -86,9 +79,138 @@
         android:id="@+id/test4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text=""
         android:layout_above="@+id/textView7"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="14dp" />
+
+    <TextView
+        android:id="@+id/navnstring"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:layout_above="@+id/test3"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/stringfdato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/navnstring"
+        android:layout_marginTop="9dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/studentid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/stringfdato"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/companyname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentid"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:text="@string/companyname"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        app:srcCompat="@drawable/kvtlogo1" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView5"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/gyldigbutton"
+        android:layout_alignBottom="@+id/imageView5"
+        android:layout_toRightOf="@+id/imageView5"
+        android:layout_alignRight="@+id/textView16"
+        android:layout_alignEnd="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/validTil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:elevation="100dp"
+        android:text="@string/GyldigTil"
+        android:textColor="@color/tw__solid_white"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/button11"
+
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/expDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="100dp"
+        android:text="2017-12-12"
+        android:textColor="@color/tw__solid_white"
+        android:textSize="20sp"
+        android:layout_below="@+id/validTil"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:onClick="openBarCode"
+        android:src="@drawable/strekkode"
+        android:layout_marginTop="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/companyname"
+        android:layout_toEndOf="@+id/companyname" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="openSettings"
+        android:src="@drawable/config"
+        android:layout_alignTop="@+id/imageButton3"
+        android:layout_alignLeft="@+id/imageView5"
+        android:layout_alignStart="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/tw__solid_white"
+        android:text="TextView"
+        android:layout_above="@+id/button11"
+        android:layout_toRightOf="@+id/validTil"
+        android:layout_toEndOf="@+id/validTil" />
 
 </RelativeLayout>

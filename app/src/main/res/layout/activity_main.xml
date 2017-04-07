@@ -83,17 +83,17 @@
         android:layout_toEndOf="@+id/imageView3" />
 
     <Button
-        android:text="@string/Contactus"
+        android:id="@+id/button"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/my_button_bg"
-        android:textColorLink="@android:color/white"
-        android:textColor="@android:color/white"
-        android:onClick="sendToSecondActivity"
-        android:id="@+id/button"
-        android:layout_marginBottom="58dp"
         android:layout_above="@+id/imageView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
+        android:background="@drawable/my_button_bg"
+        android:onClick="sendToSecondActivity"
+        android:text="@string/Contactus"
+        android:textColor="@android:color/white"
+        android:textColorLink="@android:color/white" />
 
     <TextView
         android:text="@string/headerTwo"
@@ -117,23 +117,32 @@
         android:layout_above="@+id/secondheader"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_alignTop="@+id/auth_button"
+        android:background="@drawable/my_button_bg"
+        android:text=""
+        android:layout_alignRight="@+id/button"
+        android:layout_alignEnd="@+id/button" />
+
+
     <com.digits.sdk.android.DigitsAuthButton
         android:id="@+id/auth_button"
+        android:onClick="logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button"
+        android:paddingRight="340dp"
+        android:paddingLeft="340dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:background="@drawable/my_button_bg"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="35dp" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
-        android:onClick="av"
-        android:text="Button" />
 
 </RelativeLayout>

@@ -49,45 +49,31 @@ public class Main4Activity extends AppCompatActivity {
     private ImageView view2;
     SessionManager sessionManager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
         view2 = (ImageView) findViewById(R.id.imageView4);
-
         sessionManager = new SessionManager(getApplicationContext());
-
         byte[] bytes = getIntent().getByteArrayExtra("bitmapbytes");
-
         Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         view2.setImageBitmap(bmp);
-
     }
 
     public void addPictureButton(View v) {
 
         byte[] bytes = getIntent().getByteArrayExtra("bitmapbytes");
         final Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
         HashMap<String, String> userDetails = sessionManager.getUserDetails();
-
         String fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
-
         String authToken = userDetails.get(SessionManager.KEY_TOKEN);
-
         EditText code = (EditText) findViewById(R.id.editText1);
-
         String codeString = code.getText().toString();
-
 
         if (fourDigits.trim().equals("BRUKT")) {
             Context context = getApplicationContext();
-            CharSequence text = "Du har allerede lastet opp et bilde";
             int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
+            Toast toast = Toast.makeText(context, R.string.DenyPicture, duration);
             toast.show();
 
         } else if (fourDigits.trim().equals(codeString)) {
@@ -101,14 +87,10 @@ public class Main4Activity extends AppCompatActivity {
                     .build();
 
             String id = userDetails.get(SessionManager.KEY_ID);
-
             UserAPI userapi = retrofit.create(UserAPI.class);
             String bearertoken = "Bearer " + authToken.toString();
-
             Uri tempUri = getImageUri(getApplicationContext(), bmp);
-
             File finalFile = new File(getRealPathFromURI(tempUri));
-
             RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(tempUri)), finalFile);
 
             MultipartBody.Part body =
@@ -117,14 +99,12 @@ public class Main4Activity extends AppCompatActivity {
             RequestBody CodeToken =
                     RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
 
-
             userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), body, CodeToken).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()){
                         saveToInternalStorage(bmp);
                         String path = saveToInternalStorage(bmp);
-                        System.out.println("dette prøver jeg å lagre " + saveToInternalStorage(bmp));
                         sessionManager.updatePath(path);
                         sessionManager.updatePictureToken("BRUKT");
                         Intent intent = new Intent(Main4Activity.this, Main3Activity.class);
@@ -134,17 +114,17 @@ public class Main4Activity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    System.out.println("This is nicht good");
-
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, R.string.PictureNotUpdated, duration);
+                    toast.show();
                 }
             });
 
         } else if (!fourDigits.trim().equals(codeString)) {
             Context context = getApplicationContext();
-            CharSequence text = "Feil kode, kontakt IKT";
             int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
+            Toast toast = Toast.makeText(context, R.string.wrongCode, duration);
             toast.show();
         }
     }
