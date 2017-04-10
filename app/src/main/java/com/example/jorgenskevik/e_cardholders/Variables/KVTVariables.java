@@ -23,6 +23,7 @@ public class KVTVariables {
     private static String pictureToken = "";
     private static String picture = "";
     private static String role = "";
+    private static String birthday = "";
     private static SharedPreferences userIdPrefs;
 
 
@@ -144,5 +145,13 @@ public class KVTVariables {
 
     public static void setUserIdPrefs(SharedPreferences userIdPrefs) {
         KVTVariables.userIdPrefs = userIdPrefs;
+    }
+
+    public static String getBirthday() {
+        return birthday;
+    }
+
+    public static void setBirthday(String birthday) {
+        KVTVariables.birthday = birthday;
     }
 }

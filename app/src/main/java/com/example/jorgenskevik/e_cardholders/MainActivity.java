@@ -124,7 +124,6 @@ public class MainActivity extends Activity {
                         @Override
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             if (response.isSuccessful()) {
-                                Digits.logout();
 
                                 LoginModel LoginList = response.body();
 
@@ -142,20 +141,18 @@ public class MainActivity extends Activity {
                                 String pictureToken = LoginList.user.getPictureToken();
 
                                 java.util.Date dateToExp = LoginList.user.getExpirationDate();
-                                java.util.Date birtday = LoginList.user.getDateOfBirth();
-                                System.out.println(" første som kommer inn født " + LoginList.user.getDateOfBirth());
-                                System.out.println(" første som kommer inn exp " + LoginList.user.getExpirationDate());
+                                java.util.Date birthday = LoginList.user.getDateOfBirth();
 
 
                                 DateTime timeToexp = new DateTime(dateToExp);
-                                DateTime dateBirtday = new DateTime(birtday);
+                                DateTime dateBirthday = new DateTime(birthday);
 
 
-                                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                                DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MMM-yyyy");
                                 DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
                                 String experation = fmt1.print(timeToexp);
-                                String birthdate = fmt.print(dateBirtday);
+                                String birthdate = fmt.print(dateBirthday);
 
 
                                 sessionManager.createLoginSession(username,email, token1, studentNumber, id, role, pictureToken, experation, birthdate);

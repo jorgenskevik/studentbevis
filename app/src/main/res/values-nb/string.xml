@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">KortFri</string>
     <string name="headerTwo">Vi digitaliserer ditt skolebevis</string>
     <string name="Madewith">Laget med</string>
     <string name="forKVT">for KVT</string>
@@ -35,12 +35,4 @@
     <string name="expired">UTGÅTT</string>
     <string name="studentnumber">Studentnr:</string>
     <string name="Barcode">Barkode:</string>
-
-
-
-
-
-
-
-
 </resources>

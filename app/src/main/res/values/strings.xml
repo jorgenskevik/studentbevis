@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">E-CardHolders</string>
+    <string name="app_name">KortFri</string>
     <string name="headerTwo">We digitize your school certificates</string>
     <string name="Madewith">Made with</string>
     <string name="forKVT">for KVT</string>
@@ -18,6 +18,7 @@
     <string name="closeSettings">Cancel</string>
     <string name="Loggout">Log out</string>
     <string name="LogginButton">Login</string>
+    <string name="digitsfail">Digits login failed</string>
     <string name="CancelBarCode">OK</string>
     <string name="GiveAccess">"Give the app access: settings/apps/Ecardholder/Storage"</string>
     <string name="setPicture">Set picture</string>

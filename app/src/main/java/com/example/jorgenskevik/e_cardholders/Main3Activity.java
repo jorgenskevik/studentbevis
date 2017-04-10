@@ -92,6 +92,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
 
         //View barcode
+
         ImageButton codebutton = (ImageButton) findViewById(R.id.imageButton3);
         TextView fogenavn = (TextView) findViewById(R.id.navnstring);
         TextView fdato = (TextView) findViewById(R.id.stringfdato);
@@ -99,7 +100,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         HashMap<String, String> userDetails = sessionManager.getUserDetails();
 
         String forandsirname = userDetails.get(SessionManager.KEY_NAME);
-        String birthdate = userDetails.get(SessionManager.KEY_BIRTHDATE);
+        String birthday = userDetails.get(SessionManager.KEY_BIRTHDATE);
         String studentIDString = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
 
         String path = userDetails.get(SessionManager.KEY_PATH);
@@ -111,7 +112,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         }
 
         fogenavn.setText(forandsirname);
-        fdato.setText(birthdate);
+        fdato.setText(birthday);
         String extra = getResources().getString(R.string.studentnumber) + " " + studentIDString;
         studentid.setText(extra);
 
@@ -119,10 +120,10 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         String expDate = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
         expButton = (Button) findViewById(R.id.button11);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         Date strDate = null;
         try {
-            strDate = sdf.parse(expDate);
+            strDate = sdf1.parse(expDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -258,18 +259,17 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                         String role = user.getRole();
                         String pictureToken = user.getPictureToken();
 
+
                         java.util.Date juDate = user.getDateOfBirth();
                         java.util.Date juDate2 = user.getExpirationDate();
 
                         DateTime dt = new DateTime(juDate);
                         DateTime dt2 = new DateTime(juDate2);
 
-                        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+                        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MMM-yyyy");
                         DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd");
                         String dtStr = fmt.print(dt);
                         String dtStr2 = fmt1.print(dt2);
-
-
 
                         sessionManager.createUpdtaeLoginSession(username, email, studentNumber, id, role, pictureToken, dtStr, dtStr2);
 
