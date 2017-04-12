@@ -20,13 +20,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,7 +94,6 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         actionBar.hide();
 
 
-
         //View barcode
 
         ImageButton codebutton = (ImageButton) findViewById(R.id.imageButton3);
@@ -106,7 +109,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         String path = userDetails.get(SessionManager.KEY_PATH);
 
         if(path == null){
-            view2.setImageResource(R.drawable.jogga2);
+            view2.setImageResource(R.drawable.tommann);
         }else{
             loadImageFromStorage(path);
         }
@@ -138,8 +141,21 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
             int selectedColor = Color.rgb(254, 56, 36);
             expButton.setText(R.string.expired);
             expButton.setTextSize(30);
+
             expButton.setBackgroundColor(selectedColor);
-        }else{
+       // }if(path == null){
+         //   TextView valid = (TextView) findViewById(R.id.validTil);
+           // TextView experation = (TextView) findViewById(R.id.expDate);
+            //String empty = "";
+            //valid.setText(empty);
+            //experation.setText(empty);
+            //int selectedColor = Color.rgb(254, 56, 36);
+            //expButton.setText(R.string.Not);
+            //expButton.setTextSize(30);
+
+           // expButton.setBackgroundColor(selectedColor);
+
+        } else{
             //gyldig
             int selectedColor = Color.rgb(132, 205, 182);
             TextView experation = (TextView) findViewById(R.id.expDate);
@@ -149,19 +165,21 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
         }
 
-        expButton.setOnClickListener(new View.OnClickListener() {
+       /* expButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ImageView view = (ImageView) findViewById(R.id.window1);
-                    RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                   RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                     //Setup anim with desired properties
                     anim.setInterpolator(new LinearInterpolator());
                     anim.setRepeatCount(1); //Repeat animation indefinitely
                     anim.setDuration(1000); //Put desired duration per anim cycle here, in milliseconds
                     //Start animation
                     view.startAnimation(anim);
+
+
             }
-        });
+        });*/
 
         codebutton.setOnClickListener(new View.OnClickListener() {
 
@@ -224,7 +242,9 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                 String pictureDirpath = pictureDire.getPath();
                 Uri data = Uri.parse(pictureDirpath);
                 photopickerintent.setDataAndType(data, "image/*");
+                System.out.println("kommer hit");
                 startActivityForResult(photopickerintent, IMAGE_GALLERY_REQUEST);
+
             }
         }
         //Oppdater brukeren
@@ -338,6 +358,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onActivityResult(int requestcode, int resultcode, Intent data) {
+        System.out.println("onAct");
 
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             if (resultcode == RESULT_OK) {
@@ -394,9 +415,8 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
     }
 
     private void loadImageFromStorage(String path) {
-
         try {
-            File f=new File(path, "profile.jpg");
+            File f = new File(path, "profile.jpg");
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
             ImageView img=(ImageView)findViewById(R.id.window1);
             img.setImageBitmap(b);
@@ -406,7 +426,10 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         }
     }
 
-
+    public void trykk(View v){
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.anime);
+        findViewById(R.id.window1).startAnimation(shake);
+    }
 }
 
 

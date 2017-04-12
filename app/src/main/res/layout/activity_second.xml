@@ -15,12 +15,13 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/kvtlogo1"
+        android:src="@drawable/kortfrilogo"
         android:scaleType="fitXY"
         android:id="@+id/kvtLOGO"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:alpha="0.7"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -36,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:alpha="0.9" />
+        android:alpha="0.95" />
 
     <View
         android:layout_width="match_parent"

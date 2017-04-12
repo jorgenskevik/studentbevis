@@ -30,7 +30,8 @@
         android:layout_width="436dp"
         android:layout_height="283dp"
         android:layout_marginTop="41dp"
-        android:src="@drawable/jogga2"
+        android:scaleType="fitXY"
+        android:src="@drawable/mannprofil"
         android:layout_below="@+id/appBarLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -42,14 +43,14 @@
         android:layout_below="@+id/appBarLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Ditt bilde:" />
+        android:text="@string/yourPic" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
-        android:text="Skriv inn bildekode:"
+        android:text="@string/writepictureToken"
         android:layout_below="@+id/imageView4"
         android:layout_centerHorizontal="true" />
 
@@ -77,6 +78,6 @@
         android:layout_marginBottom="9dp"
         android:layout_toEndOf="@+id/textView8"
         android:layout_toRightOf="@+id/textView8"
-        android:text="Sett bilde" />
+        android:text="@string/setPic" />
 
 </RelativeLayout>

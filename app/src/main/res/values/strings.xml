@@ -38,6 +38,14 @@
     <string name="expired">EXPIRED</string>
     <string name="studentnumber">Studentnr:</string>
     <string name="Barcode">Barcode:</string>
+    <string name="Not">Invalid</string>
+    <string name="yourPic">Your picture::</string>
+    <string name="writepictureToken">Write picture code:</string>
+    <string name="setPic">Set picture</string>
+
+
+
+
 
 
 

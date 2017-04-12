@@ -225,6 +225,5 @@ public class MainActivity extends Activity {
     public void logout(View w){
         System.out.println("tissen te brage");
         Digits.logout();
-
     }
 }

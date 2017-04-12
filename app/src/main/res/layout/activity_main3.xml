@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.example.jorgenskevik.e_cardholders.Main3Activity">
 
 
@@ -55,8 +54,8 @@
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:layout_above="@+id/test3"
-        android:layout_alignLeft="@+id/navnstring"
-        android:layout_alignStart="@+id/navnstring" />
+        android:layout_centerHorizontal="true"
+         />
 
     <TextView
         android:id="@+id/test2"
@@ -129,44 +128,20 @@
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        app:srcCompat="@drawable/kvtlogo1" />
 
-    <Button
-        android:id="@+id/button11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView5"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/gyldigbutton"
-        android:layout_alignBottom="@+id/imageView5"
-        android:layout_toRightOf="@+id/imageView5"
-        android:layout_alignRight="@+id/textView16"
-        android:layout_alignEnd="@+id/textView16" />
 
     <TextView
         android:id="@+id/validTil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
         android:elevation="100dp"
         android:text="@string/GyldigTil"
         android:textColor="@color/tw__solid_white"
         android:textSize="12sp"
         android:layout_alignTop="@+id/button11"
-
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
         android:layout_centerHorizontal="true"
+
         />
 
     <TextView
@@ -179,6 +154,7 @@
         android:textSize="20sp"
         android:layout_below="@+id/validTil"
         android:layout_centerHorizontal="true"
+
         />
 
     <ImageButton
@@ -189,8 +165,8 @@
         android:src="@drawable/strekkode"
         android:layout_marginTop="14dp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/companyname"
-        android:layout_toEndOf="@+id/companyname" />
+        android:layout_toEndOf="@+id/companyname"
+        android:layout_toRightOf="@+id/companyname"/>
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -199,18 +175,31 @@
         android:onClick="openSettings"
         android:src="@drawable/config"
         android:layout_alignTop="@+id/imageButton3"
-        android:layout_alignLeft="@+id/imageView5"
-        android:layout_alignStart="@+id/imageView5" />
+         />
 
-    <TextView
-        android:id="@+id/textView16"
+    <Button
+        android:id="@+id/button11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/tw__solid_white"
-        android:text="TextView"
-        android:layout_above="@+id/button11"
-        android:layout_toRightOf="@+id/validTil"
-        android:layout_toEndOf="@+id/validTil" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:onClick="trykk"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/my_button_bg"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/imageView7"
+        android:layout_alignStart="@+id/imageView7" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        app:srcCompat="@drawable/kvtlogo1"
+        android:layout_below="@+id/test2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp" />
 
 </RelativeLayout>

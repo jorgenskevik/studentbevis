@@ -41,7 +41,7 @@ public class picturepopup extends Activity {
         setContentView(R.layout.picturepopup);
 
 
-        /*sessionManager = new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
 
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -97,8 +97,6 @@ public class picturepopup extends Activity {
 
 
         }
-    }
-}*/
     }
 }
 

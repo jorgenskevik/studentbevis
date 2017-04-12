@@ -103,7 +103,7 @@ public class Code extends Activity{
         ImageView iv = new ImageView(this);
         try {
 
-            bitmap = encodeAsBitmap(id, BarcodeFormat.CODE_39, 600, 300);
+            bitmap = encodeAsBitmap(id, BarcodeFormat.CODE_39, 700, 200);
             iv.setImageBitmap(bitmap);
 
         } catch (WriterException e) {
