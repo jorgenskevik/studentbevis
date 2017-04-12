@@ -109,7 +109,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         String path = userDetails.get(SessionManager.KEY_PATH);
 
         if(path == null){
-            view2.setImageResource(R.drawable.tommann);
+            view2.setImageResource(R.drawable.jogga2);
         }else{
             loadImageFromStorage(path);
         }

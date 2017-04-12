@@ -81,6 +81,8 @@ public class Code extends Activity{
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
+
+
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         TextView tv1 = new TextView(this);
@@ -89,6 +91,7 @@ public class Code extends Activity{
         tv1.setTextSize(32);
         tv1.setTextColor(BLACK);
 
+        System.out.println(width + " + " + height);
 
 
         // get user data from session
@@ -113,7 +116,7 @@ public class Code extends Activity{
 
 
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000, 1000);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(width*0.92), (int)(height*0.5));
         iv.setLayoutParams(layoutParams);
         layoutParams.gravity=Gravity.CENTER;
         l.addView(tv1);
@@ -121,6 +124,8 @@ public class Code extends Activity{
 
 
         Button cancel = new Button(this);
+        int selectedColor = Color.rgb(132, 205, 182);
+        cancel.setBackgroundColor(selectedColor);
         cancel.setText(R.string.CancelBarCode);
 
         cancel.setOnClickListener(new View.OnClickListener()
