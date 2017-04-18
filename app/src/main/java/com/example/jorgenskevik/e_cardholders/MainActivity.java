@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +98,8 @@ public class MainActivity extends Activity {
             digitsButton.setAuthTheme(android.R.style.Theme_Material);
             digitsButton.setText(R.string.LogginButton);
             digitsButton.setBackgroundColor(Color.TRANSPARENT);
-            digitsButton.setTextSize(14);
+            digitsButton.setTextSize(16);
+            digitsButton.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
 
             digitsButton.setCallback(new AuthCallback() {
 
@@ -115,7 +117,7 @@ public class MainActivity extends Activity {
                           .create();
 
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(KVTVariables.getLocal_URL())
+                            .baseUrl(KVTVariables.getBaseUrl())
                             .addConverterFactory(GsonConverterFactory.create(gson))
                             .build();
 
@@ -124,6 +126,7 @@ public class MainActivity extends Activity {
                         @Override
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             if (response.isSuccessful()) {
+                                System.out.println("her?");
 
                                 LoginModel LoginList = response.body();
 
@@ -173,7 +176,7 @@ public class MainActivity extends Activity {
                                     startActivity(intent);
 
                                 } else {
-                                    Digits.logout();
+                                    //Digits.logout();
                                     Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                                     startActivity(intent);
 
@@ -183,6 +186,7 @@ public class MainActivity extends Activity {
                                 CharSequence text1 = response.message();
                                 int duration1 = Toast.LENGTH_SHORT;
                                 Toast toast1 = Toast.makeText(context1, text1, duration1);
+                                System.out.println("eller her?");
                                 toast1.show();
                             }
                         }

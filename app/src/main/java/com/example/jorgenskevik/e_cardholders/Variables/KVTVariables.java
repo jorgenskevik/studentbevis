@@ -12,9 +12,9 @@ public class KVTVariables {
     private static String TWITTER_KEY = "OwT8vAGt92TMSDRK3O9naZznW";
     private static String TWITTER_SECRET = "PfC1rhbLQ8WSnmJCgqKwyfPZJyjyAoLHzx61sClci42tiiA38R";
 
-    private static String Appkey = "SF6y36FZ698y7oqUCbB6uvr0o2yaHW2H";
+    private static String Appkey = "dde53eeb013d5560ce1e7f1cbdffc822";
     private static String AcceptVersion = "V1";
-    private static String BASE_URL = "http://ec2-34-249-6-7.eu-west-1.compute.amazonaws.com:6900/";
+    private static String BASE_URL = "https://apikvt.kortfri.no/";
     private static String tokenlogin = "";
     private static String userID = "";
     private static String userName = "";

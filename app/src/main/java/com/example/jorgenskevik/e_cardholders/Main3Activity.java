@@ -22,7 +22,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -62,6 +64,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.view.animation.Animation.INFINITE;
 
 public class Main3Activity extends AppCompatActivity implements ActionSheet.ActionSheetListener {
     public static final int CAM_REQUEST_CODE = 457843;
@@ -254,7 +258,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(KVTVariables.getLocal_URL())
+                    .baseUrl(KVTVariables.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
             HashMap<String, String> userDetails = sessionManager.getUserDetails();

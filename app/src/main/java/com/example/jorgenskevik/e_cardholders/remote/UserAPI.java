@@ -42,14 +42,16 @@ public interface UserAPI {
 
     @Multipart
     @POST("Users/{id}/changePicture")
-    Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth, @Header("accept-version") String version, @Header("client_key") String clientkey, @Part MultipartBody.Part photo, @Part("pictureToken") RequestBody pictureToken);
+    Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth,
+                           @Header("accept-version") String version, @Header("client_key") String clientkey,
+                           @Part MultipartBody.Part photo, @Part("pictureToken") RequestBody pictureToken);
 
     @GET("Users/me")
     Call<User> getUser(@Header("accept-version") String version, @Header("Authorization") String auth);
 
     @POST("auth")
     Call<LoginModel> userLogin(@Header("X-Verify-Credentials-Authorization") String auth, @Header("X-Auth-Service-Provider") String link,
-                                     @Header("client_key") String clientkey, @Header("phoneNumber") String number,
-                                     @Header("accept-version") String version);
+                               @Header("client_key") String clientkey, @Header("phoneNumber") String number,
+                               @Header("accept-version") String version);
 
 }

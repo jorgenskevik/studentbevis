@@ -20,7 +20,7 @@
     <string name="LogginButton">Login</string>
     <string name="digitsfail">Digits login failed</string>
     <string name="CancelBarCode">OK</string>
-    <string name="GiveAccess">"Give the app access: settings/apps/Ecardholder/Storage"</string>
+    <string name="GiveAccess">"Give the app access: settings/apps/KortFri/Storage"</string>
     <string name="setPicture">Set picture</string>
     <string name="updateProfile">Oppdater</string>
     <string name="DenyPicture">You have already picked a photo</string>

@@ -10,11 +10,11 @@ import com.google.gson.annotations.SerializedName;
 public class PictureModel {
     @SerializedName("pictureToken")
     @Expose
-    public String pictureToken;
+    private String pictureToken;
 
     @SerializedName("photo")
     @Expose
-    public String photo;
+    private String photo;
 
     public PictureModel(String token, String photo){
         this.photo = photo;

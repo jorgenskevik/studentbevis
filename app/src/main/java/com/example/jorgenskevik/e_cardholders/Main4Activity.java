@@ -84,7 +84,7 @@ public class Main4Activity extends AppCompatActivity {
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(KVTVariables.getLocal_URL())
+                    .baseUrl(KVTVariables.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 

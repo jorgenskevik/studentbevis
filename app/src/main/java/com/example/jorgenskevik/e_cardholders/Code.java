@@ -81,8 +81,6 @@ public class Code extends Activity{
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-
-
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         TextView tv1 = new TextView(this);

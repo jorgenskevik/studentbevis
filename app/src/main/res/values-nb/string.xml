@@ -18,7 +18,7 @@
     <string name="closeSettings">Avbryt</string>
     <string name="Loggout">Logg ut</string>
     <string name="LogginButton">Logg inn</string>
-    <string name="GiveAccess">"Gi appen tilgang: settings/apps/Ecardholder/Storage"</string>
+    <string name="GiveAccess">"Gi appen tilgang: settings/apps/KortFri/Storage"</string>
     <string name="setPicture">Sett bilde</string>
     <string name="updateProfile">Oppdater</string>
     <string name="DenyPicture">Du har allerede valgt et bilde</string>

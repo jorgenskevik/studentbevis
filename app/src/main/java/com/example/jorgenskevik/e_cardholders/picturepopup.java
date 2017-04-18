@@ -88,7 +88,7 @@ public class picturepopup extends Activity {
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(KVTVariables.getLocal_URL())
+                    .baseUrl(KVTVariables.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
