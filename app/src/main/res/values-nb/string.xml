@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">KortFri</string>
+    <string name="app_name">KVT - KortFri</string>
     <string name="headerTwo">Vi digitaliserer ditt skolebevis</string>
     <string name="Madewith">Laget med</string>
     <string name="forKVT">for KVT</string>
@@ -40,6 +40,8 @@
     <string name="yourPic">Ditt bilde:</string>
     <string name="writepictureToken">Skriv inn bildekode:</string>
     <string name="setPic">Sett bilde</string>
+    <string name="kortfriNorge">www.kortfri.no</string>
+
 
 
 

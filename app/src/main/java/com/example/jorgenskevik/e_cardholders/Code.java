@@ -64,6 +64,13 @@ import static com.example.jorgenskevik.e_cardholders.R.layout.codepopup;
 public class Code extends Activity{
 
     SessionManager session;
+    private static double widthParam = 0.92;
+    private static double heightParam = 0.5;
+    private static double widthSize = 0.9;
+    private static double heightSize = 0.7;
+    private static final int WHITE = 0xFFFFFFFF;
+    private static final int BLACK = 0xFF000000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +78,11 @@ public class Code extends Activity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.codepopup);
 
-        LinearLayout l = new LinearLayout(this);
-        l.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        l.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        setContentView(l);
+        setContentView(linearLayout);
         session = new SessionManager(getApplicationContext());
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -83,12 +90,11 @@ public class Code extends Activity{
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        TextView tv1 = new TextView(this);
-        tv1.setText(R.string.barcode);
-        tv1.setGravity(Gravity.CENTER);
-        tv1.setTextSize(32);
-        tv1.setTextColor(BLACK);
-
+        TextView textView = new TextView(this);
+        textView.setText(R.string.barcode);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextSize(32);
+        textView.setTextColor(BLACK);
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
@@ -96,28 +102,23 @@ public class Code extends Activity{
         // name
         String id = user.get(SessionManager.KEY_STUDENTNUMBER);
 
-
         // barcode image
         Bitmap bitmap = null;
-        ImageView iv = new ImageView(this);
+        ImageView imageView = new ImageView(this);
         try {
 
             bitmap = encodeAsBitmap(id, BarcodeFormat.CODE_39, 700, 200);
-            iv.setImageBitmap(bitmap);
+            imageView.setImageBitmap(bitmap);
 
         } catch (WriterException e) {
             e.printStackTrace();
         }
 
-
-
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(width*0.92), (int)(height*0.5));
-        iv.setLayoutParams(layoutParams);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(width*widthParam), (int)(height*heightParam));
+        imageView.setLayoutParams(layoutParams);
         layoutParams.gravity=Gravity.CENTER;
-        l.addView(tv1);
-        l.addView(iv);
-
+        linearLayout.addView(textView);
+        linearLayout.addView(imageView);
 
         Button cancel = new Button(this);
         int selectedColor = Color.rgb(132, 205, 182);
@@ -132,18 +133,11 @@ public class Code extends Activity{
             }
         });
 
-        l.addView(cancel);
+        linearLayout.addView(cancel);
 
-        getWindow().setLayout((int) (width*.9) ,(int) (height*.7));
+        getWindow().setLayout((int) (width*widthSize) ,(int) (height*heightSize));
     }
 
-    public void close(View v){
-        Intent intent = new Intent(Code.this, Main3Activity.class);
-        startActivity(intent);
-    }
-
-    private static final int WHITE = 0xFFFFFFFF;
-    private static final int BLACK = 0xFF000000;
 
     Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
         String contentsToEncode = contents;

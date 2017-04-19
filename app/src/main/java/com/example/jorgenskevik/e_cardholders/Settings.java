@@ -31,22 +31,24 @@ import java.util.HashMap;
 
 public class Settings extends Activity{
     SessionManager sessionManager;
+    private static double widthSize = 0.9;
+    private static double heightSize = 0.7;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.settings);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         sessionManager = new SessionManager(getApplicationContext());
 
 
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
 
-        getWindow().setLayout((int) (width*.9) ,(int) (height*.7));
+        getWindow().setLayout((int) (width*widthSize) ,(int) (height*heightSize));
 
 
         Button termsButton = (Button)findViewById(R.id.button7);
@@ -73,5 +75,4 @@ public class Settings extends Activity{
         Intent intent = new Intent(Settings.this, Main3Activity.class);
         startActivity(intent);
     }
-
 }

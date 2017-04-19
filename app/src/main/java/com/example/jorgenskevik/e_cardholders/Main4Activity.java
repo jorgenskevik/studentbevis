@@ -47,32 +47,37 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Multipart;
 
 public class Main4Activity extends AppCompatActivity {
-    private ImageView view2;
+    private ImageView imageView;
     SessionManager sessionManager;
+    public static final String bitMapBytes = "bitmapBytes";
+    public static final String photoCodeToken = "BRUKT";
+    public static final String tokenBearer = "Bearer ";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main4);
-        view2 = (ImageView) findViewById(R.id.imageView4);
+        imageView = (ImageView) findViewById(R.id.imageView4);
         sessionManager = new SessionManager(getApplicationContext());
-        byte[] bytes = getIntent().getByteArrayExtra("bitmapbytes");
-        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        view2.setImageBitmap(bmp);
+        byte[] bytes = getIntent().getByteArrayExtra(bitMapBytes);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        imageView.setImageBitmap(bitmap);
     }
 
     public void addPictureButton(View v) {
-
-        byte[] bytes = getIntent().getByteArrayExtra("bitmapbytes");
-        final Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        byte[] bytes = getIntent().getByteArrayExtra(bitMapBytes);
+        final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         HashMap<String, String> userDetails = sessionManager.getUserDetails();
         String fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
         String authToken = userDetails.get(SessionManager.KEY_TOKEN);
         EditText code = (EditText) findViewById(R.id.editText1);
         String codeString = code.getText().toString();
 
-        if (fourDigits.trim().equals("BRUKT")) {
+        if (fourDigits.trim().equals(photoCodeToken)) {
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, R.string.DenyPicture, duration);
@@ -90,10 +95,10 @@ public class Main4Activity extends AppCompatActivity {
 
             String id = userDetails.get(SessionManager.KEY_ID);
             UserAPI userapi = retrofit.create(UserAPI.class);
-            String bearertoken = "Bearer " + authToken.toString();
-            Uri tempUri = getImageUri(getApplicationContext(), bmp);
-            File finalFile = new File(getRealPathFromURI(tempUri));
-            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(tempUri)), finalFile);
+            String bearerToken = tokenBearer + authToken.toString();
+            Uri temporaryUri = getImageUri(getApplicationContext(), bitmap);
+            File finalFile = new File(getRealPathFromURI(temporaryUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(temporaryUri)), finalFile);
 
             MultipartBody.Part body =
                     MultipartBody.Part.createFormData("photo", finalFile.getName(),requestFile);
@@ -101,14 +106,14 @@ public class Main4Activity extends AppCompatActivity {
             RequestBody CodeToken =
                     RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
 
-            userapi.postPicture(id, bearertoken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), body, CodeToken).enqueue(new Callback<User>() {
+            userapi.postPicture(id, bearerToken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), body, CodeToken).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()){
-                        saveToInternalStorage(bmp);
-                        String path = saveToInternalStorage(bmp);
+                        saveToInternalStorage(bitmap);
+                        String path = saveToInternalStorage(bitmap);
                         sessionManager.updatePath(path);
-                        sessionManager.updatePictureToken("BRUKT");
+                        sessionManager.updatePictureToken(photoCodeToken);
                         Intent intent = new Intent(Main4Activity.this, Main3Activity.class);
                         startActivity(intent);
                     }
@@ -159,18 +164,18 @@ public class Main4Activity extends AppCompatActivity {
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
-        File mypath=new File(directory,"profile.jpg");
+        File myPath = new File(directory, "profile.jpg");
 
-        FileOutputStream fos = null;
+        FileOutputStream fileOutputStream = null;
         try {
-            fos = new FileOutputStream(mypath);
+            fileOutputStream = new FileOutputStream(myPath);
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                fos.close();
+                fileOutputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

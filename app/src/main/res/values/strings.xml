@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KortFri</string>
+    <string name="app_name">KVT - KortFri</string>
     <string name="headerTwo">We digitize your school certificates</string>
     <string name="Madewith">Made with</string>
     <string name="forKVT">for KVT</string>
@@ -42,6 +42,8 @@
     <string name="yourPic">Your picture::</string>
     <string name="writepictureToken">Write picture code:</string>
     <string name="setPic">Set picture</string>
+    <string name="kortfriNorge">www.kortfri.no</string>
+
 
 
 

@@ -12,7 +12,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/jogga2"
+        android:icon="@drawable/kvtblue"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -23,6 +23,7 @@
 
         <activity
             android:name=".MainActivity"
+
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -51,10 +52,7 @@
             android:name=".Settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Custom" />
-        <activity
-            android:name=".picturepopup"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Custom" />
+
 
         <activity
             android:name=".Main4Activity"

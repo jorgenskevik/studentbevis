@@ -11,6 +11,10 @@ import android.view.Window;
 import static android.R.id.message;
 
 public class SecondActivity extends Activity {
+    public static final String phoneNumber = "tel:72894940";
+    public static final String web = "http://www.kortfri.no";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +25,7 @@ public class SecondActivity extends Activity {
 
     public void OpenPhone(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:1337"));
+        intent.setData(Uri.parse(phoneNumber));
         startActivity(intent);
     }
 
@@ -31,5 +35,9 @@ public class SecondActivity extends Activity {
         intent.putExtra(Intent.EXTRA_TEXT, message);
         Intent mailer = Intent.createChooser(intent, null);
         startActivity(mailer);
+    }
+
+    public void openBrowser(View view){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(web)));
     }
 }

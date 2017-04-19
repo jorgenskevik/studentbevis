@@ -13,17 +13,19 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+
 public class Main2Activity extends Activity {
     public static final int CAM_REQUEST_CODE = 4545;
+    public static final int maxBuildVersion = 6;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_main2);
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -32,11 +34,11 @@ public class Main2Activity extends Activity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void opencard(View view) {
-        String n = Build.VERSION.RELEASE;
-        String firstLetter = String.valueOf(n.charAt(0));
+    public void openCard(View view) {
+        String buildVersion = Build.VERSION.RELEASE;
+        String firstLetter = String.valueOf(buildVersion.charAt(0));
         int number = Integer.parseInt(firstLetter);
-        if(number < 6){
+        if(number < maxBuildVersion){
             Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
             startActivity(intent);
             return;

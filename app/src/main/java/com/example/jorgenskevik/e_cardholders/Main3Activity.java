@@ -74,14 +74,19 @@ import static android.view.animation.Animation.INFINITE;
 
 public class Main3Activity extends AppCompatActivity implements ActionSheet.ActionSheetListener {
     public static final int CAM_REQUEST_CODE = 457843;
+    public static final int buildVersionMin = 6;
+    public static final int compressBitmap = 100;
+    public static final String photoCodeToken = "BRUKT";
+    public static final String bitMapBytes = "bitmapBytes";
+    public static final String tokenBearer = "Bearer ";
     private Main3Activity mContext;
     private static int IMAGE_GALLERY_REQUEST = 20;
     SessionManager sessionManager;
     private ImageView view2;
     private Uri imageUri;
     String mediaPath;
-    Button expButton;
-    private int state = 0;
+    Button expirationButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,17 +107,16 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-
         //View barcode
 
-        ImageButton codebutton = (ImageButton) findViewById(R.id.imageButton3);
-        TextView fogenavn = (TextView) findViewById(R.id.navnstring);
-        TextView fdato = (TextView) findViewById(R.id.stringfdato);
-        TextView studentid = (TextView) findViewById(R.id.studentid);
+        ImageButton codeButton = (ImageButton) findViewById(R.id.imageButton3);
+        TextView firstAndSirName = (TextView) findViewById(R.id.navnstring);
+        TextView BirthDay = (TextView) findViewById(R.id.stringfdato);
+        TextView studentId = (TextView) findViewById(R.id.studentid);
         HashMap<String, String> userDetails = sessionManager.getUserDetails();
 
-        String forandsirname = userDetails.get(SessionManager.KEY_NAME);
-        String birthday = userDetails.get(SessionManager.KEY_BIRTHDATE);
+        String firstAndSirNameString = userDetails.get(SessionManager.KEY_NAME);
+        String birthdayString = userDetails.get(SessionManager.KEY_BIRTHDATE);
         String studentIDString = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
 
         String path = userDetails.get(SessionManager.KEY_PATH);
@@ -123,68 +127,50 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
             loadImageFromStorage(path);
         }
 
-        fogenavn.setText(forandsirname);
-        fdato.setText(birthday);
-        String extra = getResources().getString(R.string.studentnumber) + " " + studentIDString;
-        studentid.setText(extra);
+        firstAndSirName.setText(firstAndSirNameString);
+        BirthDay.setText(birthdayString);
+        String extraStudentID = getResources().getString(R.string.studentnumber) + " " + studentIDString;
+        studentId.setText(extraStudentID);
 
         sessionManager = new SessionManager(getApplicationContext());
-        String expDate = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
-        expButton = (Button) findViewById(R.id.button11);
+        String expirationDateString = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
+        expirationButton = (Button) findViewById(R.id.button11);
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date strDate = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null;
         try {
-            strDate = sdf1.parse(expDate);
+            startDate = simpleDateFormat.parse(expirationDateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-       // if (new Date().after(strDate)) {
-        if(System.currentTimeMillis() > strDate.getTime()){
+        if(System.currentTimeMillis() > startDate.getTime()){
             //Ugyldig
-            //TextView valid = (TextView) findViewById(R.id.validTil);
-            //TextView experation = (TextView) findViewById(R.id.expDate);
-            String empty = "";
-            //valid.setText(empty);
-            //experation.setText(empty);
             int selectedColor = Color.rgb(254, 56, 36);
-            expButton.setText(R.string.expired);
-            expButton.setTextSize(30);
-
-            expButton.setBackgroundColor(selectedColor);
-       // }if(path == null){
-         //   TextView valid = (TextView) findViewById(R.id.validTil);
-           // TextView experation = (TextView) findViewById(R.id.expDate);
-            //String empty = "";
-            //valid.setText(empty);
-            //experation.setText(empty);
-            //int selectedColor = Color.rgb(254, 56, 36);
-            //expButton.setText(R.string.Not);
-            //expButton.setTextSize(30);
-
-           // expButton.setBackgroundColor(selectedColor);
+            expirationButton.setText(R.string.expired);
+            expirationButton.setTextSize(30);
+            expirationButton.setBackgroundColor(selectedColor);
 
         } else{
             //gyldig
             int selectedColor = Color.rgb(132, 205, 182);
-            int selectedwhite = Color.rgb(255, 255, 255);
+            int selectedWhite = Color.rgb(255, 255, 255);
             DateFormat targetFormat = new SimpleDateFormat("dd-MMM-yyyy");
             try {
-                String dtStr2 = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
-                Date date = sdf1.parse(dtStr2);
+                String thisExpDate = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
+                Date date = simpleDateFormat.parse(thisExpDate);
                 String formattedDate = targetFormat.format(date);
-                String experationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
-                expButton.setText(experationDate);
-                expButton.setTextColor(selectedwhite);
-                expButton.setBackgroundColor(selectedColor);
-                expButton.setTextSize(14);
+                String expirationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
+                expirationButton.setText(expirationDate);
+                expirationButton.setTextColor(selectedWhite);
+                expirationButton.setBackgroundColor(selectedColor);
+                expirationButton.setTextSize(14);
 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
-        codebutton.setOnClickListener(new View.OnClickListener() {
+        codeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -208,7 +194,6 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
     @Override
     public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
-        //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -231,7 +216,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
             HashMap<String, String> userDetails = sessionManager.getUserDetails();
             String fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
 
-            if (fourDigits.equals("BRUKT")) {
+            if (fourDigits.equals(photoCodeToken)) {
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
 
@@ -240,13 +225,12 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
             } else {
 
-                Intent photopickerintent = new Intent(Intent.ACTION_PICK);
-                File pictureDire = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                String pictureDirpath = pictureDire.getPath();
-                Uri data = Uri.parse(pictureDirpath);
-                photopickerintent.setDataAndType(data, "image/*");
-                startActivityForResult(photopickerintent, IMAGE_GALLERY_REQUEST);
-
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                File pictureFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                String picturePath = pictureFile.getPath();
+                Uri data = Uri.parse(picturePath);
+                photoPickerIntent.setDataAndType(data, "image/*");
+                startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
             }
         }
         //Oppdater brukeren
@@ -262,11 +246,11 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                     .build();
             HashMap<String, String> userDetails = sessionManager.getUserDetails();
 
-            String auth = userDetails.get(SessionManager.KEY_TOKEN);
-            String auth1 = "Bearer " + auth;
+            String authenticateString = userDetails.get(SessionManager.KEY_TOKEN);
+            String authenticateExtra = tokenBearer + authenticateString;
 
             UserAPI userapi = retrofit.create(UserAPI.class);
-            userapi.getUser(KVTVariables.getAcceptVersion(), auth1).enqueue(new Callback<User>() {
+            userapi.getUser(KVTVariables.getAcceptVersion(), authenticateExtra).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
@@ -282,73 +266,69 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                         String role = user.getRole();
                         String pictureToken = user.getPictureToken();
 
+                        java.util.Date userDateOfBirthDate = user.getDateOfBirth();
+                        java.util.Date userExpirationDate = user.getExpirationDate();
 
-                        java.util.Date juDate = user.getDateOfBirth();
-                        java.util.Date juDate2 = user.getExpirationDate();
+                        DateTime dateTime = new DateTime(userDateOfBirthDate);
+                        DateTime dateTime2 = new DateTime(userExpirationDate);
 
-                        DateTime dt = new DateTime(juDate);
-                        DateTime dt2 = new DateTime(juDate2);
+                        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
+                        DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
+                        String dateTimeBirthday = dateTimeFormatter.print(dateTime);
+                        String dateTimeExpiration = dateTimeFormatter2.print(dateTime2);
 
-                        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MMM-yyyy");
-                        DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd");
-                        String dtStr = fmt.print(dt);
-                        String dtStr2 = fmt1.print(dt2);
+                        sessionManager.createUpdatedLoginSession(username, email, studentNumber, id, role, pictureToken, dateTimeBirthday, dateTimeExpiration);
 
-                        sessionManager.createUpdtaeLoginSession(username, email, studentNumber, id, role, pictureToken, dtStr, dtStr2);
+                        TextView firstAndSirName = (TextView) findViewById(R.id.navnstring);
+                        TextView dateOfBirth = (TextView) findViewById(R.id.stringfdato);
+                        TextView studentId = (TextView) findViewById(R.id.studentid);
 
-                        TextView fogenavn = (TextView) findViewById(R.id.navnstring);
-                        TextView fdato = (TextView) findViewById(R.id.stringfdato);
-                        TextView studentid = (TextView) findViewById(R.id.studentid);
+                        expirationButton = (Button) findViewById(R.id.button11);
 
-                        expButton = (Button) findViewById(R.id.button11);
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        Date strDate = null;
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date startDate = null;
                         try {
-                            strDate = sdf.parse(dtStr2);
+                            startDate = simpleDateFormat.parse(dateTimeExpiration);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        if(System.currentTimeMillis() > strDate.getTime()){
+                        if(System.currentTimeMillis() > startDate.getTime()){
                             //Ugyldig
                             int selectedColor = Color.rgb(254, 56, 36);
-                            expButton.setText(R.string.expired);
-                            expButton.setTextSize(30);
-                            expButton.setBackgroundColor(selectedColor);
+                            expirationButton.setText(R.string.expired);
+                            expirationButton.setTextSize(30);
+                            expirationButton.setBackgroundColor(selectedColor);
                         }else{
                             //gyldig
                             int selectedColor = Color.rgb(132, 205, 182);
                             int selectedWhite = Color.rgb(255, 255, 255);
                             DateFormat targetFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             try {
-                                Date date = sdf.parse(dtStr2);
+                                Date date = simpleDateFormat.parse(dateTimeExpiration);
                                 String formattedDate = targetFormat.format(date);
-                                String experationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
-                                expButton.setText(experationDate);
-                                expButton.setTextColor(selectedWhite);
-                                expButton.setBackgroundColor(selectedColor);
-                                expButton.setTextSize(14);
+                                String ExpirationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
+                                expirationButton.setText(ExpirationDate);
+                                expirationButton.setTextColor(selectedWhite);
+                                expirationButton.setBackgroundColor(selectedColor);
+                                expirationButton.setTextSize(14);
 
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-
                         }
 
-                        fogenavn.setText(username);
-                        fdato.setText(dtStr);
+                        firstAndSirName.setText(username);
+                        dateOfBirth.setText(dateTimeBirthday);
                         String extra = getResources().getString(R.string.studentnumber) + " " + studentNumber;
-                        studentid.setText(extra);
+                        studentId.setText(extra);
 
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.userUpdated), Toast.LENGTH_SHORT).show();
-
 
                     }else{
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.userNotUpdated), Toast.LENGTH_SHORT).show();
                     }
                 }
-
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
@@ -360,18 +340,18 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
     //@RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    protected void onActivityResult(int requestcode, int resultcode, Intent data) {
-        String n = Build.VERSION.RELEASE;
-        String firstLetter = String.valueOf(n.charAt(0));
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String buildVersion = Build.VERSION.RELEASE;
+        String firstLetter = String.valueOf(buildVersion.charAt(0));
         int number = Integer.parseInt(firstLetter);
-        if(number < 6){
+        if(number < buildVersionMin){
             imageUri = data.getData();
             String [] filePath = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
             assert cursor != null;
             cursor.moveToFirst();
-            int columindex = cursor.getColumnIndex(filePath[0]);
-            mediaPath = cursor.getString(columindex);
+            int columnIndex = cursor.getColumnIndex(filePath[0]);
+            mediaPath = cursor.getString(columnIndex);
             InputStream inputStream;
 
             try {
@@ -379,32 +359,27 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 Intent intent = new Intent(this, Main4Activity.class);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                bitmap.compress(Bitmap.CompressFormat.PNG, compressBitmap, stream);
                 byte[] bytes = stream.toByteArray();
-                intent.putExtra("bitmapbytes",bytes);
+                intent.putExtra(bitMapBytes, bytes);
                 startActivity(intent);
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(this, getResources().getString(R.string.pictureNotAvailable), Toast.LENGTH_SHORT).show();
             }
-
-        }else{
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
-            if (resultcode == RESULT_OK) {
-
-                if (requestcode == IMAGE_GALLERY_REQUEST) {
-
+            if (resultCode == RESULT_OK) {
+                if (requestCode == IMAGE_GALLERY_REQUEST) {
                     imageUri = data.getData();
                     String [] filePath = {MediaStore.Images.Media.DATA};
                     Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
                     assert cursor != null;
                     cursor.moveToFirst();
-                    int columindex = cursor.getColumnIndex(filePath[0]);
-                    mediaPath = cursor.getString(columindex);
+                    int columnIndex = cursor.getColumnIndex(filePath[0]);
+                    mediaPath = cursor.getString(columnIndex);
                     InputStream inputStream;
 
                     try {
@@ -412,9 +387,9 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         Intent intent = new Intent(this, Main4Activity.class);
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, compressBitmap, stream);
                         byte[] bytes = stream.toByteArray();
-                        intent.putExtra("bitmapbytes",bytes);
+                        intent.putExtra(bitMapBytes,bytes);
                         startActivity(intent);
 
                     } catch (FileNotFoundException e) {
@@ -451,22 +426,20 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
     private void loadImageFromStorage(String path) {
         try {
-            File f = new File(path, "profile.jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            ImageView img=(ImageView)findViewById(R.id.window1);
-            img.setImageBitmap(b);
+            File pictureFile = new File(path, "profile.jpg");
+            Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(pictureFile));
+            ImageView image = (ImageView)findViewById(R.id.window1);
+            image.setImageBitmap(bitmap);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public void trykk(View v){
+    public void shake(View v){
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.anime);
         findViewById(R.id.window1).startAnimation(shake);
     }
-
-
 }
 
 

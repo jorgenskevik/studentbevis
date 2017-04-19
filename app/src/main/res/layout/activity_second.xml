@@ -44,16 +44,18 @@
         android:layout_height="1px"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        />
+        android:id="@+id/view2" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/love"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="8dp"
+        android:id="@+id/imageView3"
+        android:layout_toRightOf="@+id/MadeWith"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp"
-        android:id="@+id/imageView3" />
+        />
 
     <TextView
         android:text="@string/Madewith"
@@ -63,8 +65,8 @@
         android:layout_alignLeft="@+id/ECARDHOLDER"
         android:layout_alignStart="@+id/ECARDHOLDER"
         android:id="@+id/MadeWith"
+        android:layout_marginLeft="5dp"
         android:textColor="@android:color/white"
-        android:layout_toStartOf="@+id/imageView3"
         android:textSize="18sp" />
 
     <TextView
@@ -74,9 +76,9 @@
         android:id="@+id/ECARDHOLDER"
         android:textColor="@android:color/white"
         android:textSize="36sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="91dp" />
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/view2"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/Sendanemail"
@@ -128,8 +130,23 @@
         android:id="@+id/forKVT"
         android:textColor="@android:color/white"
         android:textSize="18sp"
+        android:layout_marginLeft="10dp"
         android:layout_alignBottom="@+id/imageView3"
         android:layout_toEndOf="@+id/imageView3"
-        android:layout_toRightOf="@+id/imageView3" />
+        android:layout_toRightOf="@+id/imageView3"
+        android:layout_alignTop="@+id/MadeWith" />
+
+    <Button
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView3"
+        android:background="@color/tw__transparent"
+        android:layout_centerHorizontal="true"
+        android:onClick="openBrowser"
+        android:layout_marginBottom="6dp"
+        android:textSize="18dp"
+        android:textColor="@android:color/white"
+        android:text="@string/kortfriNorge" />
 
 </RelativeLayout>

@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 
             //setting style for the digits button
             DigitsAuthButton digitsButton = (DigitsAuthButton) findViewById(R.id.auth_button);
-            digitsButton.setAuthTheme(android.R.style.Theme_Material);
+            //digitsButton.setAuthTheme(android.R.style.Theme_Black);
             digitsButton.setText(R.string.LogginButton);
             digitsButton.setBackgroundColor(Color.TRANSPARENT);
             digitsButton.setTextSize(16);
@@ -113,8 +113,8 @@ public class MainActivity extends Activity {
                     authHeader.put("accept-version", KVTVariables.getAcceptVersion());
 
                     Gson gson = new GsonBuilder()
-                           .setLenient()
-                          .create();
+                            .setLenient()
+                            .create();
 
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(KVTVariables.getBaseUrl())
@@ -122,7 +122,11 @@ public class MainActivity extends Activity {
                             .build();
 
                     UserAPI userapi = retrofit.create(UserAPI.class);
-                    userapi.userLogin(authHeader.get("X-Verify-Credentials-Authorization"), authHeader.get("X-Auth-Service-Provider"), authHeader.get("client_key"), authHeader.get("phoneNumber"), authHeader.get("accept-version")).enqueue(new Callback<LoginModel>() {
+                    userapi.userLogin(
+                            authHeader.get("X-Verify-Credentials-Authorization"),
+                            authHeader.get("X-Auth-Service-Provider"), authHeader.get("client_key"),
+                            authHeader.get("phoneNumber"), authHeader.get("accept-version")).enqueue(new Callback<LoginModel>() {
+
                         @Override
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             if (response.isSuccessful()) {
@@ -132,9 +136,9 @@ public class MainActivity extends Activity {
                                 // Session Manager
                                 sessionManager = new SessionManager(getApplicationContext());
 
-                                String username = LoginList.user.getName();
-                                String email = LoginList.user.getEmail();
-                                String token1 = LoginList.token;
+                                String usernameString = LoginList.user.getName();
+                                String emailString = LoginList.user.getEmail();
+                                String tokenString = LoginList.token;
 
                                 String studentNumber = LoginList.user.getStudentNumber();
                                 String id = LoginList.user.getId();
@@ -142,22 +146,23 @@ public class MainActivity extends Activity {
                                 String role = LoginList.user.getRole();
                                 String pictureToken = LoginList.user.getPictureToken();
 
-                                java.util.Date dateToExp = LoginList.user.getExpirationDate();
-                                java.util.Date birthday = LoginList.user.getDateOfBirth();
+                                java.util.Date dateToExpiration = LoginList.user.getExpirationDate();
+                                java.util.Date birthdayDate = LoginList.user.getDateOfBirth();
 
 
-                                DateTime timeToexp = new DateTime(dateToExp);
-                                DateTime dateBirthday = new DateTime(birthday);
+                                DateTime timeToExpiration = new DateTime(dateToExpiration);
+                                DateTime timeBirthday = new DateTime(birthdayDate);
 
 
-                                DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MMM-yyyy");
-                                DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd");
+                                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
+                                DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-                                String experation = fmt1.print(timeToexp);
-                                String birthdate = fmt.print(dateBirthday);
+                                String birthDateString = dateTimeFormatter.print(timeBirthday);
+                                String expirationString = dateTimeFormatter2.print(timeToExpiration);
 
 
-                                sessionManager.createLoginSession(username,email, token1, studentNumber, id, role, pictureToken, experation, birthdate);
+
+                                sessionManager.createLoginSession(usernameString,emailString, tokenString, studentNumber, id, role, pictureToken, expirationString, birthDateString);
                                 Digits.logout();
 
                                 if (role.equals("admin")) {
@@ -167,7 +172,7 @@ public class MainActivity extends Activity {
                                 toast.show();
 
 
-                                } else if (email.trim().equals("") || id.trim().equals("") || username.trim().equals("") || role.trim().equals("") || pictureToken.trim().equals("")) {
+                                } else if (emailString.trim().equals("") || id.trim().equals("") || usernameString.trim().equals("") || role.trim().equals("") || pictureToken.trim().equals("")) {
                                     Context context = getApplicationContext();
                                     int duration = Toast.LENGTH_SHORT;
                                     Toast toast = Toast.makeText(context, R.string.contactIT, duration);
@@ -182,31 +187,31 @@ public class MainActivity extends Activity {
 
                                 }
                             } else {
-                                Context context1 = getApplicationContext();
-                                CharSequence text1 = response.message();
-                                int duration1 = Toast.LENGTH_SHORT;
-                                Toast toast1 = Toast.makeText(context1, text1, duration1);
-                                toast1.show();
+                                Context context = getApplicationContext();
+                                CharSequence text = response.message();
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<LoginModel> call, Throwable t) {
-                            Context context1 = getApplicationContext();
-                            CharSequence text1 = t.getMessage();
-                            int duration1 = Toast.LENGTH_SHORT;
-                            Toast toast1 = Toast.makeText(context1, text1, duration1);
-                            toast1.show();
+                            Context context = getApplicationContext();
+                            CharSequence text = t.getMessage();
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
                         }
                     });
                 }
 
                 @Override
                 public void failure(DigitsException exception) {
-                    Context context1 = getApplicationContext();
-                    int duration1 = Toast.LENGTH_SHORT;
-                    Toast toast1 = Toast.makeText(context1, R.string.signInDigiFail, duration1);
-                    toast1.show();
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, R.string.signInDigiFail, duration);
+                    toast.show();
                 }
             });
 
