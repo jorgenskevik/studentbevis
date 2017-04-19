@@ -89,8 +89,6 @@ public class Code extends Activity{
         tv1.setTextSize(32);
         tv1.setTextColor(BLACK);
 
-        System.out.println(width + " + " + height);
-
 
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();

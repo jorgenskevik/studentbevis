@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ public class Main2Activity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main2);
+
     }
 
     @Override
@@ -28,15 +30,25 @@ public class Main2Activity extends Activity {
         moveTaskToBack(true);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void opencard(View view) {
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        String n = Build.VERSION.RELEASE;
+        String firstLetter = String.valueOf(n.charAt(0));
+        int number = Integer.parseInt(firstLetter);
+        if(number < 6){
+            Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+            startActivity(intent);
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
             startActivity(intent);
         }else{
             String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            requestPermissions(permissionRequest, CAM_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, permissionRequest, CAM_REQUEST_CODE);
             Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_SHORT).show();
+
         }
     }
 }

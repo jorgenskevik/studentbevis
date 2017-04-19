@@ -9,12 +9,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,11 +56,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -137,11 +142,11 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
        // if (new Date().after(strDate)) {
         if(System.currentTimeMillis() > strDate.getTime()){
             //Ugyldig
-            TextView valid = (TextView) findViewById(R.id.validTil);
-            TextView experation = (TextView) findViewById(R.id.expDate);
+            //TextView valid = (TextView) findViewById(R.id.validTil);
+            //TextView experation = (TextView) findViewById(R.id.expDate);
             String empty = "";
-            valid.setText(empty);
-            experation.setText(empty);
+            //valid.setText(empty);
+            //experation.setText(empty);
             int selectedColor = Color.rgb(254, 56, 36);
             expButton.setText(R.string.expired);
             expButton.setTextSize(30);
@@ -162,28 +167,22 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         } else{
             //gyldig
             int selectedColor = Color.rgb(132, 205, 182);
-            TextView experation = (TextView) findViewById(R.id.expDate);
-            String experationDate = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
-            experation.setText(experationDate);
-            expButton.setBackgroundColor(selectedColor);
+            int selectedwhite = Color.rgb(255, 255, 255);
+            DateFormat targetFormat = new SimpleDateFormat("dd-MMM-yyyy");
+            try {
+                String dtStr2 = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
+                Date date = sdf1.parse(dtStr2);
+                String formattedDate = targetFormat.format(date);
+                String experationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
+                expButton.setText(experationDate);
+                expButton.setTextColor(selectedwhite);
+                expButton.setBackgroundColor(selectedColor);
+                expButton.setTextSize(14);
 
-        }
-
-       /* expButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageView view = (ImageView) findViewById(R.id.window1);
-                   RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                    //Setup anim with desired properties
-                    anim.setInterpolator(new LinearInterpolator());
-                    anim.setRepeatCount(1); //Repeat animation indefinitely
-                    anim.setDuration(1000); //Put desired duration per anim cycle here, in milliseconds
-                    //Start animation
-                    view.startAnimation(anim);
-
-
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });*/
+        }
 
         codebutton.setOnClickListener(new View.OnClickListener() {
 
@@ -246,13 +245,13 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                 String pictureDirpath = pictureDire.getPath();
                 Uri data = Uri.parse(pictureDirpath);
                 photopickerintent.setDataAndType(data, "image/*");
-                System.out.println("kommer hit");
                 startActivityForResult(photopickerintent, IMAGE_GALLERY_REQUEST);
 
             }
         }
         //Oppdater brukeren
         if(index == 3){
+
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -300,7 +299,6 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                         TextView fogenavn = (TextView) findViewById(R.id.navnstring);
                         TextView fdato = (TextView) findViewById(R.id.stringfdato);
                         TextView studentid = (TextView) findViewById(R.id.studentid);
-                        TextView exp = (TextView) findViewById(R.id.expDate);
 
                         expButton = (Button) findViewById(R.id.button11);
 
@@ -314,12 +312,6 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
                         if(System.currentTimeMillis() > strDate.getTime()){
                             //Ugyldig
-                            TextView valid = (TextView) findViewById(R.id.validTil);
-                            //TextView expDate = (TextView) findViewById(R.id.expDate);
-                            String empty = "";
-                            String empty1 = "";
-                            valid.setText(empty);
-                            exp.setText(empty1);
                             int selectedColor = Color.rgb(254, 56, 36);
                             expButton.setText(R.string.expired);
                             expButton.setTextSize(30);
@@ -327,13 +319,20 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                         }else{
                             //gyldig
                             int selectedColor = Color.rgb(132, 205, 182);
-                            //TextView experation = (TextView) findViewById(R.id.expDate);
-                            TextView valid = (TextView) findViewById(R.id.validTil);
-                            valid.setText(R.string.GyldigTil);
-                            exp.setText(dtStr2);
-                            //Button mybutton = (Button) findViewById(R.id.button11);
-                            expButton.setText("");
-                            expButton.setBackgroundColor(selectedColor);
+                            int selectedWhite = Color.rgb(255, 255, 255);
+                            DateFormat targetFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                            try {
+                                Date date = sdf.parse(dtStr2);
+                                String formattedDate = targetFormat.format(date);
+                                String experationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
+                                expButton.setText(experationDate);
+                                expButton.setTextColor(selectedWhite);
+                                expButton.setBackgroundColor(selectedColor);
+                                expButton.setTextSize(14);
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
                         }
 
@@ -359,14 +358,46 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    //@RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onActivityResult(int requestcode, int resultcode, Intent data) {
-        System.out.println("onAct");
+        String n = Build.VERSION.RELEASE;
+        String firstLetter = String.valueOf(n.charAt(0));
+        int number = Integer.parseInt(firstLetter);
+        if(number < 6){
+            imageUri = data.getData();
+            String [] filePath = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
+            assert cursor != null;
+            cursor.moveToFirst();
+            int columindex = cursor.getColumnIndex(filePath[0]);
+            mediaPath = cursor.getString(columindex);
+            InputStream inputStream;
 
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                inputStream = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                Intent intent = new Intent(this, Main4Activity.class);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] bytes = stream.toByteArray();
+                intent.putExtra("bitmapbytes",bytes);
+                startActivity(intent);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this, getResources().getString(R.string.pictureNotAvailable), Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
             if (resultcode == RESULT_OK) {
+
                 if (requestcode == IMAGE_GALLERY_REQUEST) {
+
                     imageUri = data.getData();
                     String [] filePath = {MediaStore.Images.Media.DATA};
                     Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
@@ -395,7 +426,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
         } else {
             String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            requestPermissions(permissionRequest, CAM_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, permissionRequest, CAM_REQUEST_CODE);
         }
     }
 
@@ -434,6 +465,8 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.anime);
         findViewById(R.id.window1).startAnimation(shake);
     }
+
+
 }
 
 

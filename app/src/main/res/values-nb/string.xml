@@ -23,6 +23,7 @@
     <string name="updateProfile">Oppdater</string>
     <string name="DenyPicture">Du har allerede valgt et bilde</string>
     <string name="userUpdated">Bruker Oppdatert</string>
+    <string name="signInDigiFail">Innlogging failet</string>
     <string name="userNotUpdated">Kunne ikke oppdatere bruker</string>
     <string name="pictureNotAvailable">Bildet ikke tilgjengelig</string>
     <string name="PictureNotUpdated">Kunne ikke oppdatere bilde</string>
@@ -31,7 +32,7 @@
     <string name="contactIT">Ta kontakt med IT-avdelingen</string>
     <string name="studentbevis">STUDENTBEVIS</string>
     <string name="companyname">Kristen Videregående skole Trøndelag</string>
-    <string name="GyldigTil">Gyldig til</string>
+    <string name="GyldigTil">Gyldig til:</string>
     <string name="expired">UTGÅTT</string>
     <string name="studentnumber">Studentnr:</string>
     <string name="Barcode">Barkode:</string>

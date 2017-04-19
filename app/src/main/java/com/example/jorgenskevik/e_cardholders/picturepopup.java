@@ -55,8 +55,7 @@ public class picturepopup extends Activity {
             Bitmap b = BitmapFactory.decodeByteArray(
                     getIntent().getByteArrayExtra("byteArray"),0,getIntent().getByteArrayExtra("byteArray").length);
             previewThumbnail.setImageBitmap(b);
-            System.out.println("dette gikk ikke så bra");
-            
+
         }
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.5));
     }
@@ -91,10 +90,6 @@ public class picturepopup extends Activity {
                     .baseUrl(KVTVariables.getBaseUrl())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-
-
-
-
 
         }
     }

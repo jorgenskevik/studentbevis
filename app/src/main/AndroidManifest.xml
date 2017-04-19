@@ -46,7 +46,7 @@
         <activity
             android:name=".Code"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Custom" />
+            android:theme="@style/AppTheme.customPopup" />
         <activity
             android:name=".Settings"
             android:screenOrientation="portrait"

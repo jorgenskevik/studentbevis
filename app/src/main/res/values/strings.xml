@@ -34,7 +34,7 @@
     <string name="signInDigiFail">Login failed</string>
     <string name="studentbevis">STUDENT CARD</string>
     <string name="companyname">Kristen Videregående skole Trøndelag</string>
-    <string name="GyldigTil">Valid until</string>
+    <string name="GyldigTil">Valid until:</string>
     <string name="expired">EXPIRED</string>
     <string name="studentnumber">Studentnr:</string>
     <string name="Barcode">Barcode:</string>

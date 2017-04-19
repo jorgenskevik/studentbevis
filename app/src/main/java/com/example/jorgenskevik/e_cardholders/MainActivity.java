@@ -126,7 +126,6 @@ public class MainActivity extends Activity {
                         @Override
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             if (response.isSuccessful()) {
-                                System.out.println("her?");
 
                                 LoginModel LoginList = response.body();
 
@@ -159,6 +158,7 @@ public class MainActivity extends Activity {
 
 
                                 sessionManager.createLoginSession(username,email, token1, studentNumber, id, role, pictureToken, experation, birthdate);
+                                Digits.logout();
 
                                 if (role.equals("admin")) {
                                 Context context = getApplicationContext();
@@ -186,7 +186,6 @@ public class MainActivity extends Activity {
                                 CharSequence text1 = response.message();
                                 int duration1 = Toast.LENGTH_SHORT;
                                 Toast toast1 = Toast.makeText(context1, text1, duration1);
-                                System.out.println("eller her?");
                                 toast1.show();
                             }
                         }
@@ -227,7 +226,6 @@ public class MainActivity extends Activity {
     }
 
     public void logout(View w){
-        System.out.println("tissen te brage");
         Digits.logout();
     }
 }
