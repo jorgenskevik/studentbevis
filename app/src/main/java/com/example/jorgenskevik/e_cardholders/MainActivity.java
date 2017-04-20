@@ -60,9 +60,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends Activity {
     private AuthCallback authCallback;
+    /**
+     * The Auth config.
+     */
     public TwitterAuthConfig authConfig = new TwitterAuthConfig(KVTVariables.getTwitterKey(), KVTVariables.getTwitterSecret());
+    /**
+     * The Session manager.
+     */
     SessionManager sessionManager;
 
     @Override
@@ -221,15 +230,30 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * Send to second activity.
+     *
+     * @param view the view
+     */
     public void sendToSecondActivity(View view) {
         Intent intent = new Intent(MainActivity.this, SecondActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Get auth callback auth callback.
+     *
+     * @return the auth callback
+     */
     public AuthCallback getAuthCallback(){
         return authCallback;
     }
 
+    /**
+     * Logout.
+     *
+     * @param w the w
+     */
     public void logout(View w){
         Digits.logout();
     }

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by jorgenskevik on 30.03.2017.
  */
-
 public class PictureModel {
     @SerializedName("pictureToken")
     @Expose
@@ -16,6 +15,12 @@ public class PictureModel {
     @Expose
     private String photo;
 
+    /**
+     * Instantiates a new Picture model.
+     *
+     * @param token the token
+     * @param photo the photo
+     */
     public PictureModel(String token, String photo){
         this.photo = photo;
         this.pictureToken = token;

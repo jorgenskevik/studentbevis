@@ -60,9 +60,11 @@ import static com.example.jorgenskevik.e_cardholders.R.layout.codepopup;
 /**
  * Created by jorgenskevik on 24.03.2017.
  */
-
 public class Code extends Activity{
 
+    /**
+     * The Session.
+     */
     SessionManager session;
     private static double widthParam = 0.92;
     private static double heightParam = 0.5;
@@ -139,6 +141,16 @@ public class Code extends Activity{
     }
 
 
+    /**
+     * Encode as bitmap bitmap.
+     *
+     * @param contents   the contents
+     * @param format     the format
+     * @param img_width  the img width
+     * @param img_height the img height
+     * @return the bitmap
+     * @throws WriterException the writer exception
+     */
     Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
         String contentsToEncode = contents;
         if (contentsToEncode == null) {

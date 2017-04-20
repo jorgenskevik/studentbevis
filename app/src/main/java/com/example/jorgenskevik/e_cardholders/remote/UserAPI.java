@@ -37,18 +37,49 @@ import retrofit2.http.Path;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * The interface User api.
+ */
 public interface UserAPI {
 
 
+    /**
+     * Post picture call.
+     *
+     * @param id           the id
+     * @param auth         the auth
+     * @param version      the version
+     * @param clientKey    the client key
+     * @param photo        the photo
+     * @param pictureToken the picture token
+     * @return the call
+     */
     @Multipart
     @POST("Users/{id}/changePicture")
     Call<User> postPicture(@Path("id") String id, @Header("Authorization") String auth,
                            @Header("accept-version") String version, @Header("client_key") String clientKey,
                            @Part MultipartBody.Part photo, @Part("pictureToken") RequestBody pictureToken);
 
+    /**
+     * Gets user.
+     *
+     * @param version the version
+     * @param auth    the auth
+     * @return the user
+     */
     @GET("Users/me")
     Call<User> getUser(@Header("accept-version") String version, @Header("Authorization") String auth);
 
+    /**
+     * User login call.
+     *
+     * @param auth      the auth
+     * @param link      the link
+     * @param clientKey the client key
+     * @param number    the number
+     * @param version   the version
+     * @return the call
+     */
     @POST("auth")
     Call<LoginModel> userLogin(@Header("X-Verify-Credentials-Authorization") String auth, @Header("X-Auth-Service-Provider") String link,
                                @Header("client_key") String clientKey, @Header("phoneNumber") String number,

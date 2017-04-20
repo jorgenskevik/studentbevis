@@ -72,19 +72,49 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.view.animation.Animation.INFINITE;
 
+/**
+ * The type Main 3 activity.
+ */
 public class Main3Activity extends AppCompatActivity implements ActionSheet.ActionSheetListener {
+    /**
+     * The constant CAM_REQUEST_CODE.
+     */
     public static final int CAM_REQUEST_CODE = 457843;
+    /**
+     * The constant buildVersionMin.
+     */
     public static final int buildVersionMin = 6;
+    /**
+     * The constant compressBitmap.
+     */
     public static final int compressBitmap = 100;
+    /**
+     * The constant photoCodeToken.
+     */
     public static final String photoCodeToken = "BRUKT";
+    /**
+     * The constant bitMapBytes.
+     */
     public static final String bitMapBytes = "bitmapBytes";
+    /**
+     * The constant tokenBearer.
+     */
     public static final String tokenBearer = "Bearer ";
     private Main3Activity mContext;
     private static int IMAGE_GALLERY_REQUEST = 20;
+    /**
+     * The Session manager.
+     */
     SessionManager sessionManager;
     private ImageView view2;
     private Uri imageUri;
+    /**
+     * The Media path.
+     */
     String mediaPath;
+    /**
+     * The Expiration button.
+     */
     Button expirationButton;
 
 
@@ -179,11 +209,19 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         });
     }
 
+    /**
+     * Open settings.
+     *
+     * @param v the v
+     */
     public void openSettings(View v) {
         setTheme(R.style.ActionSheetStyleiOS7);
         showActionSheet();
     }
 
+    /**
+     * Show action sheet.
+     */
     public void showActionSheet() {
         ActionSheet.createBuilder(this, getSupportFragmentManager())
                 .setCancelButtonTitle(R.string.closeSettings)
@@ -436,6 +474,11 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         }
     }
 
+    /**
+     * Shake.
+     *
+     * @param v the v
+     */
     public void shake(View v){
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.anime);
         findViewById(R.id.window1).startAnimation(shake);

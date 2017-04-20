@@ -28,8 +28,10 @@ import java.util.HashMap;
 /**
  * Created by jorgenskevik on 27.03.2017.
  */
-
 public class Settings extends Activity{
+    /**
+     * The Session manager.
+     */
     SessionManager sessionManager;
     private static double widthSize = 0.9;
     private static double heightSize = 0.7;
@@ -71,6 +73,11 @@ public class Settings extends Activity{
         });
     }
 
+    /**
+     * Close settings.
+     *
+     * @param v the v
+     */
     public void closeSettings(View v){
         Intent intent = new Intent(Settings.this, Main3Activity.class);
         startActivity(intent);

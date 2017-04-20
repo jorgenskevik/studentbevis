@@ -10,8 +10,17 @@ import android.view.Window;
 
 import static android.R.id.message;
 
+/**
+ * The type Second activity.
+ */
 public class SecondActivity extends Activity {
+    /**
+     * The constant phoneNumber.
+     */
     public static final String phoneNumber = "tel:72894940";
+    /**
+     * The constant web.
+     */
     public static final String web = "http://www.kortfri.no";
 
 
@@ -23,12 +32,22 @@ public class SecondActivity extends Activity {
         setContentView(R.layout.activity_second);
     }
 
+    /**
+     * Open phone.
+     *
+     * @param view the view
+     */
     public void OpenPhone(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse(phoneNumber));
         startActivity(intent);
     }
 
+    /**
+     * Open mail.
+     *
+     * @param view the view
+     */
     public void OpenMail(View view){
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
@@ -37,6 +56,11 @@ public class SecondActivity extends Activity {
         startActivity(mailer);
     }
 
+    /**
+     * Open browser.
+     *
+     * @param view the view
+     */
     public void openBrowser(View view){
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(web)));
     }

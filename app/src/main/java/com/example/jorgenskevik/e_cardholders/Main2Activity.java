@@ -14,8 +14,17 @@ import android.view.Window;
 import android.widget.Toast;
 
 
+/**
+ * The type Main 2 activity.
+ */
 public class Main2Activity extends Activity {
+    /**
+     * The constant CAM_REQUEST_CODE.
+     */
     public static final int CAM_REQUEST_CODE = 4545;
+    /**
+     * The constant maxBuildVersion.
+     */
     public static final int maxBuildVersion = 6;
 
 
@@ -33,6 +42,11 @@ public class Main2Activity extends Activity {
     }
 
 
+    /**
+     * Open card.
+     *
+     * @param view the view
+     */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void openCard(View view) {
         String buildVersion = Build.VERSION.RELEASE;

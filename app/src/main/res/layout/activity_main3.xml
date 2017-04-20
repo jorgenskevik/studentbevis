@@ -17,7 +17,7 @@
         android:layout_alignParentRight="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/jogga2"
+        android:src="@drawable/facebookgirl"
         android:layout_above="@+id/test2" />
 
     <ImageView
@@ -137,20 +137,20 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:onClick="openSettings"
-        android:src="@drawable/config"
+        android:src="@drawable/set"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="1dp"/>
 
     <Button
         android:id="@+id/button11"

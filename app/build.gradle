@@ -39,6 +39,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
     sourceSets {
         main {
             resources.srcDirs = ['src/main/resources', 'src/main/resources/valuesNO']

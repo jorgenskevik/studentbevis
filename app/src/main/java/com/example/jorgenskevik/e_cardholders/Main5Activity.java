@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
+/**
+ * The type Main 5 activity.
+ */
 public class Main5Activity extends Activity {
 
     @Override
@@ -16,6 +19,11 @@ public class Main5Activity extends Activity {
         setContentView(R.layout.activity_main5);
     }
 
+    /**
+     * Open card.
+     *
+     * @param view the view
+     */
     public void openCard(View view){
         Intent intent = new Intent(Main5Activity.this, Main3Activity.class);
         startActivity(intent);

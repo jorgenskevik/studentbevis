@@ -19,17 +19,32 @@ import com.example.jorgenskevik.e_cardholders.Main2Activity;
 import com.example.jorgenskevik.e_cardholders.Main3Activity;
 import com.example.jorgenskevik.e_cardholders.MainActivity;
 
+/**
+ * The type Session manager.
+ */
 public class SessionManager {
-    // Shared Preferences
+    /**
+     * The Pref.
+     */
+// Shared Preferences
     SharedPreferences pref;
 
-    // Editor for Shared preferences
+    /**
+     * The Editor.
+     */
+// Editor for Shared preferences
     Editor editor;
 
-    // Context
+    /**
+     * The Context.
+     */
+// Context
     Context _context;
 
-    // Shared pref mode
+    /**
+     * The Private mode.
+     */
+// Shared pref mode
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
@@ -38,40 +53,73 @@ public class SessionManager {
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
 
-    // User name (make variable public to access from outside)
+    /**
+     * The constant KEY_NAME.
+     */
+// User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
 
-    // Email address (make variable public to access from outside)
+    /**
+     * The constant KEY_EMAIL.
+     */
+// Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
 
-    // id address (make variable public to access from outside)
+    /**
+     * The constant KEY_ID.
+     */
+// id address (make variable public to access from outside)
     public static final String KEY_ID = "id";
 
-    // role address (make variable public to access from outside)
+    /**
+     * The constant KEY_ROLE.
+     */
+// role address (make variable public to access from outside)
     public static final String  KEY_ROLE = "role";
 
-    // token address (make variable public to access from outside)
+    /**
+     * The constant KEY_TOKEN.
+     */
+// token address (make variable public to access from outside)
     public static final String KEY_TOKEN = "token";
 
-    // pictureToken address (make variable public to access from outside)
+    /**
+     * The constant KEY_PICTURETOKEN.
+     */
+// pictureToken address (make variable public to access from outside)
     public static final String KEY_PICTURETOKEN = "pictureToken";
 
-    // experationDate address (make variable public to access from outside)
+    /**
+     * The constant KEY_EXPERATIONDATE.
+     */
+// experationDate address (make variable public to access from outside)
     public static final String KEY_EXPERATIONDATE = "experationDate";
 
-    // studentNumber address (make variable public to access from outside)
+    /**
+     * The constant KEY_STUDENTNUMBER.
+     */
+// studentNumber address (make variable public to access from outside)
     public static final String KEY_STUDENTNUMBER = "studentNumber";
 
-    // path adress (make variable public to access from outside)
+    /**
+     * The constant KEY_PATH.
+     */
+// path adress (make variable public to access from outside)
     public static final String KEY_PATH = "path";
 
-    // birthDate address (make variable public to access from outside)
+    /**
+     * The constant KEY_BIRTHDATE.
+     */
+// birthDate address (make variable public to access from outside)
     public static final String KEY_BIRTHDATE = "birthDate";
 
 
-
-
-    // Constructor
+    /**
+     * Instantiates a new Session manager.
+     *
+     * @param context the context
+     */
+// Constructor
     public SessionManager(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -80,7 +128,17 @@ public class SessionManager {
 
     /**
      * Create login session
-     * */
+     *
+     * @param name           the name
+     * @param email          the email
+     * @param token          the token
+     * @param studentNumber  the student number
+     * @param id             the id
+     * @param role           the role
+     * @param pictureToken   the picture token
+     * @param experationDate the experation date
+     * @param birthday       the birthday
+     */
     public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate, String birthday){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -117,6 +175,18 @@ public class SessionManager {
         editor.commit();
     }
 
+    /**
+     * Create updated login session.
+     *
+     * @param name           the name
+     * @param email          the email
+     * @param studentNumber  the student number
+     * @param id             the id
+     * @param role           the role
+     * @param pictureToken   the picture token
+     * @param dateOfBirth    the date of birth
+     * @param experationDate the experation date
+     */
     public void createUpdatedLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String dateOfBirth ,String experationDate){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -149,6 +219,11 @@ public class SessionManager {
         editor.commit();
     }
 
+    /**
+     * Update picture token.
+     *
+     * @param pictureToken the picture token
+     */
     public void updatePictureToken(String pictureToken){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -160,6 +235,11 @@ public class SessionManager {
         editor.commit();
     }
 
+    /**
+     * Update path.
+     *
+     * @param path the path
+     */
     public void updatePath(String path){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -173,10 +253,11 @@ public class SessionManager {
     }
 
 
-
     /**
      * Get stored session data
-     * */
+     *
+     * @return the hash map
+     */
     public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
@@ -215,7 +296,7 @@ public class SessionManager {
 
     /**
      * Clear session details
-     * */
+     */
     public void logoutUser(){
         // Clearing all data from Shared Preferences
         //editor.clear();

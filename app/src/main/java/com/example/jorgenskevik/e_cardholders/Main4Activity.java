@@ -46,11 +46,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Multipart;
 
+/**
+ * The type Main 4 activity.
+ */
 public class Main4Activity extends AppCompatActivity {
     private ImageView imageView;
+    /**
+     * The Session manager.
+     */
     SessionManager sessionManager;
+    /**
+     * The constant bitMapBytes.
+     */
     public static final String bitMapBytes = "bitmapBytes";
+    /**
+     * The constant photoCodeToken.
+     */
     public static final String photoCodeToken = "BRUKT";
+    /**
+     * The constant tokenBearer.
+     */
     public static final String tokenBearer = "Bearer ";
 
 
@@ -68,6 +83,11 @@ public class Main4Activity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
     }
 
+    /**
+     * Add picture button.
+     *
+     * @param v the v
+     */
     public void addPictureButton(View v) {
         byte[] bytes = getIntent().getByteArrayExtra(bitMapBytes);
         final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -136,6 +156,13 @@ public class Main4Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets image uri.
+     *
+     * @param inContext the in context
+     * @param inImage   the in image
+     * @return the image uri
+     */
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -143,6 +170,12 @@ public class Main4Activity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    /**
+     * Gets real path from uri.
+     *
+     * @param uri the uri
+     * @return the real path from uri
+     */
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -150,6 +183,12 @@ public class Main4Activity extends AppCompatActivity {
         return cursor.getString(idx);
     }
 
+    /**
+     * Gets mime type.
+     *
+     * @param url the url
+     * @return the mime type
+     */
     public static String getMimeType(File url) {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(String.valueOf(url));
