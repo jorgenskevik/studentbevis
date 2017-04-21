@@ -16,7 +16,7 @@
 </ul>
 <H2>Installasjon:</H2>
 <p>1. For &aring; installere Java p&aring; Mac med bruk av brew:</p>
-<img src="/Users/jorgenskevik/Desktop/MyApplication/app/src/main/res/drawable/androiddownload.png" alt="download java"  align="middle"> <br>
+<img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/androiddownload.png" alt="download java"  align="middle"> <br>
 <p>Java sine sider gir ogs&aring; veiledning: <a href="https://java.com/en/download/help/mac_install.xml">her</a></p>
 
 <p>2. For &aring; installere Android Studio p&aring; Mac, se Android Studio sine sider: <a href="https://developer.android.com/studio/index.html">her</a></p>
