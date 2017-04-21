@@ -139,7 +139,7 @@ public class Main4Activity extends Activity {
             id = userDetails.get(SessionManager.KEY_ID);
             UserAPI userapi = retrofit.create(UserAPI.class);
             bearerToken = "Bearer " + authToken.toString();
-            File file = new File(getRealPathFromURI(Uri.parse(mediaPath)));
+            File file = new File(mediaPath);
             //System.out.println(file);
             //System.out.println(file.exists());
             //System.out.println(file.getAbsolutePath());
@@ -172,6 +172,7 @@ public class Main4Activity extends Activity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     System.out.println("onresponse");
                     if (response.isSuccessful()){
+                        System.out.println("success");
                         //saveToInternalStorage(bitmap);
                         user = response.body();
                         sessionManager.updatePicture(user.getPicture());
@@ -180,6 +181,8 @@ public class Main4Activity extends Activity {
                         sessionManager.updatePictureToken("BRUKT");
                         Intent i = new Intent(Main4Activity.this, Main3Activity.class);
                         startActivity(i);
+                    }else{
+                        System.out.println("ikke så bra");
                     }
                 }
 

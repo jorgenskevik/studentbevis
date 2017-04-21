@@ -143,7 +143,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         path = userDetails.get(SessionManager.KEY_PATH);
         picture = userDetails.get(SessionManager.KEY_PICTURE);
 
-        if(path == null){
+       /* if(path == null){
             view2.setImageResource(R.drawable.facebookgirl);
 
             if(!picture.equals("")){
@@ -152,7 +152,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
             }
         }else{
             loadImageFromStorage(path);
-        }
+        }*/
 
         firstAndSirName.setText(firstAndSirNameString);
         BirthDay.setText(birthdayString);
