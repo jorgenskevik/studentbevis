@@ -24,13 +24,30 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/whitetaketwo"
+        android:src="@drawable/kvt123"
         android:layout_below="@+id/window1"
-        android:layout_alignParentBottom="true" />
+        android:alpha="0.8"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/imageButton"
+        android:layout_alignStart="@+id/imageButton" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/whitetaketwo"
+        android:layout_below="@+id/window1"
+        android:alpha="0.7"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/imageButton"
+        android:layout_alignStart="@+id/imageButton" />
 
     <TextView
         android:id="@+id/textView7"
@@ -88,9 +105,10 @@
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:layout_above="@+id/test3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+         />
 
     <TextView
         android:id="@+id/stringfdato"
@@ -138,19 +156,21 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"/>
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:onClick="openSettings"
         android:src="@drawable/set"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="1dp"
-        android:layout_marginLeft="1dp"/>
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"/>
 
     <Button
         android:id="@+id/button11"
@@ -160,22 +180,15 @@
         android:layout_marginBottom="15dp"
         android:onClick="shake"
         android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/my_button_bg"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/imageView7"
-        android:layout_alignStart="@+id/imageView7" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="15dp"
-        app:srcCompat="@drawable/kvtfinale"
-        android:layout_below="@+id/test2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        />
 
 
 

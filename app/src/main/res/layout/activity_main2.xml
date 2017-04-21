@@ -42,30 +42,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/textView2"
-        android:layout_above="@+id/button3"
         android:layout_alignParentRight="true"
         android:paddingBottom="4dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:paddingTop="4dp"
         android:layout_alignParentEnd="true"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="@string/termsdescription2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button4"
-        android:paddingBottom="4dp"
+        android:layout_below="@+id/textView2"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:paddingTop="4dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="166dp"
+        android:layout_marginTop="3dp"
         android:id="@+id/textView3"
         android:textSize="18sp"/>
 
@@ -80,7 +78,7 @@
         android:paddingTop="4dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/textView4"
         android:textSize="18sp"/>
 

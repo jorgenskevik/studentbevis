@@ -113,6 +113,9 @@ public class SessionManager {
 // birthDate address (make variable public to access from outside)
     public static final String KEY_BIRTHDATE = "birthDate";
 
+    public static final String KEY_PICTURE = "picture";
+
+
 
     /**
      * Instantiates a new Session manager.
@@ -139,7 +142,7 @@ public class SessionManager {
      * @param experationDate the experation date
      * @param birthday       the birthday
      */
-    public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate, String birthday){
+    public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate, String birthday, String picture){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -171,6 +174,9 @@ public class SessionManager {
         // Storing birthdate in pref
         editor.putString(KEY_BIRTHDATE, birthday);
 
+        editor.putString(KEY_PICTURE, picture);
+
+
         // commit changes
         editor.commit();
     }
@@ -187,7 +193,7 @@ public class SessionManager {
      * @param dateOfBirth    the date of birth
      * @param experationDate the experation date
      */
-    public void createUpdatedLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String dateOfBirth ,String experationDate){
+    public void createUpdatedLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String dateOfBirth ,String experationDate, String picture){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -214,6 +220,8 @@ public class SessionManager {
 
         // Storing role in pref
         editor.putString(KEY_EXPERATIONDATE, experationDate);
+
+        editor.putString(KEY_PICTURE, picture);
 
         // commit changes
         editor.commit();
@@ -246,6 +254,18 @@ public class SessionManager {
 
         // Storing role in pref
         editor.putString(KEY_PATH, path);
+
+        // commit changes
+        editor.apply();
+
+    }
+
+    public void updatePicture(String picture){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing role in pref
+        editor.putString(KEY_PICTURE, picture);
 
         // commit changes
         editor.apply();
@@ -290,6 +310,8 @@ public class SessionManager {
         // user birthDate
         user.put(KEY_BIRTHDATE, pref.getString(KEY_BIRTHDATE, null));
 
+        user.put(KEY_PICTURE, pref.getString(KEY_PICTURE, null));
+
         // return user
         return user;
     }
@@ -311,6 +333,8 @@ public class SessionManager {
         editor.remove(KEY_EXPERATIONDATE);
         editor.remove(KEY_STUDENTNUMBER);
         editor.remove(KEY_BIRTHDATE);
+        editor.remove(KEY_PATH);
+        editor.remove(KEY_PICTURE);
         editor.commit();
 
     }

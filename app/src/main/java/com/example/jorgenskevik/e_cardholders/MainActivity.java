@@ -148,6 +148,7 @@ public class MainActivity extends Activity {
                                 String usernameString = LoginList.user.getName();
                                 String emailString = LoginList.user.getEmail();
                                 String tokenString = LoginList.token;
+                                String picture = LoginList.user.getPicture();
 
                                 String studentNumber = LoginList.user.getStudentNumber();
                                 String id = LoginList.user.getId();
@@ -171,7 +172,7 @@ public class MainActivity extends Activity {
 
 
 
-                                sessionManager.createLoginSession(usernameString,emailString, tokenString, studentNumber, id, role, pictureToken, expirationString, birthDateString);
+                                sessionManager.createLoginSession(usernameString,emailString, tokenString, studentNumber, id, role, pictureToken, expirationString, birthDateString, picture);
                                 Digits.logout();
 
                                 if (role.equals("admin")) {
