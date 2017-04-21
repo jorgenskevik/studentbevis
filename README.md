@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<img src="/Users/jorgenskevik/Downloads/kortfrinorge.png " alt="kortfri" align="middle">
+<img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/kortfri.png" alt="kortfri" align="middle">
 
 <p align="center"> Dokumentasjon laget for Android-appen til KortFri Norge</p>
 <br>
@@ -16,12 +16,12 @@
 </ul>
 <H2>Installasjon:</H2>
 <p>1. For &aring; installere Java p&aring; Mac med bruk av brew:</p>
-<img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/androiddownload.png" alt="download java"  align="middle"> <br>
+<img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/javadownload.png" alt="download java"  align="middle"> <br>
 <p>Java sine sider gir ogs&aring; veiledning: <a href="https://java.com/en/download/help/mac_install.xml">her</a></p>
 
 <p>2. For &aring; installere Android Studio p&aring; Mac, se Android Studio sine sider: <a href="https://developer.android.com/studio/index.html">her</a></p>
 <p>3. &Aring;pne prosjektet i Android Studio:</p>
-<img src="/Users/jorgenskevik/Desktop/androiddownload.png" alt="download java"  align="middle"> <br>
+<img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/androiddownload.png" alt="download java"  align="middle"> <br>
 <H2>Kj&oslash;ring:</H2>
 <p>Velg en simulator ved &aring; trykke p&aring; &rsquo;run&rsquo; -> &rsquo;Run-&ldquo;app&ldquo;&rsquo; -> &rsquo;Create New Virtual Device&rsquo; -> &rsquo;Pixel KL&rsquo; -> &rsquo;Next&rsquo; -> &rsquo;Next&rsquo; -> &rsquo;Finish&rsquo; -> &rsquo;OK&rsquo;.
 </p>
