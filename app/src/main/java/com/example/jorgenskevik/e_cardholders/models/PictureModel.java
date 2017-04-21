@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by jorgenskevik on 30.03.2017.
  */
 public class PictureModel {
+    //hei
     @SerializedName("pictureToken")
     @Expose
     private String pictureToken;
