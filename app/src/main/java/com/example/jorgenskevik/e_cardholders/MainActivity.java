@@ -68,6 +68,10 @@ public class MainActivity extends Activity {
     /**
      * The Auth config.
      */
+
+    //new line here
+
+
     public TwitterAuthConfig authConfig = new TwitterAuthConfig(KVTVariables.getTwitterKey(), KVTVariables.getTwitterSecret());
     /**
      * The Session manager.
