@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<img src="/Users/jorgenskevik/Downloads/kortfrinorge.png " alt="kortfri" align="middle">
+<img src="/Users/jorgenskevik/Desktop/MyApplication/app/src/main/res/drawable/kortfri.png" alt="kortfri" align="middle">
 
 <p align="center"> Dokumentasjon laget for Android-appen til KortFri Norge</p>
 <br>
