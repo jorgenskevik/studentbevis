@@ -40,6 +40,7 @@ public class Settings extends Activity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.settings);
+        int i = 0;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
