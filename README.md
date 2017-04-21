@@ -18,7 +18,6 @@
 <p>1. For &aring; installere Java p&aring; Mac med bruk av brew:</p>
 <img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/javadownload.png" alt="download java"  align="middle"> <br>
 <p>Java sine sider gir ogs&aring; veiledning: <a href="https://java.com/en/download/help/mac_install.xml">her</a></p>
-
 <p>2. For &aring; installere Android Studio p&aring; Mac, se Android Studio sine sider: <a href="https://developer.android.com/studio/index.html">her</a></p>
 <p>3. &Aring;pne prosjektet i Android Studio:</p>
 <img src="https://github.com/jorgenskevik/ecardholder-android/blob/master/app/src/main/res/drawable/androiddownload.png" alt="download java"  align="middle"> <br>
@@ -102,9 +101,6 @@
     </li>
     <li>
         Governing Law, Jurisdiction: Licensee hereby agrees not to initiate class-action lawsuits against Licensor in relation to this license and to compensate Licensor for any 1.	legal fees, cost or attorney fees should any claim brought by Licensee against Licensor be denied, in part or in full.
-
-    </li>
 </ol>
-
 </body>
 </html>
