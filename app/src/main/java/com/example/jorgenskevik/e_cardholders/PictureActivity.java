@@ -6,15 +6,9 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
@@ -23,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
-import com.example.jorgenskevik.e_cardholders.models.PictureModel;
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
 import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
@@ -40,34 +33,107 @@ import java.util.HashMap;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Multipart;
 
 /**
- * The type Main 4 activity.
+ * The type Picture activity.
  */
-public class Main4Activity extends Activity {
+public class PictureActivity extends Activity {
+    /**
+     * The Image view.
+     */
     ImageView imageView;
+    /**
+     * The Session manager.
+     */
     SessionManager sessionManager;
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
-    String fourDigits, authToken, codeString, id, bearerToken, path;
+    /**
+     * The Four digits.
+     */
+    String fourDigits, /**
+     * The Auth token.
+     */
+    authToken, /**
+     * The Code string.
+     */
+    codeString, /**
+     * The Id.
+     */
+    id, /**
+     * The Bearer token.
+     */
+    bearerToken, /**
+     * The Path.
+     */
+    path;
+    /**
+     * The User details.
+     */
     HashMap<String, String> userDetails;
-    int duration, idx;
+    /**
+     * The Duration.
+     */
+    int duration, /**
+     * The Idx.
+     */
+    idx;
+    /**
+     * The Code.
+     */
     EditText code;
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Toast.
+     */
     Toast toast;
+    /**
+     * The Temporary uri.
+     */
     Uri temporaryUri;
-    File finalFile, directory, myPath;
+    /**
+     * The Final file.
+     */
+    File finalFile, /**
+     * The Directory.
+     */
+    directory, /**
+     * The My path.
+     */
+    myPath;
+    /**
+     * The User.
+     */
     User user;
+    /**
+     * The Intent.
+     */
     Intent intent;
+    /**
+     * The Bytes.
+     */
     ByteArrayOutputStream bytes;
+    /**
+     * The Cursor.
+     */
     Cursor cursor;
+    /**
+     * The Context wrapper.
+     */
     ContextWrapper contextWrapper;
+    /**
+     * The File output stream.
+     */
     FileOutputStream fileOutputStream;
 
 
@@ -75,7 +141,7 @@ public class Main4Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.picture_view);
         imageView = (ImageView) findViewById(R.id.imageView8);
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -179,10 +245,9 @@ public class Main4Activity extends Activity {
                         //path = saveToInternalStorage(bitmap);
                         //sessionManager.updatePath(path);
                         sessionManager.updatePictureToken("BRUKT");
-                        Intent i = new Intent(Main4Activity.this, Main3Activity.class);
+                        Intent i = new Intent(PictureActivity.this, UserActivity.class);
                         startActivity(i);
                     }else{
-                        System.out.println("ikke så bra");
                     }
                 }
 
@@ -247,6 +312,14 @@ public class Main4Activity extends Activity {
         return type;
     }
 
+    /**
+     * Scale down bitmap bitmap.
+     *
+     * @param photo     the photo
+     * @param newHeight the new height
+     * @param context   the context
+     * @return the bitmap
+     */
     public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
 
         final float densityMultiplier = context.getResources().getDisplayMetrics().density;

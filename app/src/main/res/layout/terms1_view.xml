@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/activity_main5"
     android:layout_height="match_parent"
-    tools:context="com.example.jorgenskevik.e_cardholders.Main5Activity">
+    tools:context="com.example.jorgenskevik.e_cardholders.Terms1Activity">
 
     <Button
         android:text="OK"

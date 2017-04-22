@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
- * Created by jorgenskevik on 18.03.2017.
+ * The type User.
  */
 public class User {
 

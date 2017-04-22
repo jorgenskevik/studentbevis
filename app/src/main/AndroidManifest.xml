@@ -22,7 +22,7 @@
             android:value="dd8e0d523d478b9ae90a3175b642f076a3d36d87" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
 
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,35 +33,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SecondActivity"
+            android:name=".ContactUsActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".Main2Activity"
+            android:name=".TermsActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".Main3Activity"
+            android:name=".UserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
-            android:name=".Code"
+            android:name=".BarCodeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.customPopup" />
-        <activity
-            android:name=".Settings"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Custom" />
-
 
         <activity
-            android:name=".Main4Activity"
+            android:name=".PictureActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_main4"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Main5Activity"
+            android:name=".Terms1Activity"
             android:screenOrientation="portrait"
             />
     </application>

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by jorgenskevik on 23.03.2017.
+ * The type Login model.
  */
 public class LoginModel {
     /**

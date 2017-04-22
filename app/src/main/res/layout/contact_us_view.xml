@@ -9,7 +9,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.example.jorgenskevik.e_cardholders.SecondActivity">
+    tools:context="com.example.jorgenskevik.e_cardholders.ContactUsActivity">
 
 
     <ImageView

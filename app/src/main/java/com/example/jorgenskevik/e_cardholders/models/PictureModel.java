@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by jorgenskevik on 30.03.2017.
+ * The type Picture model.
  */
 public class PictureModel {
     //hei

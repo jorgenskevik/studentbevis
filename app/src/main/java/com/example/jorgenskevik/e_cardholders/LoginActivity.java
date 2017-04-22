@@ -3,23 +3,15 @@ package com.example.jorgenskevik.e_cardholders;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.digits.sdk.android.AuthCallback;
-import com.digits.sdk.android.AuthConfig;
 import com.digits.sdk.android.Digits;
 import com.digits.sdk.android.DigitsAuthButton;
 import com.digits.sdk.android.DigitsException;
@@ -28,7 +20,6 @@ import com.digits.sdk.android.DigitsSession;
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 import com.example.jorgenskevik.e_cardholders.models.LoginModel;
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
-import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,13 +34,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
@@ -58,17 +44,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.content.ContentValues.TAG;
-
 /**
- * The type Main activity.
+ * The type Login activity.
  */
-public class MainActivity extends Activity {
+public class LoginActivity extends Activity {
     private AuthCallback authCallback;
+
     /**
      * The Auth config.
      */
-
     public TwitterAuthConfig authConfig = new TwitterAuthConfig(KVTVariables.getTwitterKey(), KVTVariables.getTwitterSecret());
     /**
      * The Session manager.
@@ -95,17 +79,16 @@ public class MainActivity extends Activity {
         String token = user.get(SessionManager.KEY_TOKEN);
 
         if(name == null || id == null || email == null || token == null){
+
             super.onCreate(savedInstanceState);
 
             //Digits logged in setup
             Fabric.with(this, new TwitterCore(authConfig), new Digits.Builder().build(), new Crashlytics());
-
             requestWindowFeature(Window.FEATURE_NO_TITLE);
-            setContentView(R.layout.activity_main);
+            setContentView(R.layout.login_view);
 
             //setting style for the digits button
             DigitsAuthButton digitsButton = (DigitsAuthButton) findViewById(R.id.auth_button);
-            //digitsButton.setAuthTheme(android.R.style.Theme_Black);
             digitsButton.setText(R.string.LogginButton);
             digitsButton.setBackgroundColor(Color.TRANSPARENT);
             digitsButton.setTextSize(16);
@@ -165,7 +148,7 @@ public class MainActivity extends Activity {
                                 DateTime timeBirthday = new DateTime(birthdayDate);
 
 
-                                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
+                                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MM-yyyy");
                                 DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
                                 String birthDateString = dateTimeFormatter.print(timeBirthday);
@@ -188,12 +171,12 @@ public class MainActivity extends Activity {
                                     int duration = Toast.LENGTH_SHORT;
                                     Toast toast = Toast.makeText(context, R.string.contactIT, duration);
                                     toast.show();
-                                    Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, ContactUsActivity.class);
                                     startActivity(intent);
 
                                 } else {
                                     //Digits.logout();
-                                    Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                                    Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
                                     startActivity(intent);
 
                                 }
@@ -227,7 +210,7 @@ public class MainActivity extends Activity {
             });
 
         } else{
-            Intent intent = new Intent(MainActivity.this, Main3Activity.class);
+            Intent intent = new Intent(LoginActivity.this, UserActivity.class);
             startActivity(intent);
         }
     }
@@ -238,7 +221,7 @@ public class MainActivity extends Activity {
      * @param view the view
      */
     public void sendToSecondActivity(View view) {
-        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        Intent intent = new Intent(LoginActivity.this, ContactUsActivity.class);
         startActivity(intent);
     }
 

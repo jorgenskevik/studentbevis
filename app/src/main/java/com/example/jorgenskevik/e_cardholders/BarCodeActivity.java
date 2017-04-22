@@ -55,12 +55,11 @@ import com.google.zxing.common.BitMatrix;
 
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 
-import static com.example.jorgenskevik.e_cardholders.R.layout.codepopup;
 
 /**
- * Created by jorgenskevik on 24.03.2017.
+ * The type Bar code activity.
  */
-public class Code extends Activity{
+public class BarCodeActivity extends Activity{
 
     /**
      * The Session.
@@ -78,7 +77,6 @@ public class Code extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.codepopup);
 
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -130,7 +128,7 @@ public class Code extends Activity{
         cancel.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view) {
-                Intent intent = new Intent(Code.this, Main3Activity.class);
+                Intent intent = new Intent(BarCodeActivity.this, UserActivity.class);
                 startActivity(intent);
             }
         });

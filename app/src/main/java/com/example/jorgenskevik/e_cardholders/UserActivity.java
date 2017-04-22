@@ -6,43 +6,28 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Point;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +38,6 @@ import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -69,7 +53,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -80,12 +63,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.view.animation.Animation.INFINITE;
-
 /**
- * The type Main 3 activity.
+ * The type User activity.
  */
-public class Main3Activity extends AppCompatActivity implements ActionSheet.ActionSheetListener {
+public class UserActivity extends AppCompatActivity implements ActionSheet.ActionSheetListener {
     /**
      * The constant CAM_REQUEST_CODE.
      */
@@ -95,27 +76,198 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
      * The Session manager.
      */
     SessionManager sessionManager;
-    //Uri imageUri, data;
+    /**
+     * The Expiration button.
+     */
+//Uri imageUri, data;
     Button expirationButton;
-    ImageView view2, image;
+    /**
+     * The View 2.
+     */
+    ImageView view2, /**
+     * The Image.
+     */
+    image;
+    /**
+     * The Code button.
+     */
     ImageButton codeButton;
-    TextView firstAndSirName, studentId, BirthDay;
-    String firstAndSirNameString, thisExpDate, birthdayString, studentIDString, path, picture, extraStudentID, dateTimeBirthday, dateTimeExpiration, buildVersion, firstLetter;
-    String expirationDateString, mediaPath, formattedDate, expirationDate, fourDigits, picturePath, authenticateString, username, email, id, studentNumber,role,pictureToken;
+    /**
+     * The First and sir name.
+     */
+    TextView firstAndSirName, /**
+     * The Student id.
+     */
+    studentId, /**
+     * The Birth day.
+     */
+    BirthDay;
+    /**
+     * The First and sir name string.
+     */
+    String firstAndSirNameString, /**
+     * The This exp date.
+     */
+    thisExpDate, /**
+     * The Birthday string.
+     */
+    birthdayString, /**
+     * The Student id string.
+     */
+    studentIDString, /**
+     * The Path.
+     */
+    path, /**
+     * The Picture.
+     */
+    picture, /**
+     * The Extra student id.
+     */
+    extraStudentID, /**
+     * The Date time birthday.
+     */
+    dateTimeBirthday, /**
+     * The Date time expiration.
+     */
+    dateTimeExpiration, /**
+     * The Build version.
+     */
+    buildVersion, /**
+     * The First letter.
+     */
+    firstLetter;
+    /**
+     * The Expiration date string.
+     */
+    String expirationDateString, /**
+     * The Media path.
+     */
+    mediaPath, /**
+     * The Formatted date.
+     */
+    formattedDate, /**
+     * The Expiration date.
+     */
+    expirationDate, /**
+     * The Four digits.
+     */
+    fourDigits, /**
+     * The Picture path.
+     */
+    picturePath, /**
+     * The Authenticate string.
+     */
+    authenticateString, /**
+     * The Username.
+     */
+    username, /**
+     * The Email.
+     */
+    email, /**
+     * The Id.
+     */
+    id, /**
+     * The Student number.
+     */
+    studentNumber, /**
+     * The Role.
+     */
+    role, /**
+     * The Picture token.
+     */
+    pictureToken;
+    /**
+     * The Simple date format.
+     */
     SimpleDateFormat simpleDateFormat;
-    Date startDate, date;
-    int selectedColor, selectedWhite, duration, number, columnIndex;
+    /**
+     * The Start date.
+     */
+    Date startDate, /**
+     * The Date.
+     */
+    date;
+    /**
+     * The Selected color.
+     */
+    int selectedColor, /**
+     * The Selected white.
+     */
+    selectedWhite, /**
+     * The Duration.
+     */
+    duration, /**
+     * The Number.
+     */
+    number, /**
+     * The Column index.
+     */
+    columnIndex;
+    /**
+     * The Target format.
+     */
     DateFormat targetFormat;
-    Intent intent, photoPickerIntent;
+    /**
+     * The Intent.
+     */
+    Intent intent, /**
+     * The Photo picker intent.
+     */
+    photoPickerIntent;
+    /**
+     * The User details.
+     */
     HashMap<String, String> userDetails;
+    /**
+     * The Context.
+     */
     Context context;
+    /**
+     * The Toast.
+     */
     Toast toast;
-    File pictureFile, directory, myPath;
-    java.util.Date userDateOfBirthDate, userExpirationDate ;
-    DateTime dateTime, dateTime2;
-    DateTimeFormatter dateTimeFormatter, dateTimeFormatter2;
+    /**
+     * The Picture file.
+     */
+    File pictureFile, /**
+     * The Directory.
+     */
+    directory, /**
+     * The My path.
+     */
+    myPath;
+    /**
+     * The User date of birth date.
+     */
+    java.util.Date userDateOfBirthDate, /**
+     * The User expiration date.
+     */
+    userExpirationDate ;
+    /**
+     * The Date time.
+     */
+    DateTime dateTime, /**
+     * The Date time 2.
+     */
+    dateTime2;
+    /**
+     * The Date time formatter.
+     */
+    DateTimeFormatter dateTimeFormatter, /**
+     * The Date time formatter 2.
+     */
+    dateTimeFormatter2;
+    /**
+     * The Input stream.
+     */
     InputStream inputStream;
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
+    /**
+     * The Stream.
+     */
     ByteArrayOutputStream stream;
     //Cursor cursor;
 
@@ -123,7 +275,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.user_view);
         sessionManager = new SessionManager(getApplicationContext());
         view2 = (ImageView) findViewById(R.id.window1);
 
@@ -186,6 +338,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                 thisExpDate = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
                 date = simpleDateFormat.parse(thisExpDate);
                 formattedDate = targetFormat.format(date);
+                expirationButton.setTransformationMethod(null);
                 expirationDate = getResources().getString(R.string.GyldigTil) + " " + formattedDate;
                 expirationButton.setText(expirationDate);
                 expirationButton.setTextColor(selectedWhite);
@@ -200,7 +353,7 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Main3Activity.this, Code.class));
+                startActivity(new Intent(UserActivity.this, BarCodeActivity.class));
             }
         });
     }
@@ -235,13 +388,13 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         //Log out
         if (index == 0) {
             sessionManager.logoutUser();
-            intent = new Intent(Main3Activity.this, MainActivity.class);
+            intent = new Intent(UserActivity.this, LoginActivity.class);
             startActivity(intent);
         }
 
         //terms
         if (index == 1) {
-            intent = new Intent(Main3Activity.this, Main5Activity.class);
+            intent = new Intent(UserActivity.this, Terms1Activity.class);
             startActivity(intent);
 
         }
@@ -264,7 +417,6 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                 Uri data = Uri.parse(picturePath);
                 photoPickerIntent.setDataAndType(data, "image/*");
                 startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
-                System.out.println("åpner album");
             }
         }
         //Oppdater brukeren
@@ -371,7 +523,6 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         number = Integer.parseInt(firstLetter);
         if(number < 6){
             System.gc();
-            System.out.println("fordi lav api, går inn her");
             if(data == null){
                 return;
             }
@@ -382,40 +533,11 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
             cursor.moveToFirst();
             columnIndex = cursor.getColumnIndex(filePath[0]);
             mediaPath = cursor.getString(columnIndex);
-
             cursor.close();
 
-           // try {
-
-                System.gc();
-
-                //inputStream = getContentResolver().openInputStream(imageUri);
-                //bitmap = BitmapFactory.decodeStream(inputStream);
-
-                //Uri tempUri = getImageUri(getApplicationContext(), bitmap);
-                //File finalFile = new File(getRealPathFromURI(tempUri));
-
-                intent = new Intent(this, Main4Activity.class);
-                intent.putExtra("picture", mediaPath);
-
-
-                //File fi = new File(mediaPath);
-                //intent.putExtra("picture", fi);
-
-
-                //stream = new ByteArrayOutputStream();
-                //System.out.println("før " + sizeOf(bitmap));
-                //bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                //bitmap = getResizedBitmap(bitmap, 120, 120);
-                //System.out.println("etter " + sizeOf(bitmap));
-                //System.out.println(getResizedBitmap(bitmap, 120, 120));
-                //byte[] bytes = stream.toByteArray();
-                //intent.putExtra("bitmapBytes", bytes);
-                startActivity(intent);
-           // } catch (FileNotFoundException e) {
-             //   e.printStackTrace();
-              //  Toast.makeText(this, getResources().getString(R.string.pictureNotAvailable), Toast.LENGTH_SHORT).show();
-            //}
+            intent = new Intent(this, PictureActivity.class);
+            intent.putExtra("picture", mediaPath);
+            startActivity(intent);
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -430,24 +552,9 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
                     mediaPath = cursor.getString(columnIndex);
                     cursor.close();
 
-                   // try {
-                     //   inputStream = getContentResolver().openInputStream(imageUri);
-                       // bitmap = BitmapFactory.decodeStream(inputStream);
-                        intent = new Intent(this, Main4Activity.class);
-                        //stream = new ByteArrayOutputStream();
-                        //bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        //byte[] bytes = stream.toByteArray();
-                        intent.putExtra("picture", mediaPath);
-                        startActivity(intent);
-                        //cursor.close();
-                        //inputStream.close();
-
-                   // } catch (FileNotFoundException e) {
-                     //   e.printStackTrace();
-                      //  Toast.makeText(this, getResources().getString(R.string.pictureNotAvailable), Toast.LENGTH_SHORT).show();
-                    //} catch (IOException e) {
-                     //   e.printStackTrace();
-                    //}
+                    intent = new Intent(this, PictureActivity.class);
+                    intent.putExtra("picture", mediaPath);
+                    startActivity(intent);
                 }
             }
 
@@ -501,8 +608,16 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        /**
+         * The Bm image.
+         */
         ImageView bmImage;
 
+        /**
+         * Instantiates a new Download image task.
+         *
+         * @param bmImage the bm image
+         */
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
@@ -553,11 +668,25 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         return directory.getAbsolutePath();
     }
 
+    /**
+     * Size of int.
+     *
+     * @param data the data
+     * @return the int
+     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     protected int sizeOf(Bitmap data) {
         return data.getByteCount();
     }
 
+    /**
+     * Gets resized bitmap.
+     *
+     * @param bm        the bm
+     * @param newWidth  the new width
+     * @param newHeight the new height
+     * @return the resized bitmap
+     */
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
         int height = bm.getHeight();
@@ -574,6 +703,12 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         return resizedBitmap;
     }
 
+    /**
+     * Gets real path from uri.
+     *
+     * @param uri the uri
+     * @return the real path from uri
+     */
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -583,6 +718,13 @@ public class Main3Activity extends AppCompatActivity implements ActionSheet.Acti
         return s;
     }
 
+    /**
+     * Gets image uri.
+     *
+     * @param inContext the in context
+     * @param inImage   the in image
+     * @return the image uri
+     */
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

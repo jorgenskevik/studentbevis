@@ -4,22 +4,19 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.Toast;
 
 
 /**
- * The type Main 2 activity.
+ * The type Terms activity.
  */
-public class Main2Activity extends Activity {
+public class TermsActivity extends Activity {
     /**
      * The constant CAM_REQUEST_CODE.
      */
@@ -34,7 +31,7 @@ public class Main2Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.terms_view);
 
     }
 
@@ -55,12 +52,12 @@ public class Main2Activity extends Activity {
         String firstLetter = String.valueOf(buildVersion.charAt(0));
         int number = Integer.parseInt(firstLetter);
         if(number < maxBuildVersion){
-            Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+            Intent intent = new Intent(TermsActivity.this, UserActivity.class);
             startActivity(intent);
             return;
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+            Intent intent = new Intent(TermsActivity.this, UserActivity.class);
             startActivity(intent);
         }else{
             String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};

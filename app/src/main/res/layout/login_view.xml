@@ -9,7 +9,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.example.jorgenskevik.e_cardholders.MainActivity">
+    tools:context="com.example.jorgenskevik.e_cardholders.LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"

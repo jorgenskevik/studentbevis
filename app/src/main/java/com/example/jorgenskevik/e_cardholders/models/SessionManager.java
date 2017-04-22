@@ -14,10 +14,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.digits.sdk.android.Digits;
-import com.example.jorgenskevik.e_cardholders.Code;
-import com.example.jorgenskevik.e_cardholders.Main2Activity;
-import com.example.jorgenskevik.e_cardholders.Main3Activity;
-import com.example.jorgenskevik.e_cardholders.MainActivity;
+import com.example.jorgenskevik.e_cardholders.BarCodeActivity;
+import com.example.jorgenskevik.e_cardholders.TermsActivity;
+import com.example.jorgenskevik.e_cardholders.UserActivity;
+import com.example.jorgenskevik.e_cardholders.LoginActivity;
 
 /**
  * The type Session manager.
@@ -113,8 +113,10 @@ public class SessionManager {
 // birthDate address (make variable public to access from outside)
     public static final String KEY_BIRTHDATE = "birthDate";
 
+    /**
+     * The constant KEY_PICTURE.
+     */
     public static final String KEY_PICTURE = "picture";
-
 
 
     /**
@@ -130,7 +132,7 @@ public class SessionManager {
     }
 
     /**
-     * Create login session
+     * Create login session.
      *
      * @param name           the name
      * @param email          the email
@@ -141,6 +143,7 @@ public class SessionManager {
      * @param pictureToken   the picture token
      * @param experationDate the experation date
      * @param birthday       the birthday
+     * @param picture        the picture
      */
     public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate, String birthday, String picture){
         // Storing login value as TRUE
@@ -192,6 +195,7 @@ public class SessionManager {
      * @param pictureToken   the picture token
      * @param dateOfBirth    the date of birth
      * @param experationDate the experation date
+     * @param picture        the picture
      */
     public void createUpdatedLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String dateOfBirth ,String experationDate, String picture){
         // Storing login value as TRUE
@@ -260,6 +264,11 @@ public class SessionManager {
 
     }
 
+    /**
+     * Update picture.
+     *
+     * @param picture the picture
+     */
     public void updatePicture(String picture){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -272,9 +281,38 @@ public class SessionManager {
 
     }
 
+    /**
+     * Check login.
+     */
+    public void checkLogin(){
+        // Check login status
+        if(!this.isLoggedIn()){
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            _context.startActivity(i);
+        }
+
+    }
 
     /**
-     * Get stored session data
+     * Is logged in boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isLoggedIn(){
+        return pref.getBoolean(IS_LOGIN, false);
+    }
+
+
+    /**
+     * Get user details hash map.
      *
      * @return the hash map
      */
@@ -317,7 +355,7 @@ public class SessionManager {
     }
 
     /**
-     * Clear session details
+     * Logout user.
      */
     public void logoutUser(){
         // Clearing all data from Shared Preferences
