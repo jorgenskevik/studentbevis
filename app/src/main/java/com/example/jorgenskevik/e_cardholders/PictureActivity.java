@@ -146,26 +146,11 @@ public class PictureActivity extends Activity {
         sessionManager = new SessionManager(getApplicationContext());
 
         Intent intent = getIntent();
-        //File pictureFile = (File)intent.getExtras().get("picture");
 
         String mediaPath = intent.getExtras().getString("picture");
         File f = new File(mediaPath);
 
-        //System.out.println(mediaPath);
-
         Picasso.with(getApplicationContext()).load(f).resize(300,300).centerCrop().into(imageView);
-
-
-        //byte[] bytes = getIntent().getByteArrayExtra("bitmapBytes");
-        //bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-        /*
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 8;
-        bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath,options);
-        */
-
-        //imageView.setImageBitmap(bitmap);
     }
 
     /**
@@ -174,12 +159,8 @@ public class PictureActivity extends Activity {
      * @param v the v
      */
     public void addPictureButton(View v) {
-        //byte[] bytes = getIntent().getByteArrayExtra("bitmapBytes");
-        //final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         Intent intent = getIntent();
-        String mediaPath = intent.getExtras().getString("picture");
-
-        //bitmap = BitmapFactory.decodeFile(finalFile.getAbsolutePath());
+        final String mediaPath = intent.getExtras().getString("picture");
         userDetails = sessionManager.getUserDetails();
         fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
         authToken = userDetails.get(SessionManager.KEY_TOKEN);
@@ -206,44 +187,23 @@ public class PictureActivity extends Activity {
             UserAPI userapi = retrofit.create(UserAPI.class);
             bearerToken = "Bearer " + authToken.toString();
             File file = new File(mediaPath);
-            //System.out.println(file);
-            //System.out.println(file.exists());
-            //System.out.println(file.getAbsolutePath());
-            //System.out.println(file.getTotalSpace());
 
-            //temporaryUri = Uri.parse(finalFile.toString());
-            //System.out.println(temporaryUri);
-            //temporaryUri = getImageUri(getApplicationContext(), bitmap);
-            //Intent intent1 = getIntent();
-            //new File(getRealPathFromURI(temporaryUri));
+            String mimeType = getMimeType(file);
 
-            //Intent i = getIntent();
-            //File pictureFile = (File)i.getExtras().get("picture");
-
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody reqFile = RequestBody.create(MediaType.parse(mimeType), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
-
-            //System.out.println("test: " + MediaType.parse(getContentResolver().getType(temporaryUri)) + " " + finalFile);
-            //RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-
-           // MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-
-            //RequestBody CodeToken = RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
-            System.out.println("body " + body);
-            System.out.println("name " + name);
 
             userapi.postPicture(id, bearerToken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), body, name).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-                    System.out.println("onresponse");
                     if (response.isSuccessful()){
-                        System.out.println("success");
                         //saveToInternalStorage(bitmap);
                         user = response.body();
                         sessionManager.updatePicture(user.getPicture());
-                        //path = saveToInternalStorage(bitmap);
-                        //sessionManager.updatePath(path);
+                        path = mediaPath;
+                        String picture = user.getPicture();
+                        sessionManager.updatePath(path);
                         sessionManager.updatePictureToken("BRUKT");
                         Intent i = new Intent(PictureActivity.this, UserActivity.class);
                         startActivity(i);
@@ -312,25 +272,6 @@ public class PictureActivity extends Activity {
         return type;
     }
 
-    /**
-     * Scale down bitmap bitmap.
-     *
-     * @param photo     the photo
-     * @param newHeight the new height
-     * @param context   the context
-     * @return the bitmap
-     */
-    public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
-
-        final float densityMultiplier = context.getResources().getDisplayMetrics().density;
-
-        int h = (int) (newHeight*densityMultiplier);
-        int w = (int) (h * photo.getWidth()/((double) photo.getHeight()));
-
-        photo=Bitmap.createScaledBitmap(photo, w, h, true);
-
-        return photo;
-    }
 
     private String saveToInternalStorage(Bitmap bitmapImage){
         contextWrapper = new ContextWrapper(getApplicationContext());

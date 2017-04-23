@@ -32,7 +32,7 @@
     <string name="contactIT">Ta kontakt med IT-avdelingen</string>
     <string name="studentbevis">STUDENTBEVIS</string>
     <string name="companyname">Kristen Videregående skole Trøndelag</string>
-    <string name="GyldigTil">Gyldig til:</string>
+    <string name="GyldigTil">Gyldig til </string>
     <string name="expired">UTGÅTT</string>
     <string name="studentnumber">Studentnr:</string>
     <string name="Barcode">Barkode:</string>

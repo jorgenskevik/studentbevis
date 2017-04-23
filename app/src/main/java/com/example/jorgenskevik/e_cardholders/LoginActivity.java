@@ -34,7 +34,10 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.lang.annotation.Target;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
@@ -153,8 +156,6 @@ public class LoginActivity extends Activity {
 
                                 String birthDateString = dateTimeFormatter.print(timeBirthday);
                                 String expirationString = dateTimeFormatter2.print(timeToExpiration);
-
-
 
                                 sessionManager.createLoginSession(usernameString,emailString, tokenString, studentNumber, id, role, pictureToken, expirationString, birthDateString, picture);
                                 Digits.logout();

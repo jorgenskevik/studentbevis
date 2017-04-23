@@ -256,8 +256,11 @@ public class SessionManager {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
-        // Storing role in pref
+        // Storing path in pref
         editor.putString(KEY_PATH, path);
+
+        // Storing picture in pref
+        //editor.putString(KEY_PICTURE, path);
 
         // commit changes
         editor.apply();
@@ -348,6 +351,7 @@ public class SessionManager {
         // user birthDate
         user.put(KEY_BIRTHDATE, pref.getString(KEY_BIRTHDATE, null));
 
+        // user picture
         user.put(KEY_PICTURE, pref.getString(KEY_PICTURE, null));
 
         // return user

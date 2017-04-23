@@ -38,6 +38,7 @@ import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -278,6 +279,7 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         setContentView(R.layout.user_view);
         sessionManager = new SessionManager(getApplicationContext());
         view2 = (ImageView) findViewById(R.id.window1);
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 
         //View barcode
 
@@ -291,31 +293,37 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
         firstAndSirNameString = userDetails.get(SessionManager.KEY_NAME);
         birthdayString = userDetails.get(SessionManager.KEY_BIRTHDATE);
+        targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
+
+
         studentIDString = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
         path = userDetails.get(SessionManager.KEY_PATH);
         picture = userDetails.get(SessionManager.KEY_PICTURE);
 
-       /* if(path == null){
+        if(path == null){
+            System.out.println("1");
             view2.setImageResource(R.drawable.facebookgirl);
 
             if(!picture.equals("")){
+                System.out.println("2");
                 new DownloadImageTask((ImageView) findViewById(R.id.window1))
                         .execute(picture);
             }
         }else{
-            loadImageFromStorage(path);
-        }*/
+            System.out.println("3");
+            File imgFile = new  File(path);
+            Picasso.with(getApplicationContext()).load(imgFile).resize(300,300).centerCrop().into(view2);            //loadImageFromStorage(path);
+        }
 
         firstAndSirName.setText(firstAndSirNameString);
-        BirthDay.setText(birthdayString);
+
         extraStudentID = getResources().getString(R.string.studentnumber) + " " + studentIDString;
         studentId.setText(extraStudentID);
-
+        BirthDay.setText(birthdayString);
         sessionManager = new SessionManager(getApplicationContext());
         expirationDateString = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
         expirationButton = (Button) findViewById(R.id.button11);
 
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
         startDate = null;
         try {
             startDate = simpleDateFormat.parse(expirationDateString);
