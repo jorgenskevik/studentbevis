@@ -49,38 +49,9 @@
         android:paddingRight="4dp"
         android:paddingTop="4dp"
         android:layout_alignParentEnd="true"
-        android:textSize="18sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="@string/termsdescription2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="4dp"
+        android:textSize="14sp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="3dp"
-        android:id="@+id/textView3"
-        android:textSize="18sp"/>
-
-    <TextView
-        android:text="@string/termsdescription3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:paddingBottom="4dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="4dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
-        android:id="@+id/textView4"
-        android:textSize="18sp"/>
-
+        android:layout_above="@+id/button3" />
 
 </RelativeLayout>

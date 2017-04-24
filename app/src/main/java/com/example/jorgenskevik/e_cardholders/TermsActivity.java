@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.digits.sdk.android.Digits;
+
 
 /**
  * The type Terms activity.
@@ -52,12 +54,14 @@ public class TermsActivity extends Activity {
         String firstLetter = String.valueOf(buildVersion.charAt(0));
         int number = Integer.parseInt(firstLetter);
         if(number < maxBuildVersion){
+            Digits.logout();
             Intent intent = new Intent(TermsActivity.this, UserActivity.class);
             startActivity(intent);
             return;
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(TermsActivity.this, UserActivity.class);
+            Digits.logout();
             startActivity(intent);
         }else{
             String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};

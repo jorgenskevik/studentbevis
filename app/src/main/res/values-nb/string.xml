@@ -9,7 +9,7 @@
     <string name="Callus">Ring KVT:</string>
     <string name="Terms">Vilkår</string>
     <string name="Picture">Bilde</string>
-    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og om du har betalt semesteravgift. Appen vil også vise bilde av deg som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitmasjon hos kollektivtransportselskaper i Norge.</string>
+    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og gyldigheten til det digitale studentbeviset. Appen vil også vise bilde av deg - som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitimasjon hos selskaper som har avtale med ditt studiested om honnør-billetter. Ved førstegangs bruk må appen være tilkoblet internett for å kunne last ned informasjonen som finnes om deg. Denne blir lagret lokalt og du trenger derfor ikke være på nett for å bruke appen senere. KortFri tar ikke ansvar for bøter, misbruk og lignende. Bildene som lastes opp vil bli slettet fra vår database når brukeren din blir slettet. Det er brukerne med admin-rettigheter til KortFri-systemet som avgjør når din bruker skal slettes.</string>
     <string name="termsdescription2">Ved førstegang bruk må appen være tilkoblet internett for å kunne last ned informasjonen. Denne blirlagret lokalt og trenger derfor ikke være på nett for å bruke appen senere.</string>
     <string name="termsdescription3"> E-CardHolder tar ikke ansvar for bøter, misbruk og lignende.</string>
     <string name="barcode">Barkode</string>
@@ -40,11 +40,10 @@
     <string name="yourPic">Ditt bilde:</string>
     <string name="writepictureToken">Skriv inn bildekode:</string>
     <string name="setPic">Sett bilde</string>
+    <string name="back">Tilbake</string>
     <string name="kortfriNorge">www.kortfri.no</string>
-
-
-
-
-
+    <string name="updatePicture">Kunne ikke oppdatere bilde</string>
+    <string name="pictureMessage">For å bytte profilbilde må du skrive inn en kode. Denne koden får du utlevert av din lærer eller IT-ansvarlig. OBS: Koden kan bare brukes én gang! Det er bare IT-ansvarlige som kan bytte ditt profilbilde etter at koden er brukt. Dette gjøres fordi kortet skal brukes som identifikasjon. Husk at det kan være straffbart å bruke en annen persons identitet for å oppnå uberettiget vinning. (For. eks: Bruke kompisens eller venninnens app for å få billigere bussbillett.)</string>
+    <string name="allertMessage">STOPP! Er du ikke fornøyd med hvordan bildet ser ut må du gå tilbake å endre bilde.</string>
 
 </resources>

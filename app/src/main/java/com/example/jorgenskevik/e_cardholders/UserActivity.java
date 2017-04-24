@@ -20,7 +20,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -28,6 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -304,7 +307,7 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
             System.out.println("1");
             view2.setImageResource(R.drawable.facebookgirl);
 
-            if(!picture.equals("")){
+              if(!picture.equals("")){
                 System.out.println("2");
                 new DownloadImageTask((ImageView) findViewById(R.id.window1))
                         .execute(picture);
@@ -418,13 +421,61 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                 toast.show();
 
             } else {
-                System.gc();
-                photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                pictureFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                picturePath = pictureFile.getPath();
-                Uri data = Uri.parse(picturePath);
-                photoPickerIntent.setDataAndType(data, "image/*");
-                startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
+                selectedColor = Color.rgb(132, 205, 182);
+                int selectedBlack = Color.rgb(50, 43, 43);
+                int black = Color.rgb(0, 0, 0);
+
+
+                LinearLayout linearLayout = new LinearLayout(this);
+                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                setContentView(linearLayout);
+                double widthParam = 0.92;
+                double heightParam = 0.5;
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+                int width = dm.widthPixels;
+                int height = dm.heightPixels;
+                ImageView imageView = new ImageView(this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(width*widthParam), (int)(height*heightParam));
+                imageView.setLayoutParams(layoutParams);
+                layoutParams.gravity= Gravity.CENTER;
+                Button myButtonOk = new Button(this);
+                Button myButtonCansel = new Button(this);
+                myButtonOk.setText("OK");
+                myButtonOk.setTextColor(selectedWhite);
+                myButtonCansel.setTextColor(selectedWhite);
+                myButtonOk.setBackgroundColor(selectedColor);
+                myButtonCansel.setText(R.string.back);
+                myButtonCansel.setBackgroundColor(selectedBlack);
+                TextView myTextView = new TextView(this);
+                myTextView.setTextSize(16);
+                myTextView.setText(R.string.pictureMessage);
+                myTextView.setTextColor(black);
+                myTextView.setPadding(10,10,10,10);
+                linearLayout.addView(myTextView);
+                linearLayout.addView(myButtonOk);
+                linearLayout.addView(myButtonCansel);
+
+                myButtonOk.setOnClickListener(new View.OnClickListener()
+                {
+                    public void onClick(View view) {
+                        photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                        pictureFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                        picturePath = pictureFile.getPath();
+                        Uri data = Uri.parse(picturePath);
+                        photoPickerIntent.setDataAndType(data, "image/*");
+                        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
+                    }
+                });
+
+                myButtonCansel.setOnClickListener(new View.OnClickListener()
+                {
+                    public void onClick(View view) {
+                        Intent intent = new Intent(UserActivity.this, UserActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         }
         //Oppdater brukeren
@@ -582,7 +633,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAM_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                System.out.println("her?");
 
                 Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_LONG).show();
 

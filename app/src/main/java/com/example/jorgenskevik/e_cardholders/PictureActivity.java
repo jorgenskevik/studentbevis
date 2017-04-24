@@ -208,6 +208,10 @@ public class PictureActivity extends Activity {
                         Intent i = new Intent(PictureActivity.this, UserActivity.class);
                         startActivity(i);
                     }else{
+                        context = getApplicationContext();
+                        duration = Toast.LENGTH_SHORT;
+                        toast = Toast.makeText(context, R.string.updatePicture, duration);
+                        toast.show();
                     }
                 }
 

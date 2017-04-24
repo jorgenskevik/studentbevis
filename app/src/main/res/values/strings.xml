@@ -8,7 +8,7 @@
     <string name="Callus">Call KVT:</string>
     <string name="Terms">Terms</string>
     <string name="Picture">Picture</string>
-    <string name="termsdescription1">The app will display the name, campus and if you have paid the semester. The app will also display photo of your choosing. The app serves as student ID, and can be used as legitmasjon with public transport companies in Norway.</string>
+    <string name="termsdescription1">This app will display your name, place of study and the validity of the digital student card. This app will display a photo of you if you choose to select one. This app will function as a student card and can be used as identification at services which companies has an agreement with you place of study. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally in the app. KortFri do not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded with this app will be deleted from our database once you as a user is deleted from our systems. Users with admin-rights to the KortFri system has the possibility to delete users. Usually this will be the IT-responsible on your place of study.</string>
     <string name="termsdescription2">At first use the app must be connected to the Internet to download the information. This is stored locally and does not need to be online to use the app later.</string>
     <string name="termsdescription3">E-CardHolder assumes no responsibility for any fines, abuse, etc.</string>
     <string name="title_activity_main4">Main4Activity</string>
@@ -42,16 +42,11 @@
     <string name="yourPic">Your picture::</string>
     <string name="writepictureToken">Write picture code:</string>
     <string name="setPic">Set picture</string>
+    <string name="back">Back</string>
     <string name="kortfriNorge">www.kortfri.no</string>
-
-
-
-
-
-
-
-
-
+    <string name="updatePicture">Could not update picture</string>
+    <string name="pictureMessage">You have to type in a code to change profile picture. Your teacher or system administrator gives you this code. IMPORTANT INFORMATION: You can only use this code once! After using the code only the system administrator can alter your profile picture. This is done because the app is used as identification. Remember that using the identity of another person can be illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
+    <string name="allertMessage">STOP! If you are not pleased with the way the picture look, go back and change it.</string>
 
 
 </resources>

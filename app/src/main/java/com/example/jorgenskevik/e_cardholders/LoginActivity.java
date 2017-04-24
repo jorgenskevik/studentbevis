@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -68,6 +70,7 @@ public class LoginActivity extends Activity {
         JodaTimeAndroid.init(this);
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
+
 
         // name
         String name = user.get(SessionManager.KEY_NAME);
@@ -225,6 +228,12 @@ public class LoginActivity extends Activity {
         Intent intent = new Intent(LoginActivity.this, ContactUsActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
 
     /**
      * Get auth callback auth callback.

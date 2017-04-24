@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/writepictureToken"
-        android:layout_below="@+id/imageView8"
+        android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -84,6 +84,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="184dp"
         android:text="" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView8"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/allertMessage"
+        android:textColorLink="@android:color/holo_red_light" />
 
 
 </RelativeLayout>
