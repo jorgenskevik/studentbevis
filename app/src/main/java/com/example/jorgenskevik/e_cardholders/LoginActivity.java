@@ -84,7 +84,10 @@ public class LoginActivity extends Activity {
         //token
         String token = user.get(SessionManager.KEY_TOKEN);
 
-        if(name == null || id == null || email == null || token == null){
+        //check
+        String check = user.get(SessionManager.KEY_CHECK);
+
+        if(name == null || id == null || email == null || token == null ){
 
             super.onCreate(savedInstanceState);
 
@@ -154,7 +157,7 @@ public class LoginActivity extends Activity {
                                 DateTime timeBirthday = new DateTime(birthdayDate);
 
 
-                                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+                                DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
                                 DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
                                 String birthDateString = dateTimeFormatter.print(timeBirthday);
@@ -213,7 +216,12 @@ public class LoginActivity extends Activity {
                 }
             });
 
-        } else{
+        } else if(check == null) {
+            Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
+            startActivity(intent);
+
+        }
+        else{
             Intent intent = new Intent(LoginActivity.this, UserActivity.class);
             startActivity(intent);
         }
@@ -250,6 +258,7 @@ public class LoginActivity extends Activity {
      * @param w the w
      */
     public void logout(View w){
+        Digits.logout();
         Digits.logout();
     }
 }

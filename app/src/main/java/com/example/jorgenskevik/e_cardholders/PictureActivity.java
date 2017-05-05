@@ -158,6 +158,15 @@ public class PictureActivity extends Activity {
      *
      * @param v the v
      */
+
+    public void moreInfo(View v){
+        context = getApplicationContext();
+        duration = Toast.LENGTH_SHORT;
+        toast = Toast.makeText(context, R.string.moreInfo, duration);
+        toast.show();
+    }
+
+
     public void addPictureButton(View v) {
         Intent intent = getIntent();
         final String mediaPath = intent.getExtras().getString("picture");
@@ -174,6 +183,7 @@ public class PictureActivity extends Activity {
             toast.show();
 
         } else if (fourDigits.trim().equals(codeString)) {
+
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -194,11 +204,11 @@ public class PictureActivity extends Activity {
             MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
 
+
             userapi.postPicture(id, bearerToken, KVTVariables.getAcceptVersion(), KVTVariables.getAppkey(), body, name).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()){
-                        //saveToInternalStorage(bitmap);
                         user = response.body();
                         sessionManager.updatePicture(user.getPicture());
                         path = mediaPath;
@@ -217,6 +227,8 @@ public class PictureActivity extends Activity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
+                    System.out.println("7");
+
                     context = getApplicationContext();
                     duration = Toast.LENGTH_SHORT;
                     toast = Toast.makeText(context, R.string.PictureNotUpdated, duration);
@@ -233,35 +245,6 @@ public class PictureActivity extends Activity {
     }
 
     /**
-     * Gets image uri.
-     *
-     * @param inContext the in context
-     * @param inImage   the in image
-     * @return the image uri
-     */
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-        path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    /**
-     * Gets real path from uri.
-     *
-     * @param uri the uri
-     * @return the real path from uri
-     */
-    public String getRealPathFromURI(Uri uri) {
-        cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        String s = cursor.getString(idx);
-        cursor.close();
-        return s;
-    }
-
-    /**
      * Gets mime type.
      *
      * @param url the url
@@ -274,29 +257,5 @@ public class PictureActivity extends Activity {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         }
         return type;
-    }
-
-
-    private String saveToInternalStorage(Bitmap bitmapImage){
-        contextWrapper = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        directory = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        myPath = new File(directory, "profile.jpg");
-
-        try {
-            fileOutputStream = new FileOutputStream(myPath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return directory.getAbsolutePath();
     }
 }

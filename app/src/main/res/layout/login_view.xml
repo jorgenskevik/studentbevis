@@ -84,6 +84,19 @@
         android:layout_marginLeft="3dp"
         android:layout_marginStart="3dp"/>
 
+    <TextView
+        android:text="@string/companyname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MadeWith"
+        android:id="@+id/companyname"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/forKVT"
+        android:layout_toEndOf="@+id/forKVT"
+        android:layout_marginLeft="3dp"
+        android:layout_marginStart="3dp"/>
+
     <Button
         android:id="@+id/button"
         android:layout_width="250dp"
@@ -145,6 +158,4 @@
         android:background="@drawable/my_button_bg"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="35dp" />
-
-
 </RelativeLayout>

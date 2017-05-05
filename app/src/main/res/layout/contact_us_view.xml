@@ -142,6 +142,20 @@
         android:layout_toRightOf="@+id/imageView3"
         android:layout_alignTop="@+id/MadeWith" />
 
+    <TextView
+        android:text="@string/companyname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forKVT1"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_toEndOf="@+id/forKVT"
+        android:layout_toRightOf="@+id/forKVT"
+        android:layout_alignTop="@+id/MadeWith" />
+
     <Button
         android:id="@+id/textView"
         android:layout_width="wrap_content"

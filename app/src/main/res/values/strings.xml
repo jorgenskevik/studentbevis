@@ -2,21 +2,22 @@
     <string name="app_name">KVT - KortFri</string>
     <string name="headerTwo">We digitize your school certificates</string>
     <string name="Madewith">Made with</string>
-    <string name="forKVT">for KVT</string>
+    <string name="forKVT">for</string>
     <string name="Contactus">Contact us</string>
     <string name="Sendanemail">Send an email:</string>
     <string name="Callus">Call KVT:</string>
     <string name="Terms">Terms</string>
     <string name="Picture">Picture</string>
-    <string name="termsdescription1">This app will display your name, place of study and the validity of the digital student card. This app will display a photo of you if you choose to select one. This app will function as a student card and can be used as identification at services which companies has an agreement with you place of study. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally in the app. KortFri do not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded with this app will be deleted from our database once you as a user is deleted from our systems. Users with admin-rights to the KortFri system has the possibility to delete users. Usually this will be the IT-responsible on your place of study.</string>
-    <string name="termsdescription2">At first use the app must be connected to the Internet to download the information. This is stored locally and does not need to be online to use the app later.</string>
-    <string name="termsdescription3">E-CardHolder assumes no responsibility for any fines, abuse, etc.</string>
+    <string name="termsdescription1">This app will display your name, place of study and the validity of your digital student card. The app will display a photo of you if you choose to select one. The app will function as a student card and can be used as identification for services your place of study has an agreement with. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally on the app. KortFri does not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded on this app will be deleted from our database once you as a user are deleted from our systems. Users with admin-rights to the KortFri system have the possibility to delete users. Usually this will be the IT-responsible on (at?) your place of study.</string>
+    <string name="termsdescription2">Are you 15 or older, and do you accept our terms of use?</string>
+    <string name="termsdescription3">The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01-31.08 and the fall semester from 01.09-31.12.</string>
     <string name="title_activity_main4">Main4Activity</string>
     <string name="title_activity_test">test</string>
     <string name="barcode">Barcode</string>
     <string name="studentcard">Student card</string>
     <string name="closeSettings">Cancel</string>
     <string name="Loggout">Log out</string>
+    <string name="moreInfo">Contact IT support to get yur code</string>
     <string name="LogginButton">Login</string>
     <string name="digitsfail">Digits login failed</string>
     <string name="CancelBarCode">OK</string>
@@ -33,8 +34,9 @@
     <string name="contactIT">Contact IT support</string>
     <string name="signInDigiFail">Login failed</string>
     <string name="studentbevis">STUDENT CARD</string>
-    <string name="companyname">Kristen Videregående skole Trøndelag</string>
-    <string name="GyldigTil">Valid until </string>
+    <string name="companynameLong">Kristen Videregående skole Trøndelag</string>
+    <string name="companyname">KVT</string>
+    <string name="GyldigTil">Valid for </string>
     <string name="expired">EXPIRED</string>
     <string name="studentnumber">Studentnr:</string>
     <string name="Barcode">Barcode:</string>
@@ -43,10 +45,13 @@
     <string name="writepictureToken">Write picture code:</string>
     <string name="setPic">Set picture</string>
     <string name="back">Back</string>
+    <string name="spring">Spring semester</string>
+    <string name="fall">Fall semester</string>
+    <string name="policy">Policy</string>
+    <string name="acceptTerms">Click the "I accept" box to use the app</string>
+    <string name="checkBox">I accept</string>
     <string name="kortfriNorge">www.kortfri.no</string>
     <string name="updatePicture">Could not update picture</string>
-    <string name="pictureMessage">You have to type in a code to change profile picture. Your teacher or system administrator gives you this code. IMPORTANT INFORMATION: You can only use this code once! After using the code only the system administrator can alter your profile picture. This is done because the app is used as identification. Remember that using the identity of another person can be illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
-    <string name="allertMessage">STOP! If you are not pleased with the way the picture look, go back and change it.</string>
-
-
+    <string name="pictureMessage">You have to type in a code to change your profile picture. Your teacher or system administrator will give you this code. IMPORTANT INFORMATION: You can only use this code once! After using the code, only the system administrator can alter your profile picture. This is because the app is used as identification. Remember that using the identity of another person is illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
+    <string name="allertMessage">STOP! If you are not pleased with the way the picture looks, go back and change it.</string>
 </resources>

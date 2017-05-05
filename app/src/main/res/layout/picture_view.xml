@@ -97,5 +97,18 @@
         android:text="@string/allertMessage"
         android:textColorLink="@android:color/holo_red_light" />
 
+    <Button
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/tw__transparent"
+        android:onClick="moreInfo"
+        android:text="(?)"
+        android:textColorLink="@color/tw__blue_default"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_alignRight="@+id/button10"
+        android:layout_alignEnd="@+id/button10" />
+
 
 </RelativeLayout>

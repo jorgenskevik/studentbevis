@@ -119,6 +119,10 @@ public class SessionManager {
     public static final String KEY_PICTURE = "picture";
 
 
+    public static final String KEY_CHECK = "check";
+
+
+
     /**
      * Instantiates a new Session manager.
      *
@@ -177,8 +181,8 @@ public class SessionManager {
         // Storing birthdate in pref
         editor.putString(KEY_BIRTHDATE, birthday);
 
+        // Storing picture in pref
         editor.putString(KEY_PICTURE, picture);
-
 
         // commit changes
         editor.commit();
@@ -284,25 +288,18 @@ public class SessionManager {
 
     }
 
-    /**
-     * Check login.
-     */
-    public void checkLogin(){
-        // Check login status
-        if(!this.isLoggedIn()){
-            // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(_context, LoginActivity.class);
-            // Closing all the Activities
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    public void updateCheck(String check){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
 
-            // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // Storing role in pref
+        editor.putString(KEY_CHECK, check);
 
-            // Staring Login Activity
-            _context.startActivity(i);
-        }
+        // commit changes
+        editor.apply();
 
     }
+
 
     /**
      * Is logged in boolean.
@@ -354,6 +351,9 @@ public class SessionManager {
         // user picture
         user.put(KEY_PICTURE, pref.getString(KEY_PICTURE, null));
 
+        // user check
+        user.put(KEY_CHECK, pref.getString(KEY_CHECK, null));
+
         // return user
         return user;
     }
@@ -377,6 +377,7 @@ public class SessionManager {
         editor.remove(KEY_BIRTHDATE);
         editor.remove(KEY_PATH);
         editor.remove(KEY_PICTURE);
+        editor.remove(KEY_CHECK);
         editor.commit();
 
     }
