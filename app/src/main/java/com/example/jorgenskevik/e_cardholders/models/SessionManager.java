@@ -379,7 +379,11 @@ public class SessionManager {
         editor.remove(KEY_PICTURE);
         editor.remove(KEY_CHECK);
         editor.commit();
+    }
 
+    public void deletePhoto(){
+        editor.remove(KEY_PATH);
+        editor.commit();
     }
 }
 

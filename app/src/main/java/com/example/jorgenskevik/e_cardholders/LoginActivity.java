@@ -71,7 +71,6 @@ public class LoginActivity extends Activity {
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
 
-
         // name
         String name = user.get(SessionManager.KEY_NAME);
 
@@ -182,7 +181,7 @@ public class LoginActivity extends Activity {
                                     startActivity(intent);
 
                                 } else {
-                                    //Digits.logout();
+                                    Digits.logout();
                                     Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
                                     startActivity(intent);
 

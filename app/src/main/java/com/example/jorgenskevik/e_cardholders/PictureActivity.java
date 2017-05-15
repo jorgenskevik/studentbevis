@@ -6,9 +6,11 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.webkit.MimeTypeMap;
@@ -23,6 +25,7 @@ import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -38,6 +41,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.crashlytics.android.Crashlytics.log;
 
 /**
  * The type Picture activity.
@@ -136,6 +141,7 @@ public class PictureActivity extends Activity {
      */
     FileOutputStream fileOutputStream;
 
+    String mediaPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,13 +150,11 @@ public class PictureActivity extends Activity {
         setContentView(R.layout.picture_view);
         imageView = (ImageView) findViewById(R.id.imageView8);
         sessionManager = new SessionManager(getApplicationContext());
-
         Intent intent = getIntent();
-
-        String mediaPath = intent.getExtras().getString("picture");
+        mediaPath = intent.getExtras().getString("picture");
         File f = new File(mediaPath);
-
         Picasso.with(getApplicationContext()).load(f).resize(300,300).centerCrop().into(imageView);
+
     }
 
     /**
@@ -168,11 +172,10 @@ public class PictureActivity extends Activity {
 
 
     public void addPictureButton(View v) {
-        Intent intent = getIntent();
-        final String mediaPath = intent.getExtras().getString("picture");
         userDetails = sessionManager.getUserDetails();
         fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
         authToken = userDetails.get(SessionManager.KEY_TOKEN);
+        final String studentNumber = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
         code = (EditText) findViewById(R.id.editText1);
         codeString = code.getText().toString();
 
@@ -211,10 +214,23 @@ public class PictureActivity extends Activity {
                     if (response.isSuccessful()){
                         user = response.body();
                         sessionManager.updatePicture(user.getPicture());
-                        path = mediaPath;
-                        String picture = user.getPicture();
-                        sessionManager.updatePath(path);
+                        sessionManager.updatePath(mediaPath);
                         sessionManager.updatePictureToken("BRUKT");
+
+
+                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                        File directory = cw.getDir(studentNumber, Context.MODE_PRIVATE);
+                        File myImageFile = new File(directory, "my_image.jpeg");
+                        if (myImageFile.getAbsoluteFile().delete()){
+                            System.out.println("slettet fil");
+
+                        }
+                        Picasso.with(getApplicationContext()).invalidate(myImageFile);
+
+                        //lagre bildet lokalt
+                        System.out.println(user.getStudentNumber());
+                        Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
+
                         Intent i = new Intent(PictureActivity.this, UserActivity.class);
                         startActivity(i);
                     }else{
@@ -227,8 +243,6 @@ public class PictureActivity extends Activity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    System.out.println("7");
-
                     context = getApplicationContext();
                     duration = Toast.LENGTH_SHORT;
                     toast = Toast.makeText(context, R.string.PictureNotUpdated, duration);
@@ -257,5 +271,45 @@ public class PictureActivity extends Activity {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         }
         return type;
+    }
+
+    private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
+        Log.d("picassoImageTarget", " picassoImageTarget");
+        ContextWrapper cw = new ContextWrapper(context);
+        final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE); // path to /data/data/yourapp/app_imageDir
+        return new Target() {
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final File myImageFile = new File(directory, imageName); // Create image file
+                        FileOutputStream fos = null;
+                        try {
+                            fos = new FileOutputStream(myImageFile);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Log.i("image", "image saved to >>>" + myImageFile.getAbsolutePath());
+
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+            }
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                if (placeHolderDrawable != null) {}
+            }
+        };
     }
 }

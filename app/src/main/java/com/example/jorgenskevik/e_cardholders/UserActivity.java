@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.os.StrictMode;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -42,6 +44,9 @@ import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -54,6 +59,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,12 +68,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.crashlytics.android.Crashlytics.log;
 
 /**
  * The type User activity.
@@ -276,11 +286,17 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
     ByteArrayOutputStream stream;
     //Cursor cursor;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.user_view);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         sessionManager = new SessionManager(getApplicationContext());
         view2 = (ImageView) findViewById(R.id.window1);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
@@ -293,28 +309,59 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         studentId = (TextView) findViewById(R.id.studentid);
         userDetails = sessionManager.getUserDetails();
 
-        System.gc();
-
         firstAndSirNameString = userDetails.get(SessionManager.KEY_NAME);
         birthdayString = userDetails.get(SessionManager.KEY_BIRTHDATE);
         targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
 
-
         studentIDString = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
         path = userDetails.get(SessionManager.KEY_PATH);
         picture = userDetails.get(SessionManager.KEY_PICTURE);
+        studentNumber = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
+        JodaTimeAndroid.init(this);
 
         if (path == null) {
+            System.out.println("1");
             view2.setImageResource(R.drawable.facebookgirl);
 
             if (!picture.equals("")) {
-                new DownloadImageTask((ImageView) findViewById(R.id.window1))
-                        .execute(picture);
+                System.out.println("2");
+
+                ContextWrapper cw = new ContextWrapper(this);
+                System.out.println("skal lgres her" + studentNumber);
+                File directory = cw.getDir(studentNumber, Context.MODE_PRIVATE);
+                File myImageFile = new File(directory, "my_image.jpeg");
+                System.out.println("path" + myImageFile.getAbsolutePath());
+
+                Picasso.with(this).load(myImageFile).resize(300,300).centerCrop().into(view2);
+
+                //Picasso.with(getApplicationContext()).load(picture).resize(300,300).centerCrop().into(view2);
+
+
+                //hent lokalt bilde
+               /* ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+                File myImageFile = new File(directory, "my_image.jpeg");
+                System.out.println("file: " + myImageFile);
+                Picasso.with(getApplicationContext()).load(myImageFile).resize(300,300).centerCrop().into(view2);
+*/
+              // Uri tempUri = getImageUri(getApplicationContext(), getBitmapFromURL(picture));
+               //loadImageFromStorage(getRealPathFromURI(tempUri));
+               //Picasso.with(this).load(picture).resize(300,300).centerCrop().into(view2);
+                /*Picasso.with(this).load(picture).into(picassoImageTarget(getApplicationContext(), "imageDir",  "my_image.jpeg"));
+                ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+                File myImageFile = new File(directory, "my_image.jpeg");
+                Picasso.with(this).load(myImageFile).into(view2);
+                String path = myImageFile.getParent();
+                sessionManager.updatePath(path);*/
+
             }
         } else {
-            File imgFile = new File(path);
-            Picasso.with(getApplicationContext()).load(imgFile).resize(300, 300).centerCrop().into(view2);            //loadImageFromStorage(path);
-        }
+            System.out.println("3");
+            File f = new File(path);
+            System.out.println("file " + f);
+            Picasso.with(getApplicationContext()).load(f).resize(300,300).centerCrop().into(view2);
+    }
 
         firstAndSirName.setText(firstAndSirNameString);
         extraStudentID = getResources().getString(R.string.studentnumber) + " " + studentIDString;
@@ -378,6 +425,8 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                 startActivity(new Intent(UserActivity.this, BarCodeActivity.class));
             }
         });
+
+
     }
 
     /**
@@ -526,10 +575,13 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
                         dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
                         dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
+
                         dateTimeBirthday = dateTimeFormatter.print(dateTime);
                         dateTimeExpiration = dateTimeFormatter2.print(dateTime2);
 
+                        sessionManager.deletePhoto();
                         sessionManager.createUpdatedLoginSession(username, email, studentNumber, id, role, pictureToken, dateTimeBirthday, dateTimeExpiration, picture);
+
 
                         startDate = null;
                         try {
@@ -572,8 +624,35 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                             }
                         }
 
-                        new DownloadImageTask((ImageView) findViewById(R.id.window1))
-                                .execute(picture);
+                        if(picture.equals("")){
+                            view2.setImageResource(R.drawable.facebookgirl);
+                        }else{
+
+                            ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                            File directory = cw.getDir(studentNumber, Context.MODE_PRIVATE);
+                            File myImageFile = new File(directory, "my_image.jpeg");
+                            myImageFile.getAbsoluteFile().delete();
+                            myImageFile.delete();
+                            deleteFile("my_image.jpeg");
+                            Picasso.with(getApplicationContext()).invalidate(myImageFile);
+                            deleteTempFolder(studentNumber);
+
+                            try {
+                                myImageFile.getCanonicalFile().delete();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+                                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(directory, "my_image.jpeg"))));
+                            }catch (NullPointerException e){
+                                System.out.println("basj");
+                            }
+                            Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
+                            Picasso.with(getApplicationContext()).load(picture).resize(300,300).centerCrop().into(view2);
+             }
+
                         firstAndSirName.setText(username);
                         BirthDay.setText(dateTimeBirthday);
                         String extra = getResources().getString(R.string.studentnumber) + " " + studentNumber;
@@ -595,8 +674,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         if (index == 4) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://privacypolicy.kortfri.no"));
             startActivity(browserIntent);
-
-
         }
     }
 
@@ -621,6 +698,7 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
             intent = new Intent(this, PictureActivity.class);
             intent.putExtra("picture", mediaPath);
+            System.out.println(mediaPath);
             startActivity(intent);
         }
 
@@ -637,6 +715,7 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     cursor.close();
 
                     intent = new Intent(this, PictureActivity.class);
+                    System.out.println(mediaPath);
                     intent.putExtra("picture", mediaPath);
                     startActivity(intent);
                 }
@@ -659,17 +738,12 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         if (requestCode == CAM_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                //Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_LONG).show();
                 Toast.makeText(this, "hallo", Toast.LENGTH_LONG).show();
 
             } else {
-                //Toast.makeText(this, "hei", Toast.LENGTH_LONG).show();
-
-                //Toast.makeText(this, getResources().getString(R.string.GiveAccess), Toast.LENGTH_LONG).show();
             }
         }
     }
-
 
     /**
      * Shake.
@@ -681,64 +755,72 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         findViewById(R.id.window1).startAnimation(shake);
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        /**
-         * The Bm image.
-         */
-        ImageView bmImage;
+    private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
+        System.out.println("går inn");
+        ContextWrapper cw = new ContextWrapper(context);
+        System.out.println("1");
+        final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE); // path to /data/data/yourapp/app_imageDir
+        System.out.println("2");
+        return new Target() {
 
-        /**
-         * Instantiates a new Download image task.
-         *
-         * @param bmImage the bm image
-         */
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                System.out.println("3");
+                new Thread(new Runnable() {
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+                    @Override
+                    public void run() {
+                        System.out.println("4");
+                        final File myImageFile = new File(directory, imageName); // Create image file
+                        System.out.println("5");
+                        FileOutputStream fos = null;
+                        System.out.println("6");
+                        try {
+                            System.out.println("7");
+                            fos = new FileOutputStream(myImageFile);
+                            System.out.println("8");
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                            System.out.println("9");
+                        } catch (IOException e) {
+                            System.out.println("10");
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                System.out.println("11");
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        System.out.println("path saved to" + myImageFile.getAbsolutePath());
+                        Log.i("image", "image saved to >>>" + myImageFile.getAbsolutePath());
+
+                    }
+                }).start();
             }
-            return mIcon11;
-        }
 
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-            String picturePath = saveToInternalStorage(result);
-            sessionManager.updatePath(picturePath);
 
-        }
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                System.out.println("her?");
+            }
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                System.out.println("eller her?");
+                if (placeHolderDrawable != null) {
+                    System.out.println("var null");
+                }
+            }
+        };
     }
 
-
-    private String saveToInternalStorage(Bitmap bitmapImage) {
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        myPath = new File(directory, "picture.jpg");
-
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(myPath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void deleteTempFolder(String dir) {
+        File myDir = new File(Environment.getExternalStorageDirectory() + "/"+dir);
+        if (myDir.isDirectory()) {
+            String[] children = myDir.list();
+            for (int i = 0; i < children.length; i++) {
+                new File(myDir, children[i]).delete();
             }
         }
-        return directory.getAbsolutePath();
     }
 }

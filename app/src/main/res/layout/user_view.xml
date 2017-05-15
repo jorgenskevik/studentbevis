@@ -30,16 +30,14 @@
         android:layout_alignParentEnd="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/whitetaketwo"
+        android:src="@drawable/test"
         android:layout_below="@+id/window1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/imageButton"
-        android:layout_alignStart="@+id/imageButton" />
+        android:layout_alignParentBottom="true" />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:adjustViewBounds="true"
         android:src="@drawable/kvt123"
         android:layout_alignBottom="@+id/button11"
@@ -47,7 +45,7 @@
         android:layout_alignStart="@+id/companynamePhoto"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:layout_alignTop="@+id/button11" />
+         />
 
     <TextView
         android:id="@+id/textView7"
@@ -175,7 +173,7 @@
     <Button
         android:id="@+id/button11"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
         android:onClick="shake"
@@ -187,7 +185,8 @@
         android:layout_toRightOf="@+id/imageView6"
         android:layout_toEndOf="@+id/imageView6"
         android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"/>
+        android:layout_marginStart="15dp"
+        />
 
 
 </RelativeLayout>
