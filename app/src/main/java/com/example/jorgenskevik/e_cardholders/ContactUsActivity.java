@@ -16,7 +16,7 @@ public class ContactUsActivity extends Activity {
     /**
      * The constant phoneNumber.
      */
-    //public static final String phoneNumber = "tel:72894940";
+//public static final String phoneNumber = "tel:72894940";
     public static final String phoneNumber = "tel:93451944";
 
     /**

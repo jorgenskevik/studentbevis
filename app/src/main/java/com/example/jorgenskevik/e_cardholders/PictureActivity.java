@@ -141,6 +141,9 @@ public class PictureActivity extends Activity {
      */
     FileOutputStream fileOutputStream;
 
+    /**
+     * The Media path.
+     */
     String mediaPath;
 
     @Override
@@ -162,7 +165,6 @@ public class PictureActivity extends Activity {
      *
      * @param v the v
      */
-
     public void moreInfo(View v){
         context = getApplicationContext();
         duration = Toast.LENGTH_SHORT;
@@ -171,6 +173,11 @@ public class PictureActivity extends Activity {
     }
 
 
+    /**
+     * Add picture button.
+     *
+     * @param v the v
+     */
     public void addPictureButton(View v) {
         userDetails = sessionManager.getUserDetails();
         fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
@@ -222,13 +229,11 @@ public class PictureActivity extends Activity {
                         File directory = cw.getDir(studentNumber, Context.MODE_PRIVATE);
                         File myImageFile = new File(directory, "my_image.jpeg");
                         if (myImageFile.getAbsoluteFile().delete()){
-                            System.out.println("slettet fil");
 
                         }
                         Picasso.with(getApplicationContext()).invalidate(myImageFile);
 
                         //lagre bildet lokalt
-                        System.out.println(user.getStudentNumber());
                         Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
 
                         Intent i = new Intent(PictureActivity.this, UserActivity.class);

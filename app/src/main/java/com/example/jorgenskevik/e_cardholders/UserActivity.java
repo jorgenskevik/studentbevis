@@ -320,46 +320,17 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         JodaTimeAndroid.init(this);
 
         if (path == null) {
-            System.out.println("1");
             view2.setImageResource(R.drawable.facebookgirl);
 
             if (!picture.equals("")) {
-                System.out.println("2");
 
                 ContextWrapper cw = new ContextWrapper(this);
-                System.out.println("skal lgres her" + studentNumber);
                 File directory = cw.getDir(studentNumber, Context.MODE_PRIVATE);
                 File myImageFile = new File(directory, "my_image.jpeg");
-                System.out.println("path" + myImageFile.getAbsolutePath());
-
                 Picasso.with(this).load(myImageFile).resize(300,300).centerCrop().into(view2);
-
-                //Picasso.with(getApplicationContext()).load(picture).resize(300,300).centerCrop().into(view2);
-
-
-                //hent lokalt bilde
-               /* ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-                File myImageFile = new File(directory, "my_image.jpeg");
-                System.out.println("file: " + myImageFile);
-                Picasso.with(getApplicationContext()).load(myImageFile).resize(300,300).centerCrop().into(view2);
-*/
-              // Uri tempUri = getImageUri(getApplicationContext(), getBitmapFromURL(picture));
-               //loadImageFromStorage(getRealPathFromURI(tempUri));
-               //Picasso.with(this).load(picture).resize(300,300).centerCrop().into(view2);
-                /*Picasso.with(this).load(picture).into(picassoImageTarget(getApplicationContext(), "imageDir",  "my_image.jpeg"));
-                ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-                File myImageFile = new File(directory, "my_image.jpeg");
-                Picasso.with(this).load(myImageFile).into(view2);
-                String path = myImageFile.getParent();
-                sessionManager.updatePath(path);*/
-
             }
         } else {
-            System.out.println("3");
             File f = new File(path);
-            System.out.println("file " + f);
             Picasso.with(getApplicationContext()).load(f).resize(300,300).centerCrop().into(view2);
     }
 
@@ -647,7 +618,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                             try {
                                 context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(directory, "my_image.jpeg"))));
                             }catch (NullPointerException e){
-                                System.out.println("basj");
                             }
                             Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
                             Picasso.with(getApplicationContext()).load(picture).resize(300,300).centerCrop().into(view2);
@@ -698,7 +668,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
             intent = new Intent(this, PictureActivity.class);
             intent.putExtra("picture", mediaPath);
-            System.out.println(mediaPath);
             startActivity(intent);
         }
 
@@ -715,7 +684,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     cursor.close();
 
                     intent = new Intent(this, PictureActivity.class);
-                    System.out.println(mediaPath);
                     intent.putExtra("picture", mediaPath);
                     startActivity(intent);
                 }
@@ -756,43 +724,29 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
     }
 
     private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
-        System.out.println("går inn");
         ContextWrapper cw = new ContextWrapper(context);
-        System.out.println("1");
-        final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE); // path to /data/data/yourapp/app_imageDir
-        System.out.println("2");
+        final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE);
         return new Target() {
 
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                System.out.println("3");
                 new Thread(new Runnable() {
-
                     @Override
                     public void run() {
-                        System.out.println("4");
-                        final File myImageFile = new File(directory, imageName); // Create image file
-                        System.out.println("5");
+                        final File myImageFile = new File(directory, imageName);
                         FileOutputStream fos = null;
-                        System.out.println("6");
                         try {
-                            System.out.println("7");
                             fos = new FileOutputStream(myImageFile);
-                            System.out.println("8");
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                            System.out.println("9");
                         } catch (IOException e) {
-                            System.out.println("10");
                             e.printStackTrace();
                         } finally {
                             try {
-                                System.out.println("11");
                                 fos.close();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-                        System.out.println("path saved to" + myImageFile.getAbsolutePath());
                         Log.i("image", "image saved to >>>" + myImageFile.getAbsolutePath());
 
                     }
@@ -802,13 +756,10 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
             @Override
             public void onBitmapFailed(Drawable errorDrawable) {
-                System.out.println("her?");
             }
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-                System.out.println("eller her?");
                 if (placeHolderDrawable != null) {
-                    System.out.println("var null");
                 }
             }
         };

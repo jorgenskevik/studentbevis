@@ -31,7 +31,13 @@ public class TermsActivity extends Activity {
      */
     public static final int maxBuildVersion = 6;
 
+    /**
+     * The Check box.
+     */
     String checkBox = "";
+    /**
+     * The Session manager.
+     */
     SessionManager sessionManager;
 
 
@@ -90,7 +96,6 @@ public class TermsActivity extends Activity {
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(TermsActivity.this, UserActivity.class);
-            //Digits.logout();
             if(checkBox.equals("check")){
                 startActivity(intent);
             }else{
