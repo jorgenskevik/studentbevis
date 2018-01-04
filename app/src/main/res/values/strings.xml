@@ -1,18 +1,16 @@
 <resources>
-    <string name="app_name">KVT - KortFri</string>
+    <string name="app_name">Akademiet trh - KortFri</string>
     <string name="headerTwo">We digitize your school certificates</string>
     <string name="Madewith">Made with</string>
     <string name="forKVT">for</string>
     <string name="Contactus">Contact us</string>
-    <string name="Sendanemail">Send an email:</string>
-    <string name="Callus">Call KVT:</string>
+    <string name="Sendanemail">Email:</string>
+    <string name="Callus">Phone:</string>
     <string name="Terms">Terms</string>
     <string name="Picture">Picture</string>
     <string name="termsdescription1">This app will display your name, place of study and the validity of your digital student card. The app will display a photo of you if you choose to select one. The app will function as a student card and can be used as identification for services your place of study has an agreement with. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally on the app. KortFri does not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded on this app will be deleted from our database once you as a user are deleted from our systems. Users with admin-rights to the KortFri system have the possibility to delete users. Usually this will be the IT-responsible at? your place of study.</string>
     <string name="termsdescription2">Are you 15 or older, and do you accept our terms of use?</string>
-    <string name="termsdescription3">The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01-31.08 and the fall semester from 01.09-31.12.</string>
-    <string name="title_activity_main4">Main4Activity</string>
-    <string name="title_activity_test">test</string>
+    <string name="termsdescription3">The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01-31.07 and the fall semester from 01.08-31.12.</string>
     <string name="barcode">Barcode</string>
     <string name="studentcard">Student card</string>
     <string name="closeSettings">Cancel</string>
@@ -23,7 +21,7 @@
     <string name="CancelBarCode">OK</string>
     <string name="GiveAccess">"Give the app access: settings/apps/KortFri/Storage"</string>
     <string name="setPicture">Set picture</string>
-    <string name="updateProfile">Oppdater</string>
+    <string name="updateProfile">Update</string>
     <string name="DenyPicture">You have already picked a photo</string>
     <string name="userUpdated">User updated</string>
     <string name="userNotUpdated">Could not update user</string>
@@ -34,8 +32,8 @@
     <string name="contactIT">Contact IT support</string>
     <string name="signInDigiFail">Login failed</string>
     <string name="studentbevis">STUDENT CARD</string>
-    <string name="companynameLong">Kristen Videregående skole Trøndelag</string>
-    <string name="companyname">KVT</string>
+    <string name="companynameLong">Akademiet Trondheim</string>
+    <string name="companyname">Aka trh</string>
     <string name="GyldigTil">Valid for </string>
     <string name="expired">EXPIRED</string>
     <string name="studentnumber">Studentnr:</string>
@@ -50,8 +48,33 @@
     <string name="policy">Policy</string>
     <string name="acceptTerms">Click the "I accept" box to use the app</string>
     <string name="checkBox">I accept</string>
-    <string name="kortfriNorge">www.kortfri.no</string>
+    <string name="kortfriNorge">www.KortFri.no</string>
     <string name="updatePicture">Could not update picture</string>
     <string name="pictureMessage">You have to type in a code to change your profile picture. Your teacher or system administrator will give you this code. IMPORTANT INFORMATION: You can only use this code once! After using the code, only the system administrator can alter your profile picture. This is because the app is used as identification. Remember that using the identity of another person is illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
+
+    <string name="login">Login</string>
+    <string name="infomasjon">Contact Information</string>
+
+
+    <string name="label_phone_auth">Phone Number Authentication</string>
+    <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
+    <string name="signed_in">Write phone number</string>
+    <string name="start_phone_auth">Start</string>
+    <string name="verify_phone_auth">Verify</string>
+    <string name="resend_phone_auth">Resend</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+    <string name="phone_title_text">Phone Number</string>
+    <string name="sign_out">Sign out</string>
+
+
+    <string name="verification">verification successful</string>
+    <string name="landskode">Country Code:</string>
+
     <string name="allertMessage">STOP! If you are not pleased with the way the picture looks, go back and change it.</string>
 </resources>

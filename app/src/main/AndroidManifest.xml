@@ -2,63 +2,76 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jorgenskevik.e_cardholders">
 
+    <!--
     <uses-feature android:name="android.hardware.camera2" />
+    -->
+     <supports-screens
+         android:anyDensity="true"
+         android:largeScreens="true"
+         android:normalScreens="true"
+         android:resizeable="true"
+         android:smallScreens="true"
+         android:xlargeScreens="true" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.CAMERA" />
+     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/kvtblue"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+     <application
+         android:allowBackup="true"
+         android:icon="@drawable/akalogo"
+         android:label="@string/app_name"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme.NoActionBar"
+         >
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="dd8e0d523d478b9ae90a3175b642f076a3d36d87" />
+         <meta-data
+             android:name="io.fabric.ApiKey"
+             android:value="dd8e0d523d478b9ae90a3175b642f076a3d36d87"
+             />
 
-        <activity
-            android:name=".LoginActivity"
+         <activity
+             android:name=".LoginActivity"
+             android:screenOrientation="portrait">
 
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+         </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ContactUsActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity
-            android:name=".TermsActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity
-            android:name=".UserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity
-            android:name=".BarCodeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.customPopup" />
-
-        <activity
-            android:name=".PictureActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_main4"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Terms1Activity"
-            android:screenOrientation="portrait"
-            />
-    </application>
-
-</manifest>
+         <activity
+             android:name=".ContactUsActivity"
+             android:screenOrientation="portrait"
+             />
+         <activity
+             android:name=".TermsActivity"
+             android:screenOrientation="portrait"
+             />
+         <activity
+             android:name=".UserActivity"
+             android:screenOrientation="portrait"
+             />
+         <activity
+             android:name=".BarCodeActivity"
+             android:screenOrientation="portrait"
+             android:theme="@style/AppTheme.customPopup"
+             />
+         <activity
+             android:name=".Terms1Activity"
+             android:screenOrientation="portrait"
+             />
+         <activity
+             android:name=".PictureActivity"
+             android:screenOrientation="portrait"
+             />
+         <activity
+             android:name=".LandingPage"
+             android:screenOrientation="portrait">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN"
+                     />
+                 <category android:name="android.intent.category.LAUNCHER"
+                     />
+             </intent-filter>
+             </activity>
+     </application>
+ </manifest>

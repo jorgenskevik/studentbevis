@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 
 import static android.R.id.message;
 
@@ -17,7 +19,12 @@ public class ContactUsActivity extends Activity {
      * The constant phoneNumber.
      */
 //public static final String phoneNumber = "tel:72894940";
-    public static final String phoneNumber = "tel:93451944";
+    public static final String phoneNumber = "tel:92634300";
+    public static final String emailNumber = "Trondheim@akademiet.no";
+    private static final int WHITE = 0xFFFFFFFF;
+
+    Button phone;
+    Button email;
 
     /**
      * The constant web.
@@ -31,6 +38,16 @@ public class ContactUsActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.contact_us_view);
+
+        phone = (Button) findViewById(R.id.editText);
+        email = (Button) findViewById(R.id.editText2);
+        emailNumber.toLowerCase();
+        phone.setText(phoneNumber);
+        phone.setHintTextColor(WHITE);
+        phone.setTextColor(WHITE);
+        email.setText(emailNumber);
+        email.setHintTextColor(WHITE);
+        email.setTextColor(WHITE);
     }
 
     /**
@@ -53,7 +70,7 @@ public class ContactUsActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
         intent.putExtra(Intent.EXTRA_TEXT, message);
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"kvt@kvt.vgs.no"});
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"Trondheim@akademiet.no"});
         Intent mailer = Intent.createChooser(intent, null);
         startActivity(mailer);
     }
