@@ -57,8 +57,6 @@
     <string name="infomasjon">Kontaktinformasjon</string>
 
 
-
-
     <string name="label_phone_auth">Phone Number Authentication</string>
     <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
     <string name="signed_in">Write phone number</string>

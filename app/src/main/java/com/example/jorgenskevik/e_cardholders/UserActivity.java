@@ -455,6 +455,7 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
             } else {
                 selectedColor = Color.rgb(239, 146, 72);
+                selectedWhite = Color.rgb(255, 255, 255);
                 int selectedBlack = Color.rgb(50, 43, 43);
                 int black = Color.rgb(0, 0, 0);
 

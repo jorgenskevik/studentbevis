@@ -117,24 +117,6 @@ public class LoginActivity extends AppCompatActivity  implements
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
 
-        // name
-      //  String name = user.get(SessionManager.KEY_NAME);
-
-        // id
-        //String id = user.get(SessionManager.KEY_ID);
-
-        // email
-      //  String email = user.get(SessionManager.KEY_EMAIL);
-
-        //token
-        //String token = user.get(SessionManager.KEY_TOKEN);
-
-        //check
-        //String check = user.get(SessionManager.KEY_CHECK);
-
-        //if(name == null || id == null || email == null || token == null ){
-
-
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
             // Assign views
@@ -237,16 +219,6 @@ public class LoginActivity extends AppCompatActivity  implements
                 }
             };
 
-        //} else if(check == null) {
-          //  Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
-            //startActivity(intent);
-
-        //}
-        //else{
-          //  Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-           // startActivity(intent);
-        //}
-        // [END phone_auth_callbacks]
     }
 
     // [START on_start_check_user]
@@ -320,15 +292,12 @@ public class LoginActivity extends AppCompatActivity  implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             updateUI(STATE_SIGNIN_SUCCESS, user);
                             // [END_EXCLUDE]
                         } else {
                             // Sign in failed, display a message and update the UI
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                                 // [START_EXCLUDE silent]

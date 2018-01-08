@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
@@ -30,10 +31,14 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -209,6 +214,7 @@ public class PictureActivity extends Activity {
             bearerToken = "Bearer " + authToken.toString();
             final File file = new File(mediaPath);
 
+
             String mimeType = getMimeType(file);
 
             RequestBody reqFile = RequestBody.create(MediaType.parse(mimeType), file);
@@ -277,6 +283,7 @@ public class PictureActivity extends Activity {
         return type;
     }
 
+
     public String getCameraPhotoOrientation(String imagePath) {
         String rotate = "kortfri";
         try {
@@ -302,12 +309,6 @@ public class PictureActivity extends Activity {
             e.printStackTrace();
         }
         return rotate;
-    }
-
-    public static Bitmap RotateBitmap(Bitmap source, float angle){
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
