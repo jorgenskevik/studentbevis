@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="6"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
@@ -25,35 +27,17 @@
             android:layout_marginTop="45dp"
             android:src="@drawable/akalogo" />
 
-        <TextView
-            android:id="@+id/textView11"
+        <com.hbb20.CountryCodePicker
+            android:layout_marginTop="20dp"
+            android:id="@+id/picker"
+            app:ccp_defaultNameCode="no"
+            app:ccp_contentColor="@color/tw__solid_white"
+            app:ccp_defaultPhoneCode="47"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/landcode"
-            android:layout_alignBottom="@+id/landcode"
-            android:layout_gravity="left"
+            android:layout_gravity="center"
             android:textStyle="bold"
-            android:layout_marginEnd="21dp"
-            android:layout_marginRight="21dp"
-            android:layout_toLeftOf="@+id/landcode"
-            android:layout_toStartOf="@+id/landcode"
-            android:text="@string/landskode"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/tw__solid_white" />
-
-        <EditText
-            android:id="@+id/landcode"
-            android:layout_width="50dp"
-            android:textColor="@color/tw__solid_white"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_alignEnd="@+id/detail"
-            android:layout_alignRight="@+id/detail"
-            android:layout_below="@+id/detail"
-            android:layout_gravity="left"
-            android:gravity="left"
-            android:maxLength="3"
-            android:text="+47" />
 
         <TextView
             android:id="@+id/status"
@@ -115,7 +99,8 @@
                     android:hint="@string/hint_phone_number"
                     android:theme="@style/ThemeOverlay.MyLightEditText"
                     android:layout_weight="1.0"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    />
 
                 <EditText
                     android:id="@+id/field_verification_code"
@@ -124,7 +109,8 @@
                     android:hint="@string/hint_verification_code"
                     android:theme="@style/ThemeOverlay.MyLightEditText"
                     android:layout_weight="1.0"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    />
             </LinearLayout>
 
             <LinearLayout

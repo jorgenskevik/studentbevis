@@ -3,6 +3,8 @@ package com.example.jorgenskevik.e_cardholders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -41,6 +43,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hbb20.CountryCodePicker;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -48,6 +51,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +95,7 @@ public class LoginActivity extends AppCompatActivity  implements
 
     private EditText mPhoneNumberField;
     private EditText mVerificationField;
-    private EditText landskode;
+    private CountryCodePicker landskode;
 
 
     private Button mStartButton;
@@ -128,7 +134,7 @@ public class LoginActivity extends AppCompatActivity  implements
 
             mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
             mVerificationField = (EditText) findViewById(R.id.field_verification_code);
-            landskode = (EditText) findViewById(R.id.landcode);
+            landskode = (CountryCodePicker) findViewById(R.id.picker);
 
             mStartButton = (Button) findViewById(R.id.button_start_verification);
             mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
@@ -144,6 +150,24 @@ public class LoginActivity extends AppCompatActivity  implements
             // [START initialize_auth]
             mAuth = FirebaseAuth.getInstance();
             mAuth.signOut();
+
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    int selectedColor = Color.rgb(254, 0, 0);
+                    if(!hasActiveInternetConnection()){
+                        mDetailText.setText(R.string.nonet);
+                        mDetailText.setTextColor(selectedColor);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
 
             // [END initialize_auth]
 
@@ -231,7 +255,8 @@ public class LoginActivity extends AppCompatActivity  implements
 
         // [START_EXCLUDE]
         if (mVerificationInProgress && validatePhoneNumber()) {
-            startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+            landskode.registerCarrierNumberEditText(mPhoneNumberField);
+            startPhoneNumberVerification(landskode.getFullNumberWithPlus());
         }
         // [END_EXCLUDE]
     }
@@ -253,7 +278,7 @@ public class LoginActivity extends AppCompatActivity  implements
     private void startPhoneNumberVerification(String phoneNumber) {
         // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                landskode.getText().toString() + phoneNumber,        // Phone number to verify
+                phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -275,7 +300,7 @@ public class LoginActivity extends AppCompatActivity  implements
     private void resendVerificationCode(String phoneNumber,
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                landskode.getText().toString() + phoneNumber,        // Phone number to verify
+                phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -329,6 +354,28 @@ public class LoginActivity extends AppCompatActivity  implements
         } else {
             updateUI(STATE_INITIALIZED);
         }
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public boolean hasActiveInternetConnection() {
+        if (isNetworkAvailable()) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+            }
+        } else {
+        }
+        return false;
     }
 
     private void updateUI(int uiState, FirebaseUser user) {
@@ -498,7 +545,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                                 startActivity(intent);
 
                                             } else {
-                                                Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
                                                 startActivity(intent);
 
                                             }

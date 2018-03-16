@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="red">#fe3824</color>
+    <color name="organe">#ef9248</color>
+    <color name="grey">#66625f</color>
+    <color name="black">#000000</color>
+
+
+
+
+
+
 </resources>

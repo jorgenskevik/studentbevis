@@ -320,7 +320,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         studentNumber = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
         JodaTimeAndroid.init(this);
 
-
         if (path == null) {
             view2.setImageResource(R.drawable.facebookgirl);
 
@@ -354,7 +353,8 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
             selectedColor = Color.rgb(254, 56, 36);
             expirationButton.setText(R.string.expired);
             expirationButton.setTextSize(30);
-            expirationButton.setBackgroundColor(selectedColor);
+            expirationButton.setTextColor(selectedColor);
+            //expirationButton.setBackgroundColor(selectedColor);
 
         } else {
             //gyldig
@@ -372,8 +372,9 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     expirationButton.setTransformationMethod(null);
                     expirationDate = getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR);
                     expirationButton.setText(expirationDate);
-                    expirationButton.setTextColor(selectedWhite);
-                    expirationButton.setBackgroundColor(selectedColor);
+                    expirationButton.setTransformationMethod(null);
+                    expirationButton.setTextColor(selectedBlack);
+                    //expirationButton.setBackgroundColor(selectedColor);
                     expirationButton.setTextSize(22);
 
                 }else{
@@ -383,8 +384,9 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     expirationButton.setTransformationMethod(null);
                     expirationDate = getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR);
                     expirationButton.setText(expirationDate);
-                    expirationButton.setTextColor(selectedWhite);
-                    expirationButton.setBackgroundColor(selectedColor);
+                    expirationButton.setTextColor(selectedBlack);
+                    expirationButton.setTransformationMethod(null);
+                    //expirationButton.setBackgroundColor(selectedColor);
                     expirationButton.setTextSize(22);
                 }
             } catch (ParseException e) {
@@ -398,8 +400,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                 startActivity(new Intent(UserActivity.this, BarCodeActivity.class));
             }
         });
-
-
     }
 
     /**
@@ -477,6 +477,8 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                 Button myButtonCansel = new Button(this);
                 myButtonOk.setText("OK");
                 myButtonOk.setTextColor(selectedWhite);
+                myButtonOk.setTextColor(this.getResources().getColor(R.color.tw__solid_white));
+                myButtonCansel.setTextColor(this.getResources().getColor(R.color.tw__solid_white));
                 myButtonCansel.setTextColor(selectedWhite);
                 myButtonOk.setBackgroundColor(selectedColor);
                 myButtonCansel.setText(R.string.back);
@@ -569,11 +571,13 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                             selectedColor = Color.rgb(254, 56, 36);
                             expirationButton.setText(R.string.expired);
                             expirationButton.setTextSize(30);
-                            expirationButton.setBackgroundColor(selectedColor);
+                            expirationButton.setTextColor(selectedColor);
+                            //expirationButton.setBackgroundColor(selectedColor);
                         } else {
                             //gyldig
                             selectedColor = Color.rgb(239, 146, 72);
                             selectedWhite = Color.rgb(255, 255, 255);
+                            int black = Color.rgb(0,0,0);
                             targetFormat = new SimpleDateFormat("dd-MMM-yyyy");
                             try {
                                 if(Calendar.getInstance().get(Calendar.MONTH) + 1 < 8){
@@ -581,16 +585,16 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                                     formattedDate = targetFormat.format(date);
                                     expirationDate =getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR);
                                     expirationButton.setText(expirationDate);
-                                    expirationButton.setTextColor(selectedWhite);
-                                    expirationButton.setBackgroundColor(selectedColor);
+                                    expirationButton.setTextColor(black);
+                                    expirationButton.setTransformationMethod(null);
                                     expirationButton.setTextSize(22);
                                 }else{
                                     date = simpleDateFormat.parse(dateTimeExpiration);
                                     formattedDate = targetFormat.format(date);
                                     expirationDate =  getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR);
                                     expirationButton.setText(expirationDate);
-                                    expirationButton.setTextColor(selectedWhite);
-                                    expirationButton.setBackgroundColor(selectedColor);
+                                    expirationButton.setTextColor(black);
+                                    expirationButton.setTransformationMethod(null);
                                     expirationButton.setTextSize(22);
                                 }
                             } catch (ParseException e) {
@@ -632,9 +636,8 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                                     Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
                                     Picasso.with(getApplicationContext()).load(picture).resize(300,300).centerCrop().into(view2);
                                 }else{
-                                    float rotateImage = Float.parseFloat(userDetails.get(SessionManager.KEY_TURN));
-                                    Picasso.with(getApplicationContext()).load(user.getPicture()).rotate(rotateImage).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
-                                    Picasso.with(getApplicationContext()).load(picture).rotate(rotateImage).resize(300,300).centerCrop().into(view2);
+                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), user.getStudentNumber(), "my_image.jpeg"));
+                                    Picasso.with(getApplicationContext()).load(picture).resize(300,300).centerCrop().into(view2);
                                 }
 
                             }catch (NullPointerException e){
