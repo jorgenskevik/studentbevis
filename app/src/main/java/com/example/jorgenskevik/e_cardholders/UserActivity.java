@@ -369,7 +369,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     thisExpDate = userDetails.get(SessionManager.KEY_EXPERATIONDATE);
                     date = simpleDateFormat.parse(thisExpDate);
                     formattedDate = targetFormat.format(date);
-                    expirationButton.setTransformationMethod(null);
                     expirationDate = getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR);
                     expirationButton.setText(expirationDate);
                     expirationButton.setTransformationMethod(null);
@@ -385,7 +384,6 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     expirationDate = getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR);
                     expirationButton.setText(expirationDate);
                     expirationButton.setTextColor(selectedBlack);
-                    expirationButton.setTransformationMethod(null);
                     //expirationButton.setBackgroundColor(selectedColor);
                     expirationButton.setTextSize(22);
                 }
@@ -444,71 +442,74 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         }
         //sett profilbilde
         if (index == 2) {
-            userDetails = sessionManager.getUserDetails();
-            fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-            if (fourDigits.equals("BRUKT")) {
-                context = getApplicationContext();
-                duration = Toast.LENGTH_SHORT;
-                toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
-                toast.show();
+                userDetails = sessionManager.getUserDetails();
+                fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
 
+                if (fourDigits.equals("BRUKT")) {
+                    context = getApplicationContext();
+                    duration = Toast.LENGTH_SHORT;
+                    toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
+                    toast.show();
+
+                } else {
+                    selectedColor = Color.rgb(239, 146, 72);
+                    selectedWhite = Color.rgb(255, 255, 255);
+                    int selectedBlack = Color.rgb(50, 43, 43);
+                    int black = Color.rgb(0, 0, 0);
+
+                    LinearLayout linearLayout = new LinearLayout(this);
+                    linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    linearLayout.setOrientation(LinearLayout.VERTICAL);
+                    setContentView(linearLayout);
+                    double widthParam = 0.92;
+                    double heightParam = 0.5;
+                    DisplayMetrics dm = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(dm);
+                    int width = dm.widthPixels;
+                    int height = dm.heightPixels;
+                    ImageView imageView = new ImageView(this);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) (width * widthParam), (int) (height * heightParam));
+                    imageView.setLayoutParams(layoutParams);
+                    layoutParams.gravity = Gravity.CENTER;
+                    Button myButtonOk = new Button(this);
+                    Button myButtonCansel = new Button(this);
+                    myButtonOk.setText("OK");
+                    myButtonOk.setTextColor(black);
+                    myButtonCansel.setTextColor(selectedWhite);
+                    myButtonOk.setBackgroundColor(selectedColor);
+                    myButtonCansel.setText(R.string.back);
+                    myButtonCansel.setBackgroundColor(selectedBlack);
+                    TextView myTextView = new TextView(this);
+                    myTextView.setTextSize(16);
+                    myTextView.setText(R.string.pictureMessage);
+                    myTextView.setTextColor(black);
+                    myTextView.setPadding(10, 10, 10, 10);
+                    linearLayout.addView(myTextView);
+                    linearLayout.addView(myButtonOk);
+                    linearLayout.addView(myButtonCansel);
+
+                    myButtonOk.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                            pictureFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                            picturePath = pictureFile.getPath();
+                            Uri data = Uri.parse(picturePath);
+                            photoPickerIntent.setDataAndType(data, "image/*");
+                            startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
+                        }
+                    });
+
+                    myButtonCansel.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            Intent intent = new Intent(UserActivity.this, UserActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
             } else {
-                selectedColor = Color.rgb(239, 146, 72);
-                selectedWhite = Color.rgb(255, 255, 255);
-                int selectedBlack = Color.rgb(50, 43, 43);
-                int black = Color.rgb(0, 0, 0);
-
-                LinearLayout linearLayout = new LinearLayout(this);
-                linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                linearLayout.setOrientation(LinearLayout.VERTICAL);
-                setContentView(linearLayout);
-                double widthParam = 0.92;
-                double heightParam = 0.5;
-                DisplayMetrics dm = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(dm);
-                int width = dm.widthPixels;
-                int height = dm.heightPixels;
-                ImageView imageView = new ImageView(this);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) (width * widthParam), (int) (height * heightParam));
-                imageView.setLayoutParams(layoutParams);
-                layoutParams.gravity = Gravity.CENTER;
-                Button myButtonOk = new Button(this);
-                Button myButtonCansel = new Button(this);
-                myButtonOk.setText("OK");
-                myButtonOk.setTextColor(selectedWhite);
-                myButtonOk.setTextColor(this.getResources().getColor(R.color.tw__solid_white));
-                myButtonCansel.setTextColor(this.getResources().getColor(R.color.tw__solid_white));
-                myButtonCansel.setTextColor(selectedWhite);
-                myButtonOk.setBackgroundColor(selectedColor);
-                myButtonCansel.setText(R.string.back);
-                myButtonCansel.setBackgroundColor(selectedBlack);
-                TextView myTextView = new TextView(this);
-                myTextView.setTextSize(16);
-                myTextView.setText(R.string.pictureMessage);
-                myTextView.setTextColor(black);
-                myTextView.setPadding(10, 10, 10, 10);
-                linearLayout.addView(myTextView);
-                linearLayout.addView(myButtonOk);
-                linearLayout.addView(myButtonCansel);
-
-                myButtonOk.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                        pictureFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                        picturePath = pictureFile.getPath();
-                        Uri data = Uri.parse(picturePath);
-                        photoPickerIntent.setDataAndType(data, "image/*");
-                        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
-                    }
-                });
-
-                myButtonCansel.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        Intent intent = new Intent(UserActivity.this, UserActivity.class);
-                        startActivity(intent);
-                    }
-                });
+                Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_LONG).show();
             }
         }
         //Oppdater brukeren

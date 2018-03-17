@@ -59,37 +59,6 @@ public class TermsActivity extends Activity {
         getWindow().setLayout((int)(width*.9), (int)(height*.8));
 
         Button cancelbutton = (Button) findViewById(R.id.cancelbutton);
-        Button yesbutton = (Button) findViewById(R.id.yesbutton);
-        yesbutton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                String buildVersion = Build.VERSION.RELEASE;
-                String firstLetter = String.valueOf(buildVersion.charAt(0));
-                int number = Integer.parseInt(firstLetter);
-                if(number < maxBuildVersion){
-                    Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    return;
-
-                }
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(TermsActivity.this, UserActivity.class);
-                    startActivity(intent);
-
-                }else{
-                    if(number < maxBuildVersion){
-
-                    }else{
-                        String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        ActivityCompat.requestPermissions(TermsActivity.this, permissionRequest, CAM_REQUEST_CODE);
-                        Toast.makeText(getApplicationContext(), R.string.GiveAccess, Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-                Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
 
         cancelbutton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -98,5 +67,30 @@ public class TermsActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void openCard(View view) {
+        String buildVersion = Build.VERSION.RELEASE;
+        String firstLetter = String.valueOf(buildVersion.charAt(0));
+        int number = Integer.parseInt(firstLetter);
+        if(number < maxBuildVersion){
+            Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }else{
+            if(number < maxBuildVersion){
+
+            }else{
+                String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                ActivityCompat.requestPermissions(this, permissionRequest, CAM_REQUEST_CODE);
+                Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 }

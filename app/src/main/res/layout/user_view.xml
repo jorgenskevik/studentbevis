@@ -9,15 +9,31 @@
     tools:context="com.example.jorgenskevik.e_cardholders.UserActivity">
 
     <ImageView
-        android:id="@+id/window1"
+        android:id="@+id/window2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        android:background="#ef9248"
+        android:layout_above="@+id/test2" />
+
+    <ImageView
+        android:id="@+id/window1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentRight="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/facebookgirl"
         android:layout_above="@+id/test2" />
+
 
     <ImageView
         android:id="@+id/companynamePhoto"
@@ -61,7 +77,7 @@
         android:fontFamily="sans-serif"
         android:includeFontPadding="false"
         android:text="@string/studentbevis"
-        android:textColor="@android:color/black"
+        android:textColor="@color/grey"
         android:textSize="14sp"
         android:layout_above="@+id/test3"
         android:layout_centerHorizontal="true"/>
@@ -161,9 +177,9 @@
 
         android:background="@color/tw__transparent"
         android:src="@drawable/newsettings"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/window1"
+        android:layout_alignLeft="@+id/window1"
+        android:layout_alignStart="@+id/window1" />
 
     <Button
         android:id="@+id/button11"

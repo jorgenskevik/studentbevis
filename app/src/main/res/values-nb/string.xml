@@ -9,7 +9,7 @@
     <string name="Callus">Telefon:</string>
     <string name="Terms">Vilkår</string>
     <string name="Picture">Bilde</string>
-    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og gyldigheten til det digitale studentbeviset. Appen vil også vise bilde av deg - som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitimasjon hos selskaper som har avtale med ditt studiested om honnør-billetter. Ved førstegangs bruk må appen være tilkoblet internett for å kunne last ned informasjonen som finnes om deg. Denne blir lagret lokalt og du trenger derfor ikke være på nett for å bruke appen senere. KortFri tar ikke ansvar for bøter, misbruk og lignende.</string>
+    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og gyldigheten til det digitale studentbeviset. Appen vil også vise bilde av deg - som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitimasjon hos selskaper som har avtale med ditt studiested om honnør-billetter. Ved førstegangs bruk må appen være tilkoblet internett for å kunne last ned informasjonen som finnes om deg. Denne blir lagret lokalt og du trenger derfor ikke være på nett for å bruke appen senere. KortFri tar ikke ansvar for bøter, misbruk og lignende. Kortet vil være gyldig et semester av gangen før det må oppdateres, vårsemestret strekker seg fra 01.01-31.07 og høstsemestret fra 01.08-31.12.</string>
     <string name="termsdescription2">Er du over 15 år og godtar våre vilkår?</string>
     <string name="termsdescription3">Kortet vil være gyldig et semester av gangen før det må oppdateres, vårsemestret strekker seg fra 01.01-31.07 og høstsemestret fra 01.08-31.12.</string>
     <string name="barcode">Barkode</string>
@@ -57,8 +57,6 @@
     <string name="infomasjon">Kontaktinformasjon</string>
     <string name="nonet">Koble til Wifi</string>
 
-
-
     <string name="label_phone_auth">Phone Number Authentication</string>
     <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
     <string name="signed_in">Write phone number</string>
@@ -66,8 +64,8 @@
     <string name="verify_phone_auth">Logg inn</string>
     <string name="resend_phone_auth">Send på ny</string>
     <string name="hint_phone_number">Mobilnummer</string>
-    <string name="hint_verification_code">Verifiserings Kode</string>
-    <string name="status_code_sent">Code Sent</string>
+    <string name="hint_verification_code">Verifiseringskode</string>
+    <string name="status_code_sent">Kode Sendt</string>
     <string name="status_verification_failed">Verifisering feilet</string>
     <string name="status_verification_succeeded">Verifisert</string>
     <string name="status_sign_in_failed">Sign-in feilet</string>
@@ -76,8 +74,7 @@
     <string name="sign_out">Sign out</string>
     <string name="Cancel">Avbryt</string>
     <string name="Yes">Ja</string>
-
-
+    <string name="Skrivinn">Fyll inn mobilnummer</string>
 
     <string name="updatePicture">Kunne ikke oppdatere bilde</string>
     <string name="pictureMessage">For å bytte profilbilde må du skrive inn en kode. Denne koden får du utlevert av din lærer eller IT-ansvarlig. OBS: Koden kan bare brukes én gang! Det er bare IT-ansvarlige som kan bytte ditt profilbilde etter at koden er brukt. Dette gjøres fordi kortet skal brukes som identifikasjon. Husk at det kan være straffbart å bruke en annen persons identitet for å oppnå uberettiget vinning. (For. eks: Bruke kompisens eller venninnens app for å få billigere bussbillett.)</string>
