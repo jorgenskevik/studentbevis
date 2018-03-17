@@ -11,7 +11,6 @@
     android:paddingTop="0dp"
     tools:context="com.example.jorgenskevik.e_cardholders.ContactUsActivity">
 
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
