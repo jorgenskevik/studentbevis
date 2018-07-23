@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/skolebevis"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:elevation="26dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/school_sertifivcat" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/valid"
+        android:layout_marginEnd="30dp"
+        android:elevation="25dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/view">
+    </View>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:elevation="26dp"
+        android:onClick="openSettings"
+        android:src="@drawable/icon_settings"
+        android:layout_marginEnd="15dp"
+        android:layout_alignBottom="@+id/skolebevis"
+        android:layout_alignEnd="@+id/view" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/icon_camera_black"
+        android:layout_below="@+id/skolebevis"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:elevation="25dp"
+        android:id="@+id/sircle"/>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/sircle"
+        android:layout_marginTop="20dp"
+        android:elevation="26dp"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/short_logo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:elevation="25dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/flag_bangladesh"
+        android:layout_alignBottom="@+id/view"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/view"
+        android:layout_below="@+id/textView11"
+        android:layout_marginStart="20dp"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:elevation="26dp"
+        android:layout_marginTop="45dp"
+        android:text="@string/school_this" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView12"
+        android:layout_below="@+id/textView12"
+        android:layout_marginTop="45dp"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:elevation="26dp"
+        android:text="@string/studentnumber" />
+
+    <View
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:elevation="25dp"
+        android:background="@color/line_color"
+        android:layout_below="@+id/textView12"
+        android:layout_marginTop="22dp"
+        android:layout_alignStart="@+id/textView12"
+        android:layout_alignEnd="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:elevation="26dp"
+        android:text="TextView"
+        android:layout_marginEnd="20dp"
+        android:layout_above="@+id/textView14"
+        android:layout_alignEnd="@+id/view" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/view"
+        android:layout_marginEnd="20dp"
+        android:layout_alignTop="@+id/textView13"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:elevation="26dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="" />
+
+
+</RelativeLayout>

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * The type Login model.
  */
-public class LoginModel {
+public class Login_model {
     /**
      * The Token.
      */
@@ -25,9 +25,6 @@ public class LoginModel {
     @Expose
     private UnitMembership unitMembership;
 
-    @SerializedName("auth_token")
-    @Expose
-    private String auth_token;
 
     public User getUser() {
         return user;
@@ -51,13 +48,5 @@ public class LoginModel {
 
     public void setUnitMembership(UnitMembership unitMembership) {
         this.unitMembership = unitMembership;
-    }
-
-    public String getAuth_token() {
-        return auth_token;
-    }
-
-    public void setAuth_token(String auth_token) {
-        this.auth_token = auth_token;
     }
 }

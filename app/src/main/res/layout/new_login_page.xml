@@ -11,33 +11,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4.2"
-        android:background="@drawable/darkblue"
+        android:background="@color/tw__solid_white"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="280dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="45dp"
-            android:src="@drawable/akalogo" />
-
-        <com.hbb20.CountryCodePicker
-            android:layout_marginTop="20dp"
-            android:id="@+id/picker"
-            app:ccp_defaultNameCode="no"
-            app:ccp_contentColor="@color/tw__solid_white"
-            app:ccp_defaultPhoneCode="47"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/tw__solid_white" />
 
         <TextView
             android:id="@+id/status"
@@ -52,11 +32,21 @@
 
             <TextView
                 android:id="@+id/detail"
+                android:layout_marginTop="145dp"
                 style="@style/ThemeOverlay.MyTextDetail"
-                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
+                android:fontFamily="sans-serif"
                 tools:text="@string/verification" />
+
+            <View
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/line_color"
+                android:layout_below="@+id/textView4"
+                />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -67,6 +57,16 @@
                 android:layout_centerHorizontal="true"
                 android:padding="5dp"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:text="Skriv inn mobilnummeret ditt" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -75,7 +75,7 @@
         android:layout_height="0dp"
         android:layout_weight="1.8"
         android:alpha="0.9"
-        android:background="@drawable/darkblue"
+        android:background="@color/tw__solid_white"
         android:gravity="center_vertical">
 
         <LinearLayout
@@ -90,15 +90,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2.0">
+                android:weightSum="3.0">
+
+                <EditText
+                    android:id="@+id/picker"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"
+                    android:text="+47"
+                    android:layout_weight="0.4"
+                    android:inputType="phone"
+                    />
 
                 <EditText
                     android:id="@+id/field_phone_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_phone_number"
-                    android:theme="@style/ThemeOverlay.MyLightEditText"
-                    android:layout_weight="1.0"
+                    android:layout_weight="1.3"
                     android:inputType="phone"
                     />
 
@@ -106,9 +115,8 @@
                     android:id="@+id/field_verification_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_verification_code"
-                    android:theme="@style/ThemeOverlay.MyLightEditText"
-                    android:layout_weight="1.0"
+                    android:hint=""
+                    android:layout_weight="1.3"
                     android:inputType="number"
                     />
             </LinearLayout>
@@ -117,32 +125,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3.0">
+                android:weightSum="3.05">
 
                 <Button
-                    android:theme="@style/ThemeOverlay.MyDarkButton"
                     android:id="@+id/button_start_verification"
                     android:layout_width="0dp"
                     android:textAllCaps="false"
+                    android:background="@drawable/tickerbutton"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:textColor="@color/logogreycolor"
                     android:layout_weight="1.0"
                     android:text="@string/start_phone_auth"/>
 
                 <Button
-                    android:theme="@style/ThemeOverlay.MyDarkButton"
                     android:id="@+id/button_verify_phone"
                     android:layout_width="0dp"
                     android:textAllCaps="false"
+                    android:textColor="@color/logogreycolor"
+                    android:background="@drawable/tickerbutton"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:text="@string/verify_phone_auth"/>
 
                 <Button
-                    android:theme="@style/ThemeOverlay.MyDarkButton"
                     android:id="@+id/button_resend"
                     android:layout_width="0dp"
                     android:textAllCaps="false"
+                    android:textColor="@color/logogreycolor"
+                    android:background="@drawable/tickerbutton"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="1.0"
                     android:text="@string/resend_phone_auth"/>
             </LinearLayout>

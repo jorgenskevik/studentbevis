@@ -16,221 +16,162 @@ public class User {
     @Expose
     private String id;
 
-    @SerializedName("name")
+    @SerializedName("first_name")
     @Expose
-    private String name;
+    private String first_name;
+
+    @SerializedName("last_name")
+    @Expose
+    private String last_name;
 
     @SerializedName("email")
     @Expose
     private String email;
 
-    @SerializedName("phoneNumber")
+    @SerializedName("phone")
     @Expose
-    private String phoneNumber;
+    private String phone;
 
-    @SerializedName("pictureToken")
+    @SerializedName("picture_token")
     @Expose
-    private String pictureToken;
+    private String picture_token;
 
     @SerializedName("picture")
     @Expose
     private String picture;
 
-    @SerializedName("role")
+    @SerializedName("user_role")
     @Expose
-    private String role;
+    private int user_role;
 
-    @SerializedName("expirationDate")
+    @SerializedName("date_of_birth")
     @Expose
-    private Date expirationDate;
+    private Date date_of_birth;
 
-    @SerializedName("studentNumber")
+    @SerializedName("has_logged_in")
     @Expose
-    private String studentNumber;
+    private boolean has_logged_in;
 
-    @SerializedName("dateOfBirth")
+
+    @SerializedName("has_set_picture")
     @Expose
-    private Date dateOfBirth;
+    private boolean has_set_picture;
+
+    @SerializedName("updated_at")
+    @Expose
+    private Date updated_at;
+
+    @SerializedName("created_at")
+    @Expose
+    private Date created_at;
 
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    /**
-     * Sets name.
-     *
-     * @param name the name
-     */
-    public void setName(String name) {
-        this.name = name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    /**
-     * Gets email.
-     *
-     * @return the email
-     */
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Sets email.
-     *
-     * @param email the email
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * Gets phone number.
-     *
-     * @return the phone number
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    /**
-     * Sets phone number.
-     *
-     * @param phoneNumber the phone number
-     */
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    /**
-     * Gets picture token.
-     *
-     * @return the picture token
-     */
-    public String getPictureToken() {
-        return pictureToken;
+    public String getPicture_token() {
+        return picture_token;
     }
 
-    /**
-     * Sets picture token.
-     *
-     * @param pictureToken the picture token
-     */
-    public void setPictureToken(String pictureToken) {
-        this.pictureToken = pictureToken;
+    public void setPicture_token(String picture_token) {
+        this.picture_token = picture_token;
     }
 
-    /**
-     * Gets picture.
-     *
-     * @return the picture
-     */
     public String getPicture() {
         return picture;
     }
 
-    /**
-     * Sets picture.
-     *
-     * @param picture the picture
-     */
     public void setPicture(String picture) {
         this.picture = picture;
     }
 
-    /**
-     * Gets role.
-     *
-     * @return the role
-     */
-    public String getRole() {
-        return role;
+    public int getUser_role() {
+        return user_role;
     }
 
-    /**
-     * Sets role.
-     *
-     * @param role the role
-     */
-    public void setRole(String role) {
-        this.role = role;
+    public void setUser_role(int user_role) {
+        this.user_role = user_role;
     }
 
-    /**
-     * Gets expiration date.
-     *
-     * @return the expiration date
-     */
-    public Date getExpirationDate() {
-        return expirationDate;
+    public Date getDate_of_birth() {
+        return date_of_birth;
     }
 
-    /**
-     * Sets expiration date.
-     *
-     * @param expirationDate the expiration date
-     */
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setDate_of_birth(Date date_of_birth) {
+        this.date_of_birth = date_of_birth;
     }
 
-    /**
-     * Gets student number.
-     *
-     * @return the student number
-     */
-    public String getStudentNumber() {
-        return studentNumber;
+    public boolean isHas_logged_in() {
+        return has_logged_in;
     }
 
-    /**
-     * Sets student number.
-     *
-     * @param studentNumber the student number
-     */
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
+    public void setHas_logged_in(boolean has_logged_in) {
+        this.has_logged_in = has_logged_in;
     }
 
-    /**
-     * Gets date of birth.
-     *
-     * @return the date of birth
-     */
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public boolean isHas_set_picture() {
+        return has_set_picture;
     }
 
-    /**
-     * Sets date of birth.
-     *
-     * @param dateOfBirth the date of birth
-     */
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setHas_set_picture(boolean has_set_picture) {
+        this.has_set_picture = has_set_picture;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getFullName(){
+        return this.first_name + " " + this.last_name;
     }
 }
 

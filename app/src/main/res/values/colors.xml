@@ -7,4 +7,14 @@
     <color name="organe">#ef9248</color>
     <color name="grey">#322b2b</color>
     <color name="black">#000000</color>
+    <color name="logogreycolor">#373642</color>
+    <color name="logobluecolor">#0091e4</color>
+    <color name="background">#EBEFF5</color>
+    <color name="invalid_backgroud">#FF0028</color>
+    <color name="valid_backgroud">#EBEFF5</color>
+    <color name="line_color">#979797</color>
+
+
+
+
 </resources>

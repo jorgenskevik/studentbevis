@@ -1,6 +1,7 @@
 package com.example.jorgenskevik.e_cardholders;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.EnumMap;
@@ -45,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
 import com.google.zxing.BarcodeFormat;
@@ -54,147 +57,63 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 /**
  * The type Bar code activity.
  */
 public class BarCodeActivity extends Activity{
-
-    /**
-     * The Session.
-     */
-    SessionManager session;
-    private static double widthParam = 0.92;
-    private static double heightParam = 0.5;
-    private static double widthSize = 0.9;
-    private static double heightSize = 0.7;
-    private static final int WHITE = 0xFFFFFFFF;
-    private static final int BLACK = 0xFF000000;
-
+    TextView button_back;
+    TextView continue_picture;
+    EditText picture_token;
+    HashMap<String, String> userDetails;
+    SessionManager sessionManager;
+    String fourDigits, codeString;
+    Context context;
+    int duration;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.picture_info);
 
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        button_back = (TextView) findViewById(R.id.button_back);
+        continue_picture = (TextView) findViewById(R.id.button_ok);
+        picture_token = (EditText) findViewById(R.id.code_picture);
 
-        setContentView(linearLayout);
-        session = new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
+        userDetails = sessionManager.getUserDetails();
+        fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
+        codeString = picture_token.getText().toString();
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-        TextView textView = new TextView(this);
-        textView.setText(R.string.barcode);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(32);
-        textView.setTextColor(BLACK);
-
-        // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
-
-        // name
-        String id = user.get(SessionManager.KEY_STUDENTNUMBER);
-
-        // barcode image
-        Bitmap bitmap = null;
-        ImageView imageView = new ImageView(this);
-        try {
-
-            bitmap = encodeAsBitmap(id, BarcodeFormat.CODE_39, 700, 200);
-            imageView.setImageBitmap(bitmap);
-
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(width*widthParam), (int)(height*heightParam));
-        imageView.setLayoutParams(layoutParams);
-        layoutParams.gravity=Gravity.CENTER;
-        linearLayout.addView(textView);
-        linearLayout.addView(imageView);
-
-        Button cancel = new Button(this);
-        int selectedColor = Color.rgb(239, 146, 72);
-        int selectedBlack = Color.rgb(0, 0, 0);
-
-        cancel.setBackgroundColor(selectedColor);
-        cancel.setText(R.string.CancelBarCode);
-        cancel.setTextColor(selectedBlack);
-
-        cancel.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view) {
-                Intent intent = new Intent(BarCodeActivity.this, UserActivity.class);
-                startActivity(intent);
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent back = new Intent(BarCodeActivity.this, UserActivity.class);
+                startActivity(back);
             }
         });
-
-        linearLayout.addView(cancel);
-
-        getWindow().setLayout((int) (width*widthSize) ,(int) (height*heightSize));
-    }
-
-
-    /**
-     * Encode as bitmap bitmap.
-     *
-     * @param contents   the contents
-     * @param format     the format
-     * @param img_width  the img width
-     * @param img_height the img height
-     * @return the bitmap
-     * @throws WriterException the writer exception
-     */
-    Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
-        String contentsToEncode = contents;
-        if (contentsToEncode == null) {
-            return null;
-        }
-        Map<EncodeHintType, Object> hints = null;
-        String encoding = guessAppropriateEncoding(contentsToEncode);
-        if (encoding != null) {
-            hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
-            hints.put(EncodeHintType.CHARACTER_SET, encoding);
-        }
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix result;
-        try {
-            result = writer.encode(contentsToEncode, format, img_width, img_height, hints);
-        } catch (IllegalArgumentException iae) {
-            return null;
-        }
-        int width = result.getWidth();
-        int height = result.getHeight();
-        int[] pixels = new int[width * height];
-        for (int y = 0; y < height; y++) {
-            int offset = y * width;
-            for (int x = 0; x < width; x++) {
-                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+        continue_picture.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (fourDigits.trim().equals(codeString)){
+                    Intent back = new Intent(BarCodeActivity.this, Picture_info.class);
+                    back.putExtra("picture_token", codeString);
+                    startActivity(back);
+                }else {
+                    context = getApplicationContext();
+                    duration = Toast.LENGTH_SHORT;
+                    toast = Toast.makeText(context, R.string.wrongCode, duration);
+                    toast.show();
+                }
             }
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        return bitmap;
+        });
     }
-
-    private static String guessAppropriateEncoding(CharSequence contents) {
-        for (int i = 0; i < contents.length(); i++) {
-            if (contents.charAt(i) > 0xFF) {
-                return "UTF-8";
-            }
-        }
-        return null;
-    }
-
 }
 
 

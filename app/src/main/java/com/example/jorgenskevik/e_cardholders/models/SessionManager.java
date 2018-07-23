@@ -4,20 +4,11 @@ package com.example.jorgenskevik.e_cardholders.models;
  * Created by jorgenskevik on 27.03.2017.
  */
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-
-import com.digits.sdk.android.Digits;
-import com.example.jorgenskevik.e_cardholders.BarCodeActivity;
-import com.example.jorgenskevik.e_cardholders.TermsActivity;
-import com.example.jorgenskevik.e_cardholders.UserActivity;
-import com.example.jorgenskevik.e_cardholders.LoginActivity;
 
 /**
  * The type Session manager.
@@ -27,19 +18,19 @@ public class SessionManager {
      * The Pref.
      */
 // Shared Preferences
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     /**
      * The Editor.
      */
 // Editor for Shared preferences
-    Editor editor;
+    private Editor editor;
 
     /**
      * The Context.
      */
 // Context
-    Context _context;
+    private Context _context;
 
     /**
      * The Private mode.
@@ -51,77 +42,32 @@ public class SessionManager {
     private static final String PREF_NAME = "AndroidHivePref";
 
     // All Shared Preferences Keys
-    private static final String IS_LOGIN = "IsLoggedIn";
-
-    /**
-     * The constant KEY_NAME.
-     */
-// User name (make variable public to access from outside)
-    public static final String KEY_NAME = "name";
-
-    /**
-     * The constant KEY_EMAIL.
-     */
-// Email address (make variable public to access from outside)
+    public static final String IS_LOGIN = "IsLoggedIn";
+    public static final String KEY_FULL_NAME = "full_name";
     public static final String KEY_EMAIL = "email";
-
-    /**
-     * The constant KEY_ID.
-     */
-// id address (make variable public to access from outside)
     public static final String KEY_ID = "id";
-
-    /**
-     * The constant KEY_ROLE.
-     */
-// role address (make variable public to access from outside)
-    public static final String  KEY_ROLE = "role";
-
-    /**
-     * The constant KEY_TOKEN.
-     */
-// token address (make variable public to access from outside)
+    public static final String KEY_ROLE = "role";
     public static final String KEY_TOKEN = "token";
-
-    /**
-     * The constant KEY_PICTURETOKEN.
-     */
-// pictureToken address (make variable public to access from outside)
     public static final String KEY_PICTURETOKEN = "pictureToken";
-
-    /**
-     * The constant KEY_EXPERATIONDATE.
-     */
-// experationDate address (make variable public to access from outside)
     public static final String KEY_EXPERATIONDATE = "experationDate";
-
-    /**
-     * The constant KEY_STUDENTNUMBER.
-     */
-// studentNumber address (make variable public to access from outside)
     public static final String KEY_STUDENTNUMBER = "studentNumber";
-
-    /**
-     * The constant KEY_PATH.
-     */
-// path adress (make variable public to access from outside)
     public static final String KEY_PATH = "path";
-
-    /**
-     * The constant KEY_BIRTHDATE.
-     */
-// birthDate address (make variable public to access from outside)
     public static final String KEY_BIRTHDATE = "birthDate";
-
-    /**
-     * The constant KEY_PICTURE.
-     */
     public static final String KEY_PICTURE = "picture";
-
-
     public static final String KEY_CHECK = "check";
-
     public static final String KEY_TURN = "turn";
+    public static final String KEY_UNIT_MEMBERSHIP_ID = "unit_membership_id";
+    public static final String KEY_STUDENT_CLASS = "student_class";
+    public static final String KEY_UNIT_NAME = "unit_name";
+    public static final String KEY_UNIT_SHORT_NAME = "unit_short_name";
+    public static final String KEY_PUBLIC_CONTACT_PHONE = "public_contact_phone";
+    public static final String KEY_PUBLIC_CONTACT_EMAIL = "public_contact_email";
+    public static final String KEY_UNIT_LOGO = "unit_logo";
+    public static final String KEY_UNIT_LOGO_SHORT = "unit_logo_short";
+    public static final String KEY_UNIT_ID = "unit_id";
+    public static final String KEY_PHONE_NUMBER = "phone_number";
+    public static final String KEY_CARD_TYPE = "card_type";
+
 
 
     /**
@@ -136,78 +82,55 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-    /**
-     * Create login session.
-     *
-     * @param name           the name
-     * @param email          the email
-     * @param token          the token
-     * @param studentNumber  the student number
-     * @param id             the id
-     * @param role           the role
-     * @param pictureToken   the picture token
-     * @param experationDate the experation date
-     * @param birthday       the birthday
-     * @param picture        the picture
-     */
-    public void createLoginSession(String name, String email, String token, String studentNumber, String id, String role, String pictureToken, String experationDate, String birthday, String picture){
-        // Storing login value as TRUE
+
+
+
+    public void create_login_session_unit(String unit_name, String unit_short_name, String unit_logo, String unit_logo_short, int unit_id,
+                                         String public_email, String public_phone, String card_type){
         editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_UNIT_NAME, unit_name);
+        editor.putString(KEY_UNIT_SHORT_NAME, unit_short_name);
+        editor.putString(KEY_UNIT_LOGO, unit_logo);
+        editor.putString(KEY_UNIT_LOGO_SHORT, unit_logo_short);
+        editor.putInt(KEY_UNIT_ID, unit_id);
+        editor.putString(KEY_PUBLIC_CONTACT_EMAIL, public_email);
+        editor.putString(KEY_PUBLIC_CONTACT_PHONE, public_phone);
+        editor.putString(KEY_CARD_TYPE, card_type);
+        editor.commit();
+    }
 
-        // Storing name in pref
-        editor.putString(KEY_NAME, name);
 
-        // Storing email in pref
-        editor.putString(KEY_EMAIL, email);
+    public void create_login_session_unit_member(String expiration_date, String student_class, String student_number, int unit_membership_id ){
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_EXPERATIONDATE, expiration_date);
+        editor.putString(KEY_STUDENT_CLASS, student_class);
+        editor.putString(KEY_STUDENTNUMBER, student_number);
+        editor.putInt(KEY_UNIT_MEMBERSHIP_ID, unit_membership_id);
+        editor.commit();
+    }
 
-        // Storing id in pref
-        editor.putString(KEY_ID, id);
+    public void create_login_session_user(String full_name, String user_email, String token, String user_id, int role,
+                                          String pictureToken, String birthday, String picture){
 
-        // Storing token in pref
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putString(KEY_FULL_NAME, full_name);
+        editor.putString(KEY_EMAIL, user_email);
+        editor.putString(KEY_ID, user_id);
         editor.putString(KEY_TOKEN, token);
-
-        // Storing role in pref
-        editor.putString(KEY_ROLE, role);
-
-        // Storing role in pref
+        editor.putInt(KEY_ROLE, role);
         editor.putString(KEY_PICTURETOKEN, pictureToken);
-
-        // Storing studentnumber in pref
-
-        editor.putString(KEY_STUDENTNUMBER, studentNumber);
-
-        // Storing role in pref
-        editor.putString(KEY_EXPERATIONDATE, experationDate);
-
-        // Storing birthdate in pref
         editor.putString(KEY_BIRTHDATE, birthday);
-
-        // Storing picture in pref
         editor.putString(KEY_PICTURE, picture);
-
         // commit changes
         editor.commit();
     }
 
-    /**
-     * Create updated login session.
-     *
-     * @param name           the name
-     * @param email          the email
-     * @param studentNumber  the student number
-     * @param id             the id
-     * @param role           the role
-     * @param pictureToken   the picture token
-     * @param dateOfBirth    the date of birth
-     * @param experationDate the experation date
-     * @param picture        the picture
-     */
-    public void createUpdatedLoginSession(String name, String email, String studentNumber, String id, String role, String pictureToken, String dateOfBirth ,String experationDate, String picture){
+    public void update_user(String name, String email, String id, int role, String pictureToken, String dateOfBirth , String picture){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing name in pref
-        editor.putString(KEY_NAME, name);
+        editor.putString(KEY_FULL_NAME, name);
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
@@ -216,19 +139,15 @@ public class SessionManager {
         editor.putString(KEY_ID, id);
 
         // Storing role in pref
-        editor.putString(KEY_ROLE, role);
+        editor.putInt(KEY_ROLE, role);
 
         // Storing role in pref
         editor.putString(KEY_PICTURETOKEN, pictureToken);
-
-        // Storing studentnumber in pref
-        editor.putString(KEY_STUDENTNUMBER, studentNumber);
 
         // Storing dateofbirth in pref
         editor.putString(KEY_BIRTHDATE, dateOfBirth);
 
         // Storing role in pref
-        editor.putString(KEY_EXPERATIONDATE, experationDate);
 
         editor.putString(KEY_PICTURE, picture);
 
@@ -270,9 +189,7 @@ public class SessionManager {
 
         // commit changes
         editor.apply();
-
     }
-
 
     /**
      * Update picture.
@@ -315,7 +232,6 @@ public class SessionManager {
 
     }
 
-
     /**
      * Is logged in boolean.
      *
@@ -331,10 +247,37 @@ public class SessionManager {
      *
      * @return the hash map
      */
+
+    public HashMap<String, String> getUnitMemberDetails(){
+        HashMap<String, String> unitMember = new HashMap<String, String>();
+        unitMember.put(KEY_EXPERATIONDATE, pref.getString(KEY_EXPERATIONDATE, null));
+        unitMember.put(KEY_STUDENT_CLASS, pref.getString(KEY_STUDENT_CLASS, null));
+        unitMember.put(KEY_STUDENTNUMBER, pref.getString(KEY_STUDENTNUMBER, null));
+        unitMember.put(KEY_UNIT_MEMBERSHIP_ID, String.valueOf(pref.getInt(KEY_UNIT_MEMBERSHIP_ID, 0)));
+
+        return unitMember;
+    }
+
+
+    public HashMap<String, String> getUnitDetails(){
+        HashMap<String, String> unit = new HashMap<String, String>();
+        unit.put(KEY_UNIT_NAME, pref.getString(KEY_UNIT_NAME, null));
+        unit.put(KEY_UNIT_SHORT_NAME, pref.getString(KEY_UNIT_SHORT_NAME, null));
+        unit.put(KEY_UNIT_LOGO_SHORT, pref.getString(KEY_UNIT_LOGO_SHORT, null));
+        unit.put(KEY_UNIT_LOGO, pref.getString(KEY_UNIT_LOGO, null));
+        unit.put(KEY_UNIT_ID, String.valueOf(pref.getInt(KEY_UNIT_ID, 0)));
+        unit.put(KEY_PUBLIC_CONTACT_EMAIL, pref.getString(KEY_PUBLIC_CONTACT_EMAIL, null));
+        unit.put(KEY_PUBLIC_CONTACT_PHONE, pref.getString(KEY_PUBLIC_CONTACT_PHONE, null));
+        unit.put(KEY_CARD_TYPE, pref.getString(KEY_CARD_TYPE, null));
+
+        return unit;
+    }
+
     public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
+
+        user.put(KEY_FULL_NAME, pref.getString(KEY_FULL_NAME, null));
 
         // user email
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
@@ -349,9 +292,11 @@ public class SessionManager {
         user.put(KEY_STUDENTNUMBER, pref.getString(KEY_STUDENTNUMBER, null));
 
         // user role
-        user.put(KEY_ROLE, pref.getString(KEY_ROLE, null));
+        user.put(KEY_ROLE, String.valueOf(pref.getInt(KEY_ROLE, 0)));
 
-        // user expertaionDate
+        user.put(KEY_UNIT_ID, String.valueOf(pref.getInt(KEY_UNIT_ID, 0)));
+
+        // user expertaionDat
         user.put(KEY_EXPERATIONDATE, pref.getString(KEY_EXPERATIONDATE, null));
 
         // user pictureToken
@@ -371,6 +316,11 @@ public class SessionManager {
 
         user.put(KEY_TURN, pref.getString(KEY_TURN, null));
 
+        user.put(KEY_UNIT_SHORT_NAME, pref.getString(KEY_UNIT_SHORT_NAME, null));
+
+        user.put(KEY_UNIT_LOGO, pref.getString(KEY_UNIT_LOGO, null));
+
+        user.put(KEY_PHONE_NUMBER, pref.getString(KEY_PHONE_NUMBER, null));
 
         // return user
         return user;
@@ -379,12 +329,24 @@ public class SessionManager {
     /**
      * Logout user.
      */
+
+
+
+
+
     public void logoutUser(){
         // Clearing all data from Shared Preferences
         //editor.clear();
-        editor.remove(KEY_BIRTHDATE);
+        editor.remove(KEY_UNIT_NAME);
+        editor.remove(KEY_UNIT_LOGO);
+        editor.remove(KEY_UNIT_LOGO_SHORT);
+        editor.remove(KEY_UNIT_ID);
+        editor.remove(KEY_PUBLIC_CONTACT_EMAIL);
+        editor.remove(KEY_PUBLIC_CONTACT_PHONE);
+        editor.remove(KEY_STUDENT_CLASS);
+        editor.remove(KEY_UNIT_MEMBERSHIP_ID);
         editor.remove(IS_LOGIN);
-        editor.remove(KEY_NAME);
+        editor.remove(KEY_FULL_NAME);
         editor.remove(KEY_EMAIL);
         editor.remove(KEY_ID);
         editor.remove(KEY_ROLE);
@@ -396,11 +358,9 @@ public class SessionManager {
         editor.remove(KEY_PATH);
         editor.remove(KEY_PICTURE);
         editor.remove(KEY_CHECK);
-        editor.commit();
-    }
-
-    public void deletePhoto(){
-        editor.remove(KEY_PATH);
+        editor.remove(KEY_UNIT_SHORT_NAME);
+        editor.remove(KEY_PHONE_NUMBER);
+        editor.remove(KEY_CARD_TYPE);
         editor.commit();
     }
 }

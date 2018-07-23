@@ -35,28 +35,25 @@
     <string name="companyname">Aka trh</string>
     <string name="GyldigTil">Gyldig for </string>
     <string name="expired">UTGÅTT</string>
-    <string name="studentnumber">Studentnr:</string>
+    <string name="studentnumber">Studentnummer</string>
     <string name="Barcode">Barkode:</string>
     <string name="Not">Ugyldig</string>
     <string name="yourPic">Ditt bilde:</string>
     <string name="writepictureToken">Skriv inn bildekode:</string>
     <string name="setPic">Sett bilde</string>
     <string name="back">Tilbake</string>
-    <string name="spring">Vårsemester</string>
-    <string name="fall">Høstsemester</string>
+    <string name="spring">Gyldig Vår</string>
+    <string name="fall">Gyldig Høst</string>
     <string name="checkBox">Jeg godtar</string>
     <string name="moreInfo">Kontakt IT-avdelingen for å få din kode</string>
     <string name="policy">Personvern</string>
     <string name="acceptTerms">Huk av "jeg godtar" for å bruke appen</string>
     <string name="kortfriNorge">www.KortFri.no</string>
-
     <string name="verification">Innlogging vellykket</string>
     <string name="landskode">Landskode:</string>
-
     <string name="login">Logg inn</string>
     <string name="infomasjon">Kontaktinformasjon</string>
     <string name="nonet">Koble til Wifi</string>
-
     <string name="label_phone_auth">Phone Number Authentication</string>
     <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
     <string name="signed_in">Write phone number</string>
@@ -64,7 +61,7 @@
     <string name="verify_phone_auth">Logg inn</string>
     <string name="resend_phone_auth">Send på ny</string>
     <string name="hint_phone_number">Mobilnummer</string>
-    <string name="hint_verification_code">Verifiseringskode</string>
+    <string name="hint_verification_code">Sekssifret kode</string>
     <string name="status_code_sent">Kode Sendt</string>
     <string name="status_verification_failed">Verifisering feilet</string>
     <string name="status_verification_succeeded">Verifisert</string>
@@ -74,10 +71,27 @@
     <string name="sign_out">Sign out</string>
     <string name="Cancel">Avbryt</string>
     <string name="Yes">Ja</string>
+    <string name="Kort">KortFri</string>
+    <string name="Fri">Fri</string>
+    <string name="continue_to">Fortsett</string>
+    <string name="vilkar">Trykk «Godkjenn og fortsett» for å akseptere</string>
+    <string name="vilkar2">KortFri sine vilkår for bruk og personvern</string>
+    <string name="mobil">90012345</string>
     <string name="Skrivinn">Fyll inn mobilnummer</string>
-
+    <string name="godkjenn">Godkjenn &amp; Fortsett</string>
+    <string name="not_supported">Beklager, men KortFri støtter ikke mobilen din</string>
+    <string name="school_tis">Skole</string>
+    <string name="school">Skoler</string>
+    <string name="pick_em">1. Trykk her for å velge bilde</string>
+    <string name="pick_em_two">2. Trykk her for å beskjære bilde</string>
+    <string name="set_your_picture">Sett ditt profilbilde</string>
+    <string name="Autoriserer">Autentisering ...</string>
+    <string name="search_school">Søk etter din skole</string>
+    <string name="school_sertifivcat">Skolebevis</string>
+    <string name="student_sertificat">Studentbevis</string>
+    <string name="your_picture">Slik vil bilde ditt se ut</string>
+    <string name="set_picture">Sett bilde før du går videre</string>
     <string name="updatePicture">Kunne ikke oppdatere bilde</string>
-    <string name="pictureMessage">For å bytte profilbilde må du skrive inn en kode. Denne koden får du utlevert av din lærer eller IT-ansvarlig. OBS: Koden kan bare brukes én gang! Det er bare IT-ansvarlige som kan bytte ditt profilbilde etter at koden er brukt. Dette gjøres fordi kortet skal brukes som identifikasjon. Husk at det kan være straffbart å bruke en annen persons identitet for å oppnå uberettiget vinning. (For. eks: Bruke kompisens eller venninnens app for å få billigere bussbillett.)</string>
+    <string name="pictureMessage">For å bytte profilbilde må du skrive inn en kode. Denne koden får du utlevert av KortFri-administratorene på din skole/institusjon og må skrives inn etter at du har valgt bilde fra ditt bildebibliotek.\n\nOBS: Koden kan bare brukes én gang!\n\nDet er bare IT-ansvarlige som kan bytte ditt profilbilde etter at koden er brukt. Dette gjøres fordi kortet skal brukes som identifikasjon. Husk at det kan være straffbart å bruke en annen persons identitet for å oppnå uberettiget vinning. \n(For. eks: Bruke kompisens/venninnens app for å få billigere bussbillett)</string>
     <string name="allertMessage">STOPP! Er du ikke fornøyd med hvordan bildet ser ut må du gå tilbake å endre bilde.</string>
-
 </resources>

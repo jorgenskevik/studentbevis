@@ -36,21 +36,21 @@
     <string name="companyname">Aka trh</string>
     <string name="GyldigTil">Valid for </string>
     <string name="expired">EXPIRED</string>
-    <string name="studentnumber">Studentnr:</string>
+    <string name="studentnumber">Student number</string>
     <string name="Barcode">Barcode:</string>
     <string name="Not">Invalid</string>
     <string name="yourPic">Your picture::</string>
     <string name="writepictureToken">Write picture code:</string>
     <string name="setPic">Set picture</string>
     <string name="back">Back</string>
-    <string name="spring">Spring semester</string>
-    <string name="fall">Fall semester</string>
+    <string name="spring">Valid Spring</string>
+    <string name="fall">Valid Fall</string>
     <string name="policy">Policy</string>
     <string name="acceptTerms">Click the "I accept" box to use the app</string>
     <string name="checkBox">I accept</string>
     <string name="kortfriNorge">www.KortFri.no</string>
     <string name="updatePicture">Could not update picture</string>
-    <string name="pictureMessage">You have to type in a code to change your profile picture. Your teacher or system administrator will give you this code. IMPORTANT INFORMATION: You can only use this code once! After using the code, only the system administrator can alter your profile picture. This is because the app is used as identification. Remember that using the identity of another person is illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
+    <string name="pictureMessage">You have to type in a code to change your profile picture. Your teacher or system administrator will give you this code.\n\nIMPORTANT INFORMATION: You can only use this code once!\n\nAfter using the code, only the system administrator can alter your profile picture. This is because the app is used as identification. Remember that using the identity of another person is illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
     <string name="login">Login</string>
     <string name="infomasjon">Contact Information</string>
     <string name="label_phone_auth">Phone Number Authentication</string>
@@ -60,7 +60,7 @@
     <string name="verify_phone_auth">Login</string>
     <string name="resend_phone_auth">Resend</string>
     <string name="hint_phone_number">Phone Number</string>
-    <string name="hint_verification_code">Verification Code</string>
+    <string name="hint_verification_code">Six digits code</string>
     <string name="status_code_sent">Code Sent</string>
     <string name="status_verification_failed">Verification failed</string>
     <string name="status_verification_succeeded">Verification succeeded</string>
@@ -72,11 +72,27 @@
     <string name="landskode">Country Code:</string>
     <string name="nonet">Connect to Wifi</string>
     <string name="Yes">Yes</string>
+    <string name="Fri">Fri</string>
+    <string name="godkjenn">Accept &amp; Continue</string>
+    <string name="not_supported">Sorry, KortFri does not support your mobile</string>
+    <string name="search_school">Search after your school</string>
+    <string name="mobil">90012345</string>
+    <string name="set_picture">Set a photo before you proceed</string>
+    <string name="school_this">School</string>
+    <string name="school">Schools</string>
+    <string name="your_picture">Your picture will look like this</string>
+    <string name="continue_to">Continue</string>
+    <string name="pick_em">1. Press here to pick a picture</string>
+    <string name="your_pictureprofil">Your profile picture</string>
+    <string name="pick_em_two">2. Press here to crop your picture</string>
+    <string name="set_your_picture">Set your profile picture</string>
+    <string name="school_sertifivcat">School Certificate</string>
+    <string name="student_sertificat">Student Certificate</string>
+    <string name="vilkar2">KortFri \&apos; s Terms of Use and Privacy</string>
+    <string name="vilkar">Press "Approve and Continue" to accept</string>
     <string name="Skrivinn">Write in phone number</string>
-
-
-
+    <string name="Kort">KortFri</string>
+    <string name="Autoriserer">Autentisering ...</string>
     <string name="Cancel">Cancel</string>
-
     <string name="allertMessage">STOP! If you are not pleased with the way the picture looks, go back and change it.</string>
 </resources>
