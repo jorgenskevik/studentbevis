@@ -392,7 +392,7 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
                 userDetails = sessionManager.getUserDetails();
 
-                if (SessionManager.KEY_HAS_SET_PICTURE) {
+                if (Boolean.valueOf(SessionManager.KEY_HAS_SET_PICTURE)) {
                     context = getApplicationContext();
                     duration = Toast.LENGTH_SHORT;
                     toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
