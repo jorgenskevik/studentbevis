@@ -415,7 +415,6 @@ public class LoginActivity extends AppCompatActivity  implements
                 disableViews(mStartButton);
                 mDetailText.setText(R.string.status_code_sent);
                 mDetailText.setTextColor(Color.parseColor("#43a047"));
-                mVerificationField.setHint(R.string.hint_verification_code);
                 mVerifyButton.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
                 mStartButton.setTextColor(ContextCompat.getColor(this, R.color.logogreycolor));
                 mResendButton.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
@@ -468,7 +467,7 @@ public class LoginActivity extends AppCompatActivity  implements
             mPhoneNumberViews.setVisibility(View.VISIBLE);
             mSignedInViews.setVisibility(View.GONE);
 
-            mStatusText.setText(R.string.sign_out);;
+            //mStatusText.setText(R.string.sign_out);;
         } else {
 
             // Signed in
@@ -533,7 +532,8 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String birthDateString = dateTimeFormatter.print(timeBirthday);
                                         String expirationString = dateTimeFormatter2.print(timeToExpiration);
 
-                                        sessionManager.create_login_session_user(full_name, emailString, token, user_id, role, pictureToken, birthDateString, picture);
+                                        sessionManager.create_login_session_user(full_name, emailString,
+                                                token, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture());
 
                                         sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
                                                 public_contact_email, public_contact_phone, card_type);
@@ -666,11 +666,11 @@ public class LoginActivity extends AppCompatActivity  implements
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                try {
-                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }catch (NullPointerException e){
 
-                }
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+
+
                 /////////hide keyboard end
 
 
@@ -681,7 +681,7 @@ public class LoginActivity extends AppCompatActivity  implements
                 break;
             case R.id.button_verify_phone:
                 String code = mVerificationField.getText().toString();
-                int selectedWhite = Color.rgb(255, 255, 255);
+                int selectedWhite = Color.rgb(0, 0, 0);
                 if (TextUtils.isEmpty(code)) {
                     mVerificationField.setTextColor(selectedWhite);
                     mVerificationField.setError("Cannot be empty.");

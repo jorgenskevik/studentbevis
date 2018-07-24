@@ -287,22 +287,21 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
 
         r1 = (RelativeLayout) findViewById(R.id.background);
 
-        /*
         if (path == null) {
             view2.setImageResource(R.drawable.facebookgirl);
 
             if (!picture.equals("")) {
                 ContextWrapper cw = new ContextWrapper(this);
-                File directory = cw.getDir(studentNumber, Context.MODE_PRIVATE);
+                File directory = cw.getDir(studentIDString, Context.MODE_PRIVATE);
                 File myImageFile = new File(directory, "my_image.jpeg");
-                Picasso.with(this).load(myImageFile).resize(300,300).centerCrop().into(view2);
+                Picasso.with(this).load(myImageFile).into(view2);
             }
         } else {
             File f = new File(path);
-            Picasso.with(getApplicationContext()).load(f).resize(300,300).centerCrop().into(view2);
-        }*/
+            Picasso.with(getApplicationContext()).load(f).into(view2);
+        }
 
-        view2.setImageResource(R.drawable.facebookgirl);
+        //view2.setImageResource(R.drawable.facebookgirl);
         Picasso.with(this).load(small_logo).into(short_logo_view);
 
         if (card_type_string.equals("student_card")){
@@ -392,16 +391,15 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
                 userDetails = sessionManager.getUserDetails();
-                fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
 
-                if (fourDigits.equals("BRUKT")) {
+                if (SessionManager.KEY_HAS_SET_PICTURE) {
                     context = getApplicationContext();
                     duration = Toast.LENGTH_SHORT;
                     toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
                     toast.show();
 
                 } else {
-                    Intent infoIntent = new Intent(UserActivity.this, Picture_info.class);
+                    Intent infoIntent = new Intent(UserActivity.this, BarCodeActivity.class);
                     startActivity(infoIntent);
 
                 }
@@ -467,13 +465,56 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                         String birthDateString = dateTimeFormatter.print(timeBirthday);
                         String expirationString = dateTimeFormatter2.print(timeToExpiration);
 
-                        sessionManager.update_user(full_name, emailString, user_id, role, pictureToken, birthDateString, picture);
+                        sessionManager.update_user(full_name, emailString, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture());
 
                         sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
                                 public_contact_email, public_contact_phone, card_type);
 
                         sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.userUpdated), Toast.LENGTH_SHORT).show();
+
+                        if(picture.equals("")){
+                            view2.setImageResource(R.drawable.facebookgirl);
+                        }else{
+
+                            ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                            File directory = cw.getDir(student_number, Context.MODE_PRIVATE);
+                            File myImageFile = new File(directory, "my_image.jpeg");
+                            myImageFile.getAbsoluteFile().delete();
+                            myImageFile.delete();
+                            deleteFile("my_image.jpeg");
+                            Picasso.with(getApplicationContext()).invalidate(myImageFile);
+                            deleteTempFolder(student_number);
+
+                            try {
+                                myImageFile.getCanonicalFile().delete();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            try {
+                                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(directory, "my_image.jpeg"))));
+                            }catch (NullPointerException e){
+                            }
+
+
+                            try{
+                                userDetails = sessionManager.getUserDetails();
+                                String kortfri = userDetails.get(SessionManager.KEY_TURN);
+                                if(kortfri.equals("kortfri")){
+                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+                                    Picasso.with(getApplicationContext()).load(picture).into(view2);
+                                }else{
+                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+                                    Picasso.with(getApplicationContext()).load(picture).into(view2);
+                                }
+
+                            }catch (NullPointerException e){
+                                Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+                                Picasso.with(getApplicationContext()).load(picture).into(view2);
+                            }
+                        }
 
                         startDate = null;
                         try {
@@ -561,6 +602,8 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                     columnIndex = cursor.getColumnIndex(filePath[0]);
                     mediaPath = cursor.getString(columnIndex);
                     cursor.close();
+                    System.out.println(mediaPath + "      ........ mediapath");
+                    sessionManager.updatePicture(mediaPath);
 
                     intent.putExtra("picture", mediaPath);
                     startActivity(intent);

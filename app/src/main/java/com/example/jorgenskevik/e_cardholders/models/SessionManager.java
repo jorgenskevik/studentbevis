@@ -67,6 +67,10 @@ public class SessionManager {
     public static final String KEY_UNIT_ID = "unit_id";
     public static final String KEY_PHONE_NUMBER = "phone_number";
     public static final String KEY_CARD_TYPE = "card_type";
+    public static final String KEY_MEDIA_PATH = "media_path";
+    public static final String KEY_HAS_SET_PICTURE = "has_set_picture";
+
+
 
 
 
@@ -110,7 +114,7 @@ public class SessionManager {
     }
 
     public void create_login_session_user(String full_name, String user_email, String token, String user_id, int role,
-                                          String pictureToken, String birthday, String picture){
+                                          String pictureToken, String birthday, String picture, boolean has_set_picture){
 
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_FULL_NAME, full_name);
@@ -121,11 +125,13 @@ public class SessionManager {
         editor.putString(KEY_PICTURETOKEN, pictureToken);
         editor.putString(KEY_BIRTHDATE, birthday);
         editor.putString(KEY_PICTURE, picture);
+        editor.putBoolean(KEY_HAS_SET_PICTURE, has_set_picture);
         // commit changes
         editor.commit();
     }
 
-    public void update_user(String name, String email, String id, int role, String pictureToken, String dateOfBirth , String picture){
+    public void update_user(String name, String email, String id, int role, String pictureToken, String dateOfBirth
+            , String picture, boolean has_set_picture){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -151,6 +157,8 @@ public class SessionManager {
 
         editor.putString(KEY_PICTURE, picture);
 
+        editor.putBoolean(KEY_HAS_SET_PICTURE, has_set_picture);
+
         // commit changes
         editor.commit();
     }
@@ -168,10 +176,23 @@ public class SessionManager {
         editor.putString(KEY_PICTURETOKEN, pictureToken);
 
         // commit changes
-        editor.commit();
+        editor.apply();
     }
 
 
+    public void update_boolean(Boolean path){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing path in pref
+        editor.putBoolean(KEY_HAS_SET_PICTURE, path);
+
+        // Storing picture in pref
+        //editor.putString(KEY_PICTURE, path);
+
+        // commit changes
+        editor.apply();
+    }
     /**
      * Update path.
      *
@@ -191,11 +212,20 @@ public class SessionManager {
         editor.apply();
     }
 
-    /**
-     * Update picture.
-     *
-     * @param picture the picture
-     */
+
+    public void setMedia_path(String media_path){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing role in pref
+        editor.putString(KEY_MEDIA_PATH, media_path);
+
+        // commit changes
+        editor.apply();
+
+    }
+
+
     public void updatePicture(String picture){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
@@ -241,12 +271,25 @@ public class SessionManager {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
+    public HashMap<String, String> getTurn(){
+        HashMap<String, String> unitMember = new HashMap<String, String>();
+        unitMember.put(KEY_TURN, pref.getString(KEY_TURN, null));
+        return unitMember;
+    }
+
+
+    public HashMap<String, String> getMedia_path(){
+        HashMap<String, String> unitMember = new HashMap<String, String>();
+        unitMember.put(KEY_MEDIA_PATH, pref.getString(KEY_MEDIA_PATH, null));
+        return unitMember;
+    }
 
     /**
      * Get user details hash map.
      *
      * @return the hash map
      */
+
 
     public HashMap<String, String> getUnitMemberDetails(){
         HashMap<String, String> unitMember = new HashMap<String, String>();
@@ -329,9 +372,6 @@ public class SessionManager {
     /**
      * Logout user.
      */
-
-
-
 
 
     public void logoutUser(){

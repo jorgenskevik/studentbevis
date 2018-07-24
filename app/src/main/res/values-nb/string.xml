@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Akademiet trh - KortFri</string>
+    <string name="app_name">KortFri</string>
     <string name="headerTwo">En leverandør av digitale kortløsninger</string>
     <string name="Madewith">Laget med</string>
     <string name="forKVT">for</string>
@@ -89,7 +89,9 @@
     <string name="search_school">Søk etter din skole</string>
     <string name="school_sertifivcat">Skolebevis</string>
     <string name="student_sertificat">Studentbevis</string>
-    <string name="your_picture">Slik vil bilde ditt se ut</string>
+    <string name="four_digits">Skriv inn firesifret bildekode her</string>
+    <string name="set_profil_picture">Sett profilbilde</string>
+    <string name="your_picture">Slik vil bilde ditt se ut, trykk på tilbake for å velge et annet bilde eller fortsett for å godkjenne</string>
     <string name="set_picture">Sett bilde før du går videre</string>
     <string name="updatePicture">Kunne ikke oppdatere bilde</string>
     <string name="pictureMessage">For å bytte profilbilde må du skrive inn en kode. Denne koden får du utlevert av KortFri-administratorene på din skole/institusjon og må skrives inn etter at du har valgt bilde fra ditt bildebibliotek.\n\nOBS: Koden kan bare brukes én gang!\n\nDet er bare IT-ansvarlige som kan bytte ditt profilbilde etter at koden er brukt. Dette gjøres fordi kortet skal brukes som identifikasjon. Husk at det kan være straffbart å bruke en annen persons identitet for å oppnå uberettiget vinning. \n(For. eks: Bruke kompisens/venninnens app for å få billigere bussbillett)</string>

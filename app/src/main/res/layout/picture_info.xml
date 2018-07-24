@@ -14,7 +14,7 @@
         android:textSize="32sp"
         android:textColor="@color/black"
         android:layout_marginTop="30dp"
-        android:text="Sett profilbilde"
+        android:text="@string/set_profil_picture"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textView14" />
 
@@ -32,8 +32,9 @@
         android:id="@+id/button_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fortsett"
+        android:text="@string/continue_to"
         android:fontFamily="sans-serif"
+        android:onClick="open_picture_view"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
         android:textColor="@color/logobluecolor"
@@ -44,7 +45,7 @@
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tilbake"
+        android:text="@string/back"
         android:fontFamily="sans-serif"
         android:textSize="16sp"
         android:textColor="@color/logogreycolor"
@@ -98,7 +99,7 @@
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Skriv inn firesifret bildekode her" />
+        android:text="@string/four_digits" />
 
     <EditText
         android:id="@+id/code_picture"

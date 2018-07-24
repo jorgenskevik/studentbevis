@@ -77,10 +77,12 @@
     <string name="not_supported">Sorry, KortFri does not support your mobile</string>
     <string name="search_school">Search after your school</string>
     <string name="mobil">90012345</string>
+    <string name="set_profil_picture">Set profile picture</string>
+    <string name="four_digits">Write in four-digit picture code</string>
     <string name="set_picture">Set a photo before you proceed</string>
     <string name="school_this">School</string>
     <string name="school">Schools</string>
-    <string name="your_picture">Your picture will look like this</string>
+    <string name="your_picture">Your picture will look like this, press back to choose another picture or continue to accept</string>
     <string name="continue_to">Continue</string>
     <string name="pick_em">1. Press here to pick a picture</string>
     <string name="your_pictureprofil">Your profile picture</string>

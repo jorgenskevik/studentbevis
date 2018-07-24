@@ -37,8 +37,8 @@
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="40dp"
-        android:text="@string/school" />
+       android:layout_centerHorizontal="true"
+        android:text="@string/search_school" />
 
     <View
         android:id="@+id/textView14"

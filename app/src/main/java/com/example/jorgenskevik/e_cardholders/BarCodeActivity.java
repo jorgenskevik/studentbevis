@@ -66,10 +66,10 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 public class BarCodeActivity extends Activity{
     TextView button_back;
     TextView continue_picture;
-    EditText picture_token;
+    EditText picture_token, codeString;
     HashMap<String, String> userDetails;
     SessionManager sessionManager;
-    String fourDigits, codeString;
+    String fourDigits;
     Context context;
     int duration;
     Toast toast;
@@ -82,15 +82,17 @@ public class BarCodeActivity extends Activity{
 
         button_back = (TextView) findViewById(R.id.button_back);
         continue_picture = (TextView) findViewById(R.id.button_ok);
-        picture_token = (EditText) findViewById(R.id.code_picture);
+        codeString = (EditText) findViewById(R.id.code_picture);
 
         sessionManager = new SessionManager(getApplicationContext());
         userDetails = sessionManager.getUserDetails();
         fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
-        codeString = picture_token.getText().toString();
+
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,20 +101,19 @@ public class BarCodeActivity extends Activity{
                 startActivity(back);
             }
         });
-        continue_picture.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (fourDigits.trim().equals(codeString)){
-                    Intent back = new Intent(BarCodeActivity.this, Picture_info.class);
-                    back.putExtra("picture_token", codeString);
-                    startActivity(back);
-                }else {
-                    context = getApplicationContext();
-                    duration = Toast.LENGTH_SHORT;
-                    toast = Toast.makeText(context, R.string.wrongCode, duration);
-                    toast.show();
-                }
-            }
-        });
+
+    }
+    public void open_picture_view(View v){
+        if (fourDigits.trim().equals(codeString.getText().toString())){
+            Intent back = new Intent(BarCodeActivity.this, Picture_info.class);
+            startActivity(back);
+        }else {
+            context = getApplicationContext();
+            duration = Toast.LENGTH_SHORT;
+            toast = Toast.makeText(context, R.string.wrongCode, duration);
+            toast.show();
+        }
+
     }
 }
 
