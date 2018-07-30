@@ -29,6 +29,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.os.StrictMode;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -251,6 +252,14 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // Setting black status bar
+        this.changeStatusBarColor();
+//        Window window = UserActivity.this.getWindow();
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.setStatusBarColor(ContextCompat.getColor(UserActivity.this,R.color.black));
+
         setContentView(R.layout.user_view2);
 
         sessionManager = new SessionManager(getApplicationContext());
@@ -271,9 +280,9 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         unit_membership_details = sessionManager.getUnitMemberDetails();
 
 
-        short_school_name_string = unit_details.get(SessionManager.KEY_UNIT_SHORT_NAME);
+        short_school_name_string = unit_details.get(SessionManager.KEY_UNIT_NAME);
 
-        String small_logo = unit_details.get(SessionManager.KEY_UNIT_LOGO);
+        String small_logo = unit_details.get(SessionManager.KEY_UNIT_LOGO_SHORT);
         String card_type_string = unit_details.get(SessionManager.KEY_CARD_TYPE);
 
         firstAndSirNameString = userDetails.get(SessionManager.KEY_FULL_NAME);
@@ -290,11 +299,17 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         if (path == null) {
             view2.setImageResource(R.drawable.facebookgirl);
 
-            if (!picture.equals("")) {
-                ContextWrapper cw = new ContextWrapper(this);
-                File directory = cw.getDir(studentIDString, Context.MODE_PRIVATE);
-                File myImageFile = new File(directory, "my_image.jpeg");
-                Picasso.with(this).load(myImageFile).into(view2);
+            if (picture != null && !picture.contains("/img/white_image.png") && !picture.contains("/img/avatar.png")) {
+                //ContextWrapper cw = new ContextWrapper(this);
+                //File directory = cw.getDir(studentIDString, Context.MODE_PRIVATE);
+                //File myImageFile = new File(directory, "my_image.jpeg");
+                //Picasso.with(this).load(myImageFile).into(view2);
+                // Laster bare med picasso uten å cache..
+                // Disk cache of 2% storage space up to 50MB but no less than 5MB.
+                // (Note: this is only available on API 14+ or if you are using a standalone
+                // library that provides a disk cache on all API levels like OkHttp)
+                Picasso.with(getApplicationContext()).load(picture).into(view2);
+
             }
         } else {
             File f = new File(path);
@@ -347,6 +362,15 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
         }
     }
 
+    private void changeStatusBarColor(){
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(UserActivity.this,R.color.black));
+        }
+    }
+
     /**
      * Open settings.
      *
@@ -391,17 +415,16 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
                 userDetails = sessionManager.getUserDetails();
+                picture = userDetails.get(SessionManager.KEY_PICTURE);
 
-                if (Boolean.valueOf(SessionManager.KEY_HAS_SET_PICTURE)) {
+                if (picture != null && !picture.contains("/img/white_image.png") && !picture.contains("/img/avatar.png")) {
                     context = getApplicationContext();
                     duration = Toast.LENGTH_SHORT;
                     toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
                     toast.show();
-
                 } else {
                     Intent infoIntent = new Intent(UserActivity.this, BarCodeActivity.class);
                     startActivity(infoIntent);
-
                 }
             } else {
                 Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_LONG).show();
@@ -473,47 +496,47 @@ public class UserActivity extends AppCompatActivity implements ActionSheet.Actio
                         sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
                         Toast.makeText(getApplicationContext(), getResources().getString(R.string.userUpdated), Toast.LENGTH_SHORT).show();
 
-                        if(picture.equals("")){
+
+                        if(picture == null) {
+                            view2.setImageResource(R.drawable.facebookgirl);
+                        } else if(picture.contains("/img/white_image.png") || picture.contains("/img/avatar.png")){
                             view2.setImageResource(R.drawable.facebookgirl);
                         }else{
-
-                            ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                            File directory = cw.getDir(student_number, Context.MODE_PRIVATE);
-                            File myImageFile = new File(directory, "my_image.jpeg");
-                            myImageFile.getAbsoluteFile().delete();
-                            myImageFile.delete();
-                            deleteFile("my_image.jpeg");
-                            Picasso.with(getApplicationContext()).invalidate(myImageFile);
-                            deleteTempFolder(student_number);
-
-                            try {
-                                myImageFile.getCanonicalFile().delete();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            try {
-                                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(directory, "my_image.jpeg"))));
-                            }catch (NullPointerException e){
-                            }
-
-
-                            try{
-                                userDetails = sessionManager.getUserDetails();
-                                String kortfri = userDetails.get(SessionManager.KEY_TURN);
-                                if(kortfri.equals("kortfri")){
-                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
-                                    Picasso.with(getApplicationContext()).load(picture).into(view2);
-                                }else{
-                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
-                                    Picasso.with(getApplicationContext()).load(picture).into(view2);
-                                }
-
-                            }catch (NullPointerException e){
-                                Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
-                                Picasso.with(getApplicationContext()).load(picture).into(view2);
-                            }
+                            // Laste bare med picasso, går sekkert fint det
+                            Picasso.with(getApplicationContext()).load(picture).into(view2);
+//
+//                            ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//                            File directory = cw.getDir(student_number, Context.MODE_PRIVATE);
+//                            File myImageFile = new File(directory, "my_image.jpeg");
+//                            myImageFile.getAbsoluteFile().delete();
+//                            myImageFile.delete();
+//                            deleteFile("my_image.jpeg");
+//                            Picasso.with(getApplicationContext()).invalidate(myImageFile);
+//                            deleteTempFolder(student_number);
+//
+//                            try {
+//                                myImageFile.getCanonicalFile().delete();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//
+//                            try {
+//                                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(directory, "my_image.jpeg"))));
+//                            }catch (NullPointerException e){
+//                            }
+//
+//
+//                            try{
+//                                userDetails = sessionManager.getUserDetails();
+//                                String kortfri = userDetails.get(SessionManager.KEY_TURN);
+//                                if(kortfri.equals("kortfri")){
+//                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+//                                }else{
+//                                    Picasso.with(getApplicationContext()).load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+//                                }
+//
+//                            }catch (NullPointerException e){ }
                         }
 
                         startDate = null;

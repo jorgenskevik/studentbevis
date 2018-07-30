@@ -45,7 +45,7 @@ public interface UserAPI {
 
     @Multipart
     @PUT("users/change-picture/")
-    Call<User> postPicture(@Header("Authorization") String auth, @Part MultipartBody.Part photo, @Part("picture_token") RequestBody pictureToken);
+    Call<User> postPicture(@Header("Authorization") String auth, @Part MultipartBody.Part picture, @Part("picture_token") RequestBody pictureToken);
 
     /*@Multipart
     @PUT("users/changePicture")

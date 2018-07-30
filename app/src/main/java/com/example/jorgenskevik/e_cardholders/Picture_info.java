@@ -208,9 +208,8 @@ public class Picture_info extends Activity {
 
         String mimeType = getMimeType(file);
 
-        System.out.println(fourDigits);
         RequestBody reqFile = RequestBody.create(MediaType.parse(mimeType), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("photo", file.getName(), reqFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), reqFile);
         RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
 
         Gson gson = new GsonBuilder()

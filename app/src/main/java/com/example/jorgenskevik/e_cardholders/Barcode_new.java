@@ -119,7 +119,6 @@ public class Barcode_new extends Activity {
         HashMap<String, String> unit_membership = sessionManager.getUnitMemberDetails();
         String studentIDString = unit_membership.get(SessionManager.KEY_STUDENTNUMBER);
 
-        System.out.println(studentIDString);
 
         // name
 
