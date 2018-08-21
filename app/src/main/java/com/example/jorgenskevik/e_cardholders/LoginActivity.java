@@ -26,7 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.digits.sdk.android.Digits;
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 import com.example.jorgenskevik.e_cardholders.models.FirebaseLoginModel;
 import com.example.jorgenskevik.e_cardholders.models.LoginModel;
@@ -85,6 +84,7 @@ public class LoginActivity extends AppCompatActivity  implements
     private static final int STATE_VERIFY_SUCCESS = 4;
     private static final int STATE_SIGNIN_FAILED = 5;
     private static final int STATE_SIGNIN_SUCCESS = 6;
+    private static float one_degree_just_beacause = 0;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity  implements
         mResendButton.setOnClickListener(this);
         mSignOutButton.setOnClickListener(this);
 
-        mStartButton.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
+        mStartButton.setTextColor(ContextCompat.getColor(this, R.color.black));
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -209,6 +209,8 @@ public class LoginActivity extends AppCompatActivity  implements
                 // [END_EXCLUDE]
                 signInWithPhoneAuthCredential(credential);
             }
+
+
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
@@ -279,10 +281,13 @@ public class LoginActivity extends AppCompatActivity  implements
         outState.putBoolean(KEY_VERIFY_IN_PROGRESS, mVerificationInProgress);
     }
 
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mVerificationInProgress = savedInstanceState.getBoolean(KEY_VERIFY_IN_PROGRESS);
+        if (mVerificationId == null && savedInstanceState != null) {
+            mVerificationInProgress = savedInstanceState.getBoolean(KEY_VERIFY_IN_PROGRESS);
+        }
     }
 
 
@@ -302,9 +307,13 @@ public class LoginActivity extends AppCompatActivity  implements
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
         // [START verify_with_code]
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            signInWithPhoneAuthCredential(credential);
+        }catch (NullPointerException e){
+            Toast.makeText(this, R.string.Skrivinn, Toast.LENGTH_LONG).show();
+        }
         // [END verify_with_code]
-        signInWithPhoneAuthCredential(credential);
     }
 
     // [START resend_verification]
@@ -415,9 +424,9 @@ public class LoginActivity extends AppCompatActivity  implements
                 disableViews(mStartButton);
                 mDetailText.setText(R.string.status_code_sent);
                 mDetailText.setTextColor(Color.parseColor("#43a047"));
-                mVerifyButton.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
-                mStartButton.setTextColor(ContextCompat.getColor(this, R.color.logogreycolor));
-                mResendButton.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
+                mVerifyButton.setTextColor(ContextCompat.getColor(this, R.color.black));
+                mStartButton.setTextColor(ContextCompat.getColor(this, R.color.line_color));
+                mResendButton.setTextColor(ContextCompat.getColor(this, R.color.black));
 
                 break;
             case STATE_VERIFY_FAILED:
@@ -476,7 +485,7 @@ public class LoginActivity extends AppCompatActivity  implements
 
 
             FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-            mUser.getToken(true)
+            mUser.getIdToken(true)
                     .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                         public void onComplete(@NonNull Task<GetTokenResult> task) {
                             if (task.isSuccessful()) {
@@ -533,7 +542,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String expirationString = dateTimeFormatter2.print(timeToExpiration);
 
                                         sessionManager.create_login_session_user(full_name, emailString,
-                                                token, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture());
+                                                token, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture(), one_degree_just_beacause);
 
                                         sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
                                                 public_contact_email, public_contact_phone, card_type);
@@ -652,6 +661,7 @@ public class LoginActivity extends AppCompatActivity  implements
         });
 
     }
+
 
 
     @Override

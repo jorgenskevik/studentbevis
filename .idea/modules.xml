@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android-skole.iml" filepath="$PROJECT_DIR$/android-skole.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/skolebevis.iml" filepath="$PROJECT_DIR$/skolebevis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/studentbevis.iml" filepath="$PROJECT_DIR$/studentbevis.iml" />
     </modules>
   </component>
 </project>

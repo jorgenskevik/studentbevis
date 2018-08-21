@@ -9,7 +9,9 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
@@ -25,6 +27,7 @@ import android.support.media.ExifInterface;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.system.ErrnoException;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -44,6 +47,7 @@ import com.squareup.picasso.Target;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -68,9 +72,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Picture_info extends Activity {
-    TextView button_back, continue_picture, pick_photo, information_picture; //textview_crop;
+    TextView button_back, button_back2, continue_picture, pick_photo, information_picture; //textview_crop;
     ImageView profil_picture;
-    //private CropImageView mCropImageView;
     private Uri mCropImageUri;
     String authToken, fourDigits;
     HashMap<String, String> userDetails, user, unit_member_ship;
@@ -85,13 +88,12 @@ public class Picture_info extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crop_photo);
 
-        //mCropImageView = (CropImageView) findViewById(R.id.crop123);
         button_back = (TextView) findViewById(R.id.back_button);
+        button_back2 = (TextView) findViewById(R.id.back_button2);
         continue_picture = (TextView) findViewById(R.id.done_button);
         profil_picture = (ImageView) findViewById(R.id.sircle);
         pick_photo = (TextView) findViewById(R.id.pick_photo);
         information_picture = (TextView) findViewById(R.id.this_is_how);
-        //textview_crop = (TextView) findViewById(R.id.textview_crop);
 
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -101,6 +103,13 @@ public class Picture_info extends Activity {
             public void onClick(View v) {
                 Intent back = new Intent(Picture_info.this, BarCodeActivity.class);
                 startActivity(back);
+            }
+        });
+
+        button_back2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(getPickImageChooserIntent(), 200);
             }
         });
 
@@ -131,64 +140,30 @@ public class Picture_info extends Activity {
             }
 
             if (!requirePermissions) {
-                profil_picture.setImageURI(imageUri);
+
                 android.net.Uri imageUri = data.getData();
+
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 android.database.Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
                 assert cursor != null;
+
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePath[0]);
                 String mediaPath = cursor.getString(columnIndex);
                 cursor.close();
-                //Picasso.with(this).load(mediaPath).into(profil_picture);
-
+                Picasso.with(getApplicationContext()).load(imageUri).into(profil_picture);
                 sessionManager.setMedia_path(mediaPath);
-
                 information_picture.setText(R.string.your_picture);
+                button_back.invalidate();
+                button_back2.setText(R.string.back);
                 continue_picture.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
-                //textview_crop.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
                 pick_photo.setTextColor(ContextCompat.getColor(this, R.color.line_color));
 
             }
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        if (mCropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            //mCropImageView.setImageUriAsync(mCropImageUri);
-            profil_picture.setImageURI(mCropImageUri);
-            information_picture.setText(R.string.your_picture);
-            continue_picture.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
-            //textview_crop.setTextColor(ContextCompat.getColor(this, R.color.logobluecolor));
-            pick_photo.setTextColor(ContextCompat.getColor(this, R.color.line_color));
-
-        } else {
-            Toast.makeText(this, "Required permissions are not granted", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /*public void onCropImageClick(View view) {
-        Bitmap cropped = mCropImageView.getCroppedImage(500, 500);
-        if (cropped != null)
-          profil_picture.setImageBitmap(cropped);
-    }*/
-
-    public Bitmap rotateBitmap(Bitmap original, float degrees) {
-        int width = original.getWidth();
-        int height = original.getHeight();
-
-        Matrix matrix = new Matrix();
-        matrix.preRotate(degrees);
-
-        Bitmap rotatedBitmap = Bitmap.createBitmap(original, 0, 0, width, height, matrix, true);
-        Canvas canvas = new Canvas(rotatedBitmap);
-        canvas.drawBitmap(original, 5.0f, 0.0f, null);
-
-        return rotatedBitmap;
-    }
-
-    public void onContinue(View view) {
+    public void onContinue(View view) throws IOException {
 
         if (profil_picture.getDrawable() == null){
             Toast.makeText(getApplicationContext(), R.string.set_picture, Toast.LENGTH_LONG).show();
@@ -233,7 +208,6 @@ public class Picture_info extends Activity {
 
                     sess.updatePicture(get_user.getPicture());
                     sess.updatePath(photo_phat);
-                    sess.updateTurn(getCameraPhotoOrientation(photo_phat));
                     sess.updatePictureToken("BRUKT");
                     sess.update_boolean(true);
                     get_user.setHas_set_picture(true);
@@ -268,26 +242,15 @@ public class Picture_info extends Activity {
         });
     }
 
+
+
     public Intent getPickImageChooserIntent() {
 
         // Determine Uri of camera image to save.
-        Uri outputFileUri = getCaptureImageOutputUri();
 
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = getPackageManager();
 
-        // collect all camera intents
-        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            }
-            allIntents.add(intent);
-        }
 
         // collect all gallery intents
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -328,32 +291,6 @@ public class Picture_info extends Activity {
         return outputFileUri;
     }
 
-    public String getCameraPhotoOrientation(String imagePath) {
-        String rotate = "kortfri";
-        try {
-            File imageFile = new File(imagePath);
-            ExifInterface exif = new ExifInterface(imageFile.getAbsolutePath());
-            int orientation = exif.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotate = "270";
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotate = "180";
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotate = "90";
-                    break;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rotate;
-    }
 
     private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
         ContextWrapper cw = new ContextWrapper(context);
@@ -428,7 +365,4 @@ public class Picture_info extends Activity {
         }
         return type;
     }
-
-
-
 }

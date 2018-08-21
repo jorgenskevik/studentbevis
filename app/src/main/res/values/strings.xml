@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KortFri - skole</string>
+    <string name="app_name">KortFri - School</string>
     <string name="headerTwo">We digitize your school certificates</string>
     <string name="Madewith">Made with</string>
     <string name="forKVT">for</string>
@@ -21,6 +21,7 @@
     <string name="CancelBarCode">OK</string>
     <string name="GiveAccess">"Give the app access: settings/apps/KortFri/Storage"</string>
     <string name="setPicture">Set picture</string>
+    <string name="chooise">Choice</string>
     <string name="updateProfile">Update</string>
     <string name="DenyPicture">You have already picked a photo</string>
     <string name="userUpdated">User updated</string>
@@ -81,6 +82,7 @@
     <string name="four_digits">Write in four-digit picture code</string>
     <string name="set_picture">Set a photo before you proceed</string>
     <string name="school_this">School</string>
+    <string name="school_tis">School</string>
     <string name="school">Schools</string>
     <string name="your_picture">Your picture will look like this, press back to choose another picture or continue to accept</string>
     <string name="continue_to">Continue</string>

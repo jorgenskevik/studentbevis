@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -102,9 +104,24 @@ public class BarCodeActivity extends Activity{
             }
         });
 
+        codeString.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    isCodeOk(codeString.getText().toString());
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
+
     public void open_picture_view(View v){
-        if (fourDigits.trim().equals(codeString.getText().toString())){
+        isCodeOk(codeString.getText().toString());
+    }
+    public void isCodeOk(String s){
+        if(s.equals(fourDigits.trim())){
             Intent back = new Intent(BarCodeActivity.this, Picture_info.class);
             startActivity(back);
         }else {
@@ -113,7 +130,6 @@ public class BarCodeActivity extends Activity{
             toast = Toast.makeText(context, R.string.wrongCode, duration);
             toast.show();
         }
-
     }
 }
 

@@ -52,6 +52,20 @@
         android:fontFamily="sans-serif"
         android:textColor="@color/logogreycolor"
         android:text="@string/back" />
+    <TextView
+        android:id="@+id/back_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView14"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/logogreycolor"
+        android:text="" />
+
+
 
     <TextView
         android:id="@+id/done_button"

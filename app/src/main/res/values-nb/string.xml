@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">KortFri</string>
+    <string name="app_name">KortFri - Skole</string>
     <string name="headerTwo">En leverandør av digitale kortløsninger</string>
     <string name="Madewith">Laget med</string>
     <string name="forKVT">for</string>
@@ -21,6 +21,7 @@
     <string name="GiveAccess">"Gi appen tilgang: settings/apps/KortFri/Storage"</string>
     <string name="setPicture">Sett bilde</string>
     <string name="updateProfile">Oppdater</string>
+    <string name="chooise">Valg</string>
     <string name="DenyPicture">Du har allerede valgt et bilde</string>
     <string name="userUpdated">Bruker Oppdatert</string>
     <string name="signInDigiFail">Innlogging failet</string>
@@ -38,6 +39,7 @@
     <string name="studentnumber">Studentnummer</string>
     <string name="Barcode">Barkode:</string>
     <string name="Not">Ugyldig</string>
+    <string name="school_this">Skole</string>
     <string name="yourPic">Ditt bilde:</string>
     <string name="writepictureToken">Skriv inn bildekode:</string>
     <string name="setPic">Sett bilde</string>
@@ -81,6 +83,7 @@
     <string name="godkjenn">Godkjenn &amp; Fortsett</string>
     <string name="not_supported">Beklager, men KortFri støtter ikke mobilen din</string>
     <string name="school_tis">Skole</string>
+    <string name="your_pictureprofil">Ditt prodilbilde</string>
     <string name="school">Skoler</string>
     <string name="pick_em">1. Trykk her for å velge bilde</string>
     <string name="pick_em_two">2. Trykk her for å beskjære bilde</string>

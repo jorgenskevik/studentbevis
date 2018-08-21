@@ -86,9 +86,6 @@ public class SessionManager {
         editor = pref.edit();
     }
 
-
-
-
     public void create_login_session_unit(String unit_name, String unit_short_name, String unit_logo, String unit_logo_short, int unit_id,
                                          String public_email, String public_phone, String card_type){
         editor.putBoolean(IS_LOGIN, true);
@@ -114,7 +111,7 @@ public class SessionManager {
     }
 
     public void create_login_session_user(String full_name, String user_email, String token, String user_id, int role,
-                                          String pictureToken, String birthday, String picture, boolean has_set_picture){
+                                          String pictureToken, String birthday, String picture, boolean has_set_picture, float turn){
 
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_FULL_NAME, full_name);
@@ -126,6 +123,7 @@ public class SessionManager {
         editor.putString(KEY_BIRTHDATE, birthday);
         editor.putString(KEY_PICTURE, picture);
         editor.putBoolean(KEY_HAS_SET_PICTURE, has_set_picture);
+        editor.putFloat(KEY_TURN, turn);
         // commit changes
         editor.commit();
     }
@@ -250,12 +248,12 @@ public class SessionManager {
 
     }
 
-    public void updateTurn(String turn){
+    public void updateTurn(Float turn){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing role in pref
-        editor.putString(KEY_TURN, turn);
+        editor.putFloat(KEY_TURN, turn);
 
         // commit changes
         editor.apply();
@@ -357,13 +355,13 @@ public class SessionManager {
         // user check
         user.put(KEY_CHECK, pref.getString(KEY_CHECK, null));
 
-        user.put(KEY_TURN, pref.getString(KEY_TURN, null));
-
         user.put(KEY_UNIT_SHORT_NAME, pref.getString(KEY_UNIT_SHORT_NAME, null));
 
         user.put(KEY_UNIT_LOGO, pref.getString(KEY_UNIT_LOGO, null));
 
         user.put(KEY_PHONE_NUMBER, pref.getString(KEY_PHONE_NUMBER, null));
+
+        user.put(KEY_TURN, String.valueOf(pref.getFloat(KEY_TURN, 0)));
 
         // return user
         return user;
@@ -395,7 +393,6 @@ public class SessionManager {
         editor.remove(KEY_EXPERATIONDATE);
         editor.remove(KEY_STUDENTNUMBER);
         editor.remove(KEY_BIRTHDATE);
-        editor.remove(KEY_PATH);
         editor.remove(KEY_PICTURE);
         editor.remove(KEY_CHECK);
         editor.remove(KEY_UNIT_SHORT_NAME);

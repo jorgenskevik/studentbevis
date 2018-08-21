@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +22,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,10 +55,10 @@ public class MainActivity extends Activity {
     private EditText etSearch;
     private ListView lvProducts;
     private int unit_id;
+    private TextView is_logged_in;
     String picture;
 
-
-    private ArrayList<Unit> mProductArrayList = new ArrayList<Unit>();
+    private static ArrayList<Unit> mProductArrayList = new ArrayList<Unit>();
     private MyAdapter adapter1;
 
 
@@ -63,7 +67,28 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
 
-        initialize();
+
+        is_logged_in = (TextView) findViewById(R.id.textView18);
+        etSearch = (EditText) findViewById(R.id.etSearch);
+        lvProducts = (ListView)findViewById(R.id.lvProducts);
+
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    int selectedColor = Color.rgb(254, 0, 0);
+                    if(!hasActiveInternetConnection()){
+                        is_logged_in.setText(R.string.nonet);
+                        is_logged_in.setTextColor(selectedColor);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
 
 
         // Add Text Change Listener to EditText
@@ -89,10 +114,29 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void initialize() {
-        etSearch = (EditText) findViewById(R.id.etSearch);
-        lvProducts = (ListView)findViewById(R.id.lvProducts);
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
+
+    public boolean hasActiveInternetConnection() {
+        if (isNetworkAvailable()) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 
     @Override
     protected void onResume() {
