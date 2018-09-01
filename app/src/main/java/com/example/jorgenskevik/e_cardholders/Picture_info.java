@@ -151,7 +151,7 @@ public class Picture_info extends Activity {
                 int columnIndex = cursor.getColumnIndex(filePath[0]);
                 String mediaPath = cursor.getString(columnIndex);
                 cursor.close();
-                Picasso.with(getApplicationContext()).load(imageUri).into(profil_picture);
+                Picasso.get().load(imageUri).into(profil_picture);
                 sessionManager.setMedia_path(mediaPath);
                 information_picture.setText(R.string.your_picture);
                 button_back.invalidate();
@@ -178,6 +178,7 @@ public class Picture_info extends Activity {
         fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
         user = sessionManager.getMedia_path();
         photo_phat = user.get(SessionManager.KEY_MEDIA_PATH);
+
 
         final File file = new File(photo_phat);
 
@@ -208,17 +209,16 @@ public class Picture_info extends Activity {
 
                     sess.updatePicture(get_user.getPicture());
                     sess.updatePath(photo_phat);
-                    sess.updatePictureToken("BRUKT");
                     sess.update_boolean(true);
-                    get_user.setHas_set_picture(true);
+                    SessionManager.set_has_set_picture(getApplicationContext(), true);
                     ContextWrapper cw = new ContextWrapper(getApplicationContext());
                     File directory = cw.getDir(student_number, Context.MODE_PRIVATE);
                     File myImageFile = new File(directory, "my_image." + getMimeType(file));
 
-                    Picasso.with(getApplicationContext()).invalidate(myImageFile);
+                    Picasso.get().invalidate(myImageFile);
 
                     //lagre bildet lokalt
-                    Picasso.with(getApplicationContext()).load(get_user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+                    Picasso.get().load(myImageFile).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
                     Intent i = new Intent(Picture_info.this, UserActivity.class);
                     startActivity(i);
 
@@ -320,13 +320,19 @@ public class Picture_info extends Activity {
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
             }
+
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
                 if (placeHolderDrawable != null) {}
             }
         };
+    }
+
+    public void updatePath(File picture){
+        SessionManager sessionManager_class = new SessionManager(getApplicationContext());
+        sessionManager_class.updatePath(picture.getAbsolutePath());
     }
 
     public Uri getPickImageResultUri(Intent data) {

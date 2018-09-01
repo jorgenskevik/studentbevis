@@ -98,5 +98,17 @@
     <string name="Kort">KortFri</string>
     <string name="Autoriserer">Autentisering ...</string>
     <string name="Cancel">Cancel</string>
+
+
+    <string name="Name">Name</string>
+    <string name="School">School</string>
+    <string name="Student_number">Student num.</string>
+    <string name="Class">Class</string>
+    <string name="Phone">Phone</string>
+    <string name="Email">Email</string>
+    <string name="ExpDate">Expiration date</string>
+
+
+
     <string name="allertMessage">STOP! If you are not pleased with the way the picture looks, go back and change it.</string>
 </resources>

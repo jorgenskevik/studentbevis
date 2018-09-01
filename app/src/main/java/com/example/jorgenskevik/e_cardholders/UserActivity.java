@@ -114,7 +114,9 @@ public class UserActivity extends AppCompatActivity {
     ImageView view2, /**
      * The Image.
      */
-    short_logo_view;/**
+    short_logo_view,
+
+    info_button;/**
      * The Code button.
      */
     /**
@@ -233,7 +235,7 @@ public class UserActivity extends AppCompatActivity {
     /**
      * The User details.
      */
-    HashMap<String, String> userDetails, unit_details, unit_membership_details;
+    HashMap<String, String> userDetails, unit_details, unit_membership_details, user, picture_path;
     /**
      * The Context.
      */
@@ -254,7 +256,6 @@ public class UserActivity extends AppCompatActivity {
      */
 
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -276,7 +277,6 @@ public class UserActivity extends AppCompatActivity {
 
 
         //View barcode
-
         TextView card_type = (TextView) findViewById(R.id.skolebevis);
         firstAndSirName = (TextView) findViewById(R.id.textView11);
         short_school_name = (TextView) findViewById(R.id.textView16);
@@ -286,6 +286,7 @@ public class UserActivity extends AppCompatActivity {
         unit_details = sessionManager.getUnitDetails();
         unit_membership_details = sessionManager.getUnitMemberDetails();
         ImageView button = (ImageView) findViewById(R.id.imageView2);
+        info_button = findViewById(R.id.imageView5);
 
         short_school_name_string = unit_details.get(SessionManager.KEY_UNIT_SHORT_NAME);
 
@@ -294,13 +295,25 @@ public class UserActivity extends AppCompatActivity {
 
         firstAndSirNameString = userDetails.get(SessionManager.KEY_FULL_NAME);
         birthdayString = userDetails.get(SessionManager.KEY_BIRTHDATE);
+        picture = userDetails.get(SessionManager.KEY_PICTURE);
+        path = userDetails.get(SessionManager.KEY_PATH);
         targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
 
         studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
-        path = userDetails.get(SessionManager.KEY_PATH);
+
         userDetails = sessionManager.getMedia_path();
-        picture = userDetails.get(SessionManager.KEY_PICTURE);
         JodaTimeAndroid.init(this);
+
+        user = sessionManager.getMedia_path();
+
+        info_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent send_to_information = new Intent(UserActivity.this, FlipActivity.class);
+                startActivity(send_to_information);
+                overridePendingTransition(R.anim.slide_up, R.anim.slide_in);
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
@@ -308,29 +321,28 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        r1 = (RelativeLayout) findViewById(R.id.background);
-
-        if (path == null) {
-            view2.setImageResource(R.drawable.facebookgirl);
-
-            if (picture != null && !picture.contains("/img/white_image.png") && !picture.contains("/img/avatar.png")) {
-                //ContextWrapper cw = new ContextWrapper(this);
-                //File directory = cw.getDir(studentIDString, Context.MODE_PRIVATE);
-                //File myImageFile = new File(directory, "my_image.jpeg");
-                //Picasso.with(this).load(myImageFile).into(view2);
-                // Laster bare med picasso uten å cache..
-                // Disk cache of 2% storage space up to 50MB but no less than 5MB.
-                // (Note: this is only available on API 14+ or if you are using a standalone
-                // library that provides a disk cache on all API levels like OkHttp)
-                Picasso.with(getApplicationContext()).load(picture).into(view2);
-
-            }
-        } else {
-            File f = new File(path);
-            Picasso.with(getApplicationContext()).load(f).into(view2);
+        if(picture != null){
+            SessionManager.set_has_set_picture(getApplicationContext(), true);
+        }else{
+            SessionManager.set_has_set_picture(getApplicationContext(), false);
         }
 
-        Picasso.with(this).load(small_logo).into(short_logo_view);
+        r1 = (RelativeLayout) findViewById(R.id.background);
+
+
+        if (!SessionManager.get_has_set_picture_sttus(getApplicationContext())) {
+            view2.setImageResource(R.drawable.facebookgirl);
+        }else{
+            if(path == null){
+                Picasso.get().load(picture).into(picassoImageTarget(getApplicationContext(), studentIDString, "my_image.jpeg"));
+                Picasso.get().load(picture).into(view2);
+            }else{
+                File picture_file = new File(path);
+                Picasso.get().load(picture_file).into(view2);
+            }
+        }
+
+        Picasso.get().load(small_logo).into(short_logo_view);
 
         if (card_type_string.equals("student_card")){
             card_type.setText(getResources().getString(R.string.student_sertificat));
@@ -374,7 +386,6 @@ public class UserActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
     }
 
     private void changeStatusBarColor(){
@@ -417,8 +428,6 @@ public class UserActivity extends AppCompatActivity {
                         Intent infoIntent = new Intent(UserActivity.this, BarCodeActivity.class);
                         startActivity(infoIntent);
                     }
-                } else {
-                   // Toast.makeText(this, getResources().getString(R.string.GiveAccess), Toast.LENGTH_LONG).show();
                 }
                 }
                 actionSheet.dismiss();
@@ -427,125 +436,8 @@ public class UserActivity extends AppCompatActivity {
         actionSheet.addAction(getResources().getString(R.string.updateProfile), ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(KVTVariables.getBaseUrl())
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
-                userDetails = sessionManager.getUserDetails();
-
-                authenticateString = "Bearer " + userDetails.get(SessionManager.KEY_TOKEN);
-
-                UserAPI userapi = retrofit.create(UserAPI.class);
-                int unit_id = Integer.parseInt(unit_details.get(SessionManager.KEY_UNIT_ID));
-                String super_token = "token " + userDetails.get(SessionManager.KEY_TOKEN);
-                userapi.getUser(super_token, String.valueOf(unit_id)).enqueue(new Callback<Login_model>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onResponse(Call<Login_model> call, Response<Login_model> response) {
-                        if (response.isSuccessful()) {
-                            Login_model login_model = response.body();
-                            User user = login_model.getUser();
-                            Unit unit  = login_model.getUnit();
-                            UnitMembership unitMembership = login_model.getUnitMembership();
-
-                            String full_name = user.getFullName();
-                            String emailString = user.getEmail();
-                            String picture = user.getPicture();
-                            String user_id = user.getId();
-                            int role = user.getUser_role();
-                            String pictureToken = user.getPicture_token();
-
-                            int unitMembershipId = unitMembership.getId();
-                            String student_class = unitMembership.getStudent_class();
-                            String student_number = unitMembership.getStudent_number();
-
-                            String card_type = unit.getCard_type();
-                            String unit_name = unit.getName();
-                            String unit_short_name = unit.getShort_name();
-                            String public_contact_phone = unit.getPublic_contact_phone();
-                            String public_contact_email = unit.getPublic_contact_email();
-                            String unit_logo = unit.getUnit_logo();
-                            String unit_logo_short = unit.getSmall_unit_logo();
-                            int unit_id = unit.getId();
-
-                            java.util.Date dateToExpiration = unitMembership.getExpiration_date();
-                            java.util.Date birthdayDate = user.getDate_of_birth();
-
-                            DateTime timeToExpiration = new DateTime(dateToExpiration);
-                            DateTime timeBirthday = new DateTime(birthdayDate);
-
-                            DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
-                            DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
-
-                            String birthDateString = dateTimeFormatter.print(timeBirthday);
-                            String expirationString = dateTimeFormatter2.print(timeToExpiration);
-
-                            sessionManager.update_user(full_name, emailString, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture());
-
-                            sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
-                                    public_contact_email, public_contact_phone, card_type);
-
-                            sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.userUpdated), Toast.LENGTH_SHORT).show();
-
-
-                            if(picture == null) {
-                                view2.setImageResource(R.drawable.facebookgirl);
-                            } else if(picture.contains("/img/white_image.png") || picture.contains("/img/avatar.png")){
-                                view2.setImageResource(R.drawable.facebookgirl);
-                            }else{
-                                Picasso.with(getApplicationContext()).load(picture).into(view2);
-                            }
-
-                            startDate = null;
-                            try {
-                                startDate = simpleDateFormat.parse(expirationString);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if (System.currentTimeMillis() > startDate.getTime()) {
-                                //Ugyldig
-                                r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.invalid_backgroud));
-                                BirthDay.setText(R.string.expired);
-
-                            } else {
-                                //gyldig
-                                r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.valid_backgroud));
-
-                                targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
-                                try {
-                                    if(Calendar.getInstance().get(Calendar.MONTH) + 1 < 8){
-                                        r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.valid_backgroud));
-                                        BirthDay.setText(getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR));
-
-                                    }else{
-                                        r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.valid_backgroud));
-                                        thisExpDate = unit_membership_details.get(SessionManager.KEY_EXPERATIONDATE);
-                                        date = simpleDateFormat.parse(thisExpDate);
-                                        formattedDate = targetFormat.format(date);
-                                        BirthDay.setText(getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR));
-                                    }
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            finish();
-                            startActivity(getIntent());
-
-                        }else {
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.userNotUpdated), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Login_model> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.userNotUpdated), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                updateUser();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.userUpdated), Toast.LENGTH_SHORT).show();
                 actionSheet.dismiss();
             }
         });
@@ -555,9 +447,7 @@ public class UserActivity extends AppCompatActivity {
         actionSheet.addAction(getResources().getString(R.string.Loggout), ActionSheet.Style.DESTRUCTIVE, new OnActionListener() {
             @Override public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
-                sessionManager.logoutUser();
-                intent = new Intent(UserActivity.this, LandingPage.class);
-                startActivity(intent);
+                logout_user();
                 actionSheet.dismiss();
             }
         });
@@ -568,6 +458,12 @@ public class UserActivity extends AppCompatActivity {
     private void performAction(String title) {
         Snackbar.make(UserActivity.this.findViewById(android.R.id.content), title,
                 Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void logout_user(){
+        sessionManager.logoutUser();
+        intent = new Intent(UserActivity.this, LandingPage.class);
+        startActivity(intent);
     }
 
     @Override
@@ -638,6 +534,128 @@ public class UserActivity extends AppCompatActivity {
         return myImageFile.getAbsolutePath();
     }
 
+    public void updateUser(){
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(KVTVariables.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        userDetails = sessionManager.getUserDetails();
+
+        authenticateString = "Bearer " + userDetails.get(SessionManager.KEY_TOKEN);
+
+        UserAPI userapi = retrofit.create(UserAPI.class);
+        int unit_id = Integer.parseInt(unit_details.get(SessionManager.KEY_UNIT_ID));
+        String super_token = "token " + userDetails.get(SessionManager.KEY_TOKEN);
+        userapi.getUser(super_token, String.valueOf(unit_id)).enqueue(new Callback<Login_model>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<Login_model> call, Response<Login_model> response) {
+                if (response.isSuccessful()) {
+                    Login_model login_model = response.body();
+                    User user = login_model.getUser();
+                    Unit unit  = login_model.getUnit();
+                    UnitMembership unitMembership = login_model.getUnitMembership();
+
+                    String full_name = user.getFullName();
+                    String emailString = user.getEmail();
+                    String picture = user.getPicture();
+                    String user_id = user.getId();
+                    int role = user.getUser_role();
+                    String pictureToken = user.getPicture_token();
+                    String phone = user.getPhone();
+
+                    int unitMembershipId = unitMembership.getId();
+                    String student_class = unitMembership.getStudent_class();
+                    String student_number = unitMembership.getStudent_number();
+
+                    String card_type = unit.getCard_type();
+                    String unit_name = unit.getName();
+                    String unit_short_name = unit.getShort_name();
+                    String public_contact_phone = unit.getPublic_contact_phone();
+                    String public_contact_email = unit.getPublic_contact_email();
+                    String unit_logo = unit.getUnit_logo();
+                    String unit_logo_short = unit.getSmall_unit_logo();
+                    int unit_id = unit.getId();
+
+                    java.util.Date dateToExpiration = unitMembership.getExpiration_date();
+                    java.util.Date birthdayDate = user.getDate_of_birth();
+
+                    DateTime timeToExpiration = new DateTime(dateToExpiration);
+                    DateTime timeBirthday = new DateTime(birthdayDate);
+
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
+                    DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+                    String birthDateString = dateTimeFormatter.print(timeBirthday);
+                    String expirationString = dateTimeFormatter2.print(timeToExpiration);
+
+                    sessionManager.update_user(full_name, emailString, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture(), phone);
+
+                    sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
+                            public_contact_email, public_contact_phone, card_type);
+
+                    sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
+
+
+                    if(picture == null) {
+                        view2.setImageResource(R.drawable.facebookgirl);
+                    }else{
+                        Picasso.get().load(picture).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+                        Picasso.get().load(picture).into(view2);
+                    }
+
+                    startDate = null;
+                    try {
+                        startDate = simpleDateFormat.parse(expirationString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (System.currentTimeMillis() > startDate.getTime()) {
+                        //Ugyldig
+                        r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.invalid_backgroud));
+                        BirthDay.setText(R.string.expired);
+
+                    } else {
+                        //gyldig
+                        r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.valid_backgroud));
+
+                        targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
+                        try {
+                            if(Calendar.getInstance().get(Calendar.MONTH) + 1 < 8){
+                                r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.valid_backgroud));
+                                BirthDay.setText(getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR));
+
+                            }else{
+                                r1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.valid_backgroud));
+                                thisExpDate = unit_membership_details.get(SessionManager.KEY_EXPERATIONDATE);
+                                date = simpleDateFormat.parse(thisExpDate);
+                                formattedDate = targetFormat.format(date);
+                                BirthDay.setText(getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR));
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    finish();
+                    startActivity(getIntent());
+
+                }else {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.userNotUpdated), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login_model> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.userNotUpdated), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
         ContextWrapper cw = new ContextWrapper(context);
         final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE);
@@ -649,9 +667,10 @@ public class UserActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         final File myImageFile = new File(directory, imageName);
+
                         FileOutputStream fos = null;
                         try {
-                            fos = new FileOutputStream(myImageFile);
+                            fos = new FileOutputStream(myImageFile, false);
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -667,14 +686,21 @@ public class UserActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
             }
+
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
                 if (placeHolderDrawable != null) {
                 }
             }
         };
+    }
+
+    public void updatePath(File picture){
+        SessionManager sessionManager_class = new SessionManager(getApplicationContext());
+        sessionManager_class.updatePath(picture.getAbsolutePath());
     }
 
     public String getCameraPhotoOrientation(String imagePath) {
@@ -715,5 +741,4 @@ public class UserActivity extends AppCompatActivity {
             }
         }
     }
-
 }

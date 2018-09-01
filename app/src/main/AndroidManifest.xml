@@ -77,6 +77,11 @@
 
          </activity>
 
+         <activity android:name=".FlipActivity"
+             android:screenOrientation="portrait">
+
+         </activity>
+
 
          <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
              android:theme="@style/Base.Theme.AppCompat"/>

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 /**
  * The type Session manager.
@@ -86,6 +87,10 @@ public class SessionManager {
         editor = pref.edit();
     }
 
+    static SharedPreferences getPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
     public void create_login_session_unit(String unit_name, String unit_short_name, String unit_logo, String unit_logo_short, int unit_id,
                                          String public_email, String public_phone, String card_type){
         editor.putBoolean(IS_LOGIN, true);
@@ -111,7 +116,7 @@ public class SessionManager {
     }
 
     public void create_login_session_user(String full_name, String user_email, String token, String user_id, int role,
-                                          String pictureToken, String birthday, String picture, boolean has_set_picture, float turn){
+                                          String pictureToken, String birthday, String picture, float turn, String phone){
 
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_FULL_NAME, full_name);
@@ -122,14 +127,25 @@ public class SessionManager {
         editor.putString(KEY_PICTURETOKEN, pictureToken);
         editor.putString(KEY_BIRTHDATE, birthday);
         editor.putString(KEY_PICTURE, picture);
-        editor.putBoolean(KEY_HAS_SET_PICTURE, has_set_picture);
         editor.putFloat(KEY_TURN, turn);
+        editor.putString(KEY_PHONE_NUMBER, phone);
         // commit changes
         editor.commit();
     }
 
+
+    public static void set_has_set_picture(Context context, boolean has_set_picture) {
+        SharedPreferences.Editor editor = getPreferences(context).edit();
+        editor.putBoolean(KEY_HAS_SET_PICTURE, has_set_picture);
+        editor.apply();
+    }
+
+    public static boolean get_has_set_picture_sttus(Context context) {
+        return getPreferences(context).getBoolean(KEY_HAS_SET_PICTURE, false);
+    }
+
     public void update_user(String name, String email, String id, int role, String pictureToken, String dateOfBirth
-            , String picture, boolean has_set_picture){
+            , String picture, boolean has_set_picture, String photo){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -157,26 +173,11 @@ public class SessionManager {
 
         editor.putBoolean(KEY_HAS_SET_PICTURE, has_set_picture);
 
+        editor.putString(KEY_PHONE_NUMBER, photo);
+
         // commit changes
         editor.commit();
     }
-
-    /**
-     * Update picture token.
-     *
-     * @param pictureToken the picture token
-     */
-    public void updatePictureToken(String pictureToken){
-        // Storing login value as TRUE
-        editor.putBoolean(IS_LOGIN, true);
-
-        // Storing role in pref
-        editor.putString(KEY_PICTURETOKEN, pictureToken);
-
-        // commit changes
-        editor.apply();
-    }
-
 
     public void update_boolean(Boolean path){
         // Storing login value as TRUE
@@ -202,9 +203,6 @@ public class SessionManager {
 
         // Storing path in pref
         editor.putString(KEY_PATH, path);
-
-        // Storing picture in pref
-        //editor.putString(KEY_PICTURE, path);
 
         // commit changes
         editor.apply();
@@ -268,6 +266,8 @@ public class SessionManager {
     public boolean isLoggedIn(){
         return pref.getBoolean(IS_LOGIN, false);
     }
+
+
 
     public HashMap<String, String> getTurn(){
         HashMap<String, String> unitMember = new HashMap<String, String>();
@@ -363,6 +363,8 @@ public class SessionManager {
 
         user.put(KEY_TURN, String.valueOf(pref.getFloat(KEY_TURN, 0)));
 
+        user.put(KEY_PHONE_NUMBER, pref.getString(KEY_PHONE_NUMBER, null));
+
         // return user
         return user;
     }
@@ -389,6 +391,7 @@ public class SessionManager {
         editor.remove(KEY_ID);
         editor.remove(KEY_ROLE);
         editor.remove(KEY_TOKEN);
+        editor.remove(KEY_PATH);
         editor.remove(KEY_PICTURETOKEN);
         editor.remove(KEY_EXPERATIONDATE);
         editor.remove(KEY_STUDENTNUMBER);

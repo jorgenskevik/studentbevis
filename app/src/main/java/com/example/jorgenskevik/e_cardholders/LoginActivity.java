@@ -117,6 +117,8 @@ public class LoginActivity extends AppCompatActivity  implements
     private int unit_id;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -513,8 +515,10 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String emailString = user.getEmail();
                                         String picture = user.getPicture();
                                         String user_id = user.getId();
+                                        String path = user.getPicture();
                                         int role = user.getUser_role();
                                         String pictureToken = user.getPicture_token();
+                                        String phone = user.getPhone();
 
                                         int unitMembershipId = unitMembership.getId();
                                         String student_class = unitMembership.getStudent_class();
@@ -529,6 +533,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String unit_logo_short = unit.getSmall_unit_logo();
                                         int unit_id = unit.getId();
 
+
                                         java.util.Date dateToExpiration = unitMembership.getExpiration_date();
                                         java.util.Date birthdayDate = user.getDate_of_birth();
 
@@ -542,7 +547,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String expirationString = dateTimeFormatter2.print(timeToExpiration);
 
                                         sessionManager.create_login_session_user(full_name, emailString,
-                                                token, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture(), one_degree_just_beacause);
+                                                token, user_id, role, pictureToken, birthDateString, picture, one_degree_just_beacause, phone);
 
                                         sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
                                                 public_contact_email, public_contact_phone, card_type);
@@ -582,8 +587,6 @@ public class LoginActivity extends AppCompatActivity  implements
                                             Toast toast = Toast.makeText(context, R.string.youareadmin, duration);
                                             toast.show();
                                             return;
-                                        } else if (LoginList.getUser().getFirst_name().trim().equals("") ||
-                                                LoginList.getUser().getLast_name().trim().equals("") || LoginList.getUser().getPicture_token().trim().equals("")) {
                                         }
 
                                         Intent intent = new Intent(LoginActivity.this, UserActivity.class);
@@ -649,9 +652,6 @@ public class LoginActivity extends AppCompatActivity  implements
         userapi.postToken(userDevice, auth_token).enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                if(response.isSuccessful()){
-                }else{
-                }
             }
 
             @Override

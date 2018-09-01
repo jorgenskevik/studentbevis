@@ -121,12 +121,17 @@ public class BarCodeActivity extends Activity{
         isCodeOk(codeString.getText().toString());
     }
     public void isCodeOk(String s){
+        try{
         if(s.equals(fourDigits.trim())){
             Intent back = new Intent(BarCodeActivity.this, Picture_info.class);
             startActivity(back);
         }else {
             context = getApplicationContext();
             duration = Toast.LENGTH_SHORT;
+            toast = Toast.makeText(context, R.string.wrongCode, duration);
+            toast.show();
+        }
+        }catch (NullPointerException e){
             toast = Toast.makeText(context, R.string.wrongCode, duration);
             toast.show();
         }
