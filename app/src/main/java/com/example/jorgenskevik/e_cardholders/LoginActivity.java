@@ -515,7 +515,6 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String emailString = user.getEmail();
                                         String picture = user.getPicture();
                                         String user_id = user.getId();
-                                        String path = user.getPicture();
                                         int role = user.getUser_role();
                                         String pictureToken = user.getPicture_token();
                                         String phone = user.getPhone();
@@ -540,10 +539,9 @@ public class LoginActivity extends AppCompatActivity  implements
                                         DateTime timeToExpiration = new DateTime(dateToExpiration);
                                         DateTime timeBirthday = new DateTime(birthdayDate);
 
-                                        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
                                         DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-                                        String birthDateString = dateTimeFormatter.print(timeBirthday);
+                                        String birthDateString = dateTimeFormatter2.print(timeBirthday);
                                         String expirationString = dateTimeFormatter2.print(timeToExpiration);
 
                                         sessionManager.create_login_session_user(full_name, emailString,
@@ -553,6 +551,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                                 public_contact_email, public_contact_phone, card_type);
 
                                         sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
+
 
                                     }
                                     @Override

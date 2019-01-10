@@ -26,8 +26,9 @@ import java.util.Locale;
 
 public class FlipActivity extends AppCompatActivity {
 
-    TextView Name, School, Student_number, Class, Phone, Email, Exp_date, Valid_card;
-    String Name_string, School_string, Student_number_string, Class_string, Phone_string, Email_string, Exp_date_string, Valid_date_string, formattedDate;
+    TextView Name, School, Student_number, Class, Phone, Email, Exp_date, Valid_card, date_of_birth;
+    String Name_string, School_string, Student_number_string, Class_string,
+            Phone_string, Email_string, Exp_date_string, Valid_date_string, formattedDate, date_of_birth_string, expirationDateString;
     SessionManager sessionManager;
     HashMap<String, String> userDetails, unit_details, unit_membership_details;
     Date start_date, date;
@@ -49,14 +50,16 @@ public class FlipActivity extends AppCompatActivity {
         }
 
         Name = findViewById(R.id.textView23);
+
         School = findViewById(R.id.textView8);
         Student_number = findViewById(R.id.textView21);
         Class = findViewById(R.id.textView25);
         Phone = findViewById(R.id.textView28);
         Email = findViewById(R.id.textView31);
-        Exp_date = findViewById(R.id.textView5);
+        Exp_date = findViewById(R.id.textView24);
         Valid_card = findViewById(R.id.textView2);
         cancel_button = findViewById(R.id.imageView3);
+        date_of_birth = findViewById(R.id.date_of_birth);
         r1 = findViewById(R.id.background);
 
         sessionManager = new SessionManager(getApplicationContext());
@@ -72,6 +75,7 @@ public class FlipActivity extends AppCompatActivity {
         Phone_string = userDetails.get(SessionManager.KEY_PHONE_NUMBER);
         Email_string = userDetails.get(SessionManager.KEY_EMAIL);
         Exp_date_string = unit_membership_details.get(SessionManager.KEY_EXPERATIONDATE);
+        date_of_birth_string = userDetails.get(SessionManager.KEY_STUDENTNUMBER);
 
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 
@@ -82,6 +86,7 @@ public class FlipActivity extends AppCompatActivity {
         Phone.setText(Phone_string);
         Email.setText(Email_string);
         Exp_date.setText(Exp_date_string);
+        date_of_birth.setText(date_of_birth_string);
 
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +97,11 @@ public class FlipActivity extends AppCompatActivity {
             }
         });
 
+        expirationDateString = unit_membership_details.get(SessionManager.KEY_EXPERATIONDATE);
+
         start_date = null;
         try {
-            start_date = simpleDateFormat.parse(Exp_date_string);
+            start_date = simpleDateFormat.parse(expirationDateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }

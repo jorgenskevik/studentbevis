@@ -103,7 +103,7 @@
         android:textSize="16sp"
         android:textColor="@color/black"
         android:elevation="26dp"
-        android:text="@string/studentnumber" />
+        android:text="@string/date_of_birth" />
 
     <View
         android:id="@+id/textView14"

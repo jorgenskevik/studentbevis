@@ -127,6 +127,8 @@ public class UserActivity extends AppCompatActivity {
      */
     studentId,
 
+    birthToId,
+
     short_school_name,
     /**
      * The Birth day.
@@ -224,7 +226,7 @@ public class UserActivity extends AppCompatActivity {
     /**
      * The Target format.
      */
-    DateFormat targetFormat;
+    DateFormat targetFormat, target_format;
     /**
      * The Intent.
      */
@@ -255,6 +257,8 @@ public class UserActivity extends AppCompatActivity {
      * The User date of birth date.
      */
 
+    String date_of_birth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,6 +278,8 @@ public class UserActivity extends AppCompatActivity {
         view2 = (ImageView) findViewById(R.id.sircle);
         short_logo_view = (ImageView) findViewById(R.id.short_logo);
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+        SimpleDateFormat simpleDateFormatTEST = new SimpleDateFormat("dd-MMm-yyyy", Locale.GERMANY);
+
 
 
         //View barcode
@@ -282,6 +288,7 @@ public class UserActivity extends AppCompatActivity {
         short_school_name = (TextView) findViewById(R.id.textView16);
         BirthDay = (TextView) findViewById(R.id.textView2);
         studentId = (TextView) findViewById(R.id.textView17);
+        birthToId = findViewById(R.id.textView13);
         userDetails = sessionManager.getUserDetails();
         unit_details = sessionManager.getUnitDetails();
         unit_membership_details = sessionManager.getUnitMemberDetails();
@@ -292,14 +299,32 @@ public class UserActivity extends AppCompatActivity {
 
         String small_logo = unit_details.get(SessionManager.KEY_UNIT_LOGO_SHORT);
         String card_type_string = unit_details.get(SessionManager.KEY_CARD_TYPE);
+        date_of_birth = userDetails.get(SessionManager.KEY_BIRTHDATE);
+        studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
 
+        try{
+            String first_four_numbers = date_of_birth.substring(0,4);
+            int first_four_numbers_integer = Integer.parseInt(first_four_numbers);
+            if(first_four_numbers_integer > 2015){
+                birthToId.setText(getResources().getString(R.string.Student_number));
+                studentId.setText(studentIDString);
+            }else{
+                studentId.setText(date_of_birth);
+            }
+
+        }catch (Exception e){
+            updateUser();
+            Intent i = new Intent(UserActivity.this, LandingPage.class);
+            startActivity(i);
+        }
+
+        studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
         firstAndSirNameString = userDetails.get(SessionManager.KEY_FULL_NAME);
         birthdayString = userDetails.get(SessionManager.KEY_BIRTHDATE);
         picture = userDetails.get(SessionManager.KEY_PICTURE);
         path = userDetails.get(SessionManager.KEY_PATH);
         targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
 
-        studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
 
         userDetails = sessionManager.getMedia_path();
         JodaTimeAndroid.init(this);
@@ -348,10 +373,10 @@ public class UserActivity extends AppCompatActivity {
             card_type.setText(getResources().getString(R.string.student_sertificat));
         }
 
+
         firstAndSirName.setText(firstAndSirNameString);
         extraStudentID = studentIDString;
         short_school_name.setText(short_school_name_string);
-        studentId.setText(extraStudentID);
         sessionManager = new SessionManager(getApplicationContext());
         expirationDateString = unit_membership_details.get(SessionManager.KEY_EXPERATIONDATE);
 
@@ -587,11 +612,11 @@ public class UserActivity extends AppCompatActivity {
                     DateTime timeToExpiration = new DateTime(dateToExpiration);
                     DateTime timeBirthday = new DateTime(birthdayDate);
 
-                    DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd-MMM-yyyy");
                     DateTimeFormatter dateTimeFormatter2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-                    String birthDateString = dateTimeFormatter.print(timeBirthday);
+                    String birthDateString = dateTimeFormatter2.print(timeBirthday);
                     String expirationString = dateTimeFormatter2.print(timeToExpiration);
+
 
                     sessionManager.update_user(full_name, emailString, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture(), phone);
 
@@ -600,12 +625,13 @@ public class UserActivity extends AppCompatActivity {
 
                     sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
 
-
                     if(picture == null) {
                         view2.setImageResource(R.drawable.facebookgirl);
                     }else{
-                        Picasso.get().load(picture).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+
+                        Picasso.get().load(user.getPicture()).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
                         Picasso.get().load(picture).into(view2);
+
                     }
 
                     startDate = null;
@@ -667,10 +693,9 @@ public class UserActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         final File myImageFile = new File(directory, imageName);
-
                         FileOutputStream fos = null;
                         try {
-                            fos = new FileOutputStream(myImageFile, false);
+                            fos = new FileOutputStream(myImageFile);
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -700,7 +725,8 @@ public class UserActivity extends AppCompatActivity {
 
     public void updatePath(File picture){
         SessionManager sessionManager_class = new SessionManager(getApplicationContext());
-        sessionManager_class.updatePath(picture.getAbsolutePath());
+        sessionManager_class.updatePath(Environment.getExternalStorageDirectory()
+                .getAbsolutePath() + "/my_image.jpeg");
     }
 
     public String getCameraPhotoOrientation(String imagePath) {

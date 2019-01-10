@@ -112,6 +112,16 @@
 
     <View
         android:id="@+id/textView33"
+        android:layout_width="292dp"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="169dp"
+        android:background="@color/line_color"
+        android:elevation="25dp" />
+
+    <View
+        android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:layout_alignEnd="@+id/textView23"
@@ -122,27 +132,51 @@
         android:elevation="25dp" />
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
+        android:id="@+id/date_of_birth"
+        android:layout_width="179dp"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView23"
+        android:layout_alignTop="@+id/textView20"
+        android:elevation="25dp"
         android:gravity="end"
-        android:layout_marginEnd="45dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="177dp"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView23"
         android:layout_alignTop="@+id/textView3"
+        android:layout_marginEnd="45dp"
+        android:layout_marginStart="53dp"
         android:elevation="25dp"
+        android:gravity="end"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/textView20"
+        android:layout_marginTop="30dp"
+        android:elevation="25dp"
+        android:text="@string/ExpDate"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView"
         android:layout_below="@+id/textView32"
         android:layout_marginTop="30dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:elevation="25dp"
-        android:text="@string/ExpDate" />
+        android:text="@string/studentnumber"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView31"
