@@ -104,15 +104,10 @@ public class Barcode_new extends Activity {
         Button cancel;
         TextView student_id;
 
-        student_id = (TextView) findViewById(R.id.student_id);
-        barcode = (ImageView) findViewById(R.id.imageView4);
-        cancel = (Button) findViewById(R.id.button2);
+        student_id = findViewById(R.id.student_id);
+        barcode = findViewById(R.id.imageView4);
+        cancel = findViewById(R.id.button2);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
 
         // get user data from session
         SessionManager sessionManager = new SessionManager(getApplicationContext());
@@ -122,7 +117,8 @@ public class Barcode_new extends Activity {
 
         // name
 
-        student_id.setText(studentIDString);
+        String helping_string = getResources().getString(R.string.Student_number) + " " + studentIDString;
+        student_id.setText(helping_string);
 
         // barcode image
         Bitmap bitmap = null;
@@ -143,12 +139,6 @@ public class Barcode_new extends Activity {
             }
         });
 
-        /*
-      The Session.
-     */
-        double widthSize = 0.9;
-        double heightSize = 0.7;
-        getWindow().setLayout((int) (width* widthSize) ,(int) (height* heightSize));
     }
 
 

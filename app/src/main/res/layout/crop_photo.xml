@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/valid_backgroud"
+    android:background="@color/background"
     android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/valid2"
+        android:id="@+id/view2">
+    </View>
 
     <TextView
         android:layout_width="150dp"
@@ -23,21 +36,25 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        android:text="@string/set_your_picture"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView14" />
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="50dp"
+        android:text="@string/set_your_picture"
+        />
 
     <View
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_below="@+id/textView10"
+        android:layout_marginTop="10dp"
         android:background="@color/line_color" />
 
     <TextView
@@ -46,8 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView14"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="15dp"
         android:textSize="16sp"
         android:fontFamily="sans-serif"
         android:textColor="@color/logogreycolor"
@@ -58,14 +75,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/textView14"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="15dp"
         android:textSize="16sp"
         android:fontFamily="sans-serif"
         android:textColor="@color/logogreycolor"
         android:text="" />
-
-
 
     <TextView
         android:id="@+id/done_button"
@@ -76,8 +91,8 @@
         android:textColor="@color/line_color"
         android:text="@string/continue_to"
         android:onClick="onContinue"
-        android:layout_marginEnd="10dp"
-        android:layout_alignTop="@+id/back_button"
+        android:layout_marginEnd="15dp"
+        android:layout_alignBottom="@+id/back_button"
         android:layout_alignEnd="@+id/textView14" />
 
     <TextView
@@ -101,8 +116,8 @@
         android:fontFamily="sans-serif"
         android:textColor="@color/grey"
         android:gravity="center"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
         android:text="" />
@@ -117,6 +132,8 @@
         android:textSize="18sp"
         android:layout_marginTop="15dp"
         android:text=""
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_below="@+id/pick_photo"
         android:layout_centerHorizontal="true" />
 

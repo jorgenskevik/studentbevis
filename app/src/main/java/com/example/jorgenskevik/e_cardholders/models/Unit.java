@@ -72,8 +72,14 @@ public class Unit {
     @Expose
     private String small_unit_logo;
 
-    public Unit(String unit_name, int id, String short_name){
+    @SerializedName("tag")
+    @Expose
+    private String tag;
+
+    public Unit(String unit_name, String unit_logo, String tag, int id, String short_name){
         this.name = unit_name;
+        this.unit_logo = unit_logo;
+        this.tag = tag;
         this.id = id;
         this.short_name = short_name;
     }
@@ -196,5 +202,13 @@ public class Unit {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

@@ -98,11 +98,16 @@ public class FlipActivity extends AppCompatActivity {
         });
 
         expirationDateString = unit_membership_details.get(SessionManager.KEY_EXPERATIONDATE);
-
         start_date = null;
         try {
             start_date = simpleDateFormat.parse(expirationDateString);
-        } catch (ParseException e) {
+        } catch (Exception e) {
+            String s = "2099-12-31";
+            try {
+                start_date = simpleDateFormat.parse(s);
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         if (System.currentTimeMillis() > start_date.getTime()) {

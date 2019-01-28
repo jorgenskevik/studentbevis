@@ -12,11 +12,11 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/valid"
-        android:layout_marginEnd="30dp"
-        android:elevation="25dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="60dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/valid2"
+        android:elevation="25dp"
         android:id="@+id/view">
     </View>
 
@@ -112,11 +112,12 @@
 
     <View
         android:id="@+id/textView33"
-        android:layout_width="292dp"
+        android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="169dp"
+        android:layout_alignEnd="@+id/textView23"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/textView20"
+        android:layout_marginTop="15dp"
         android:background="@color/line_color"
         android:elevation="25dp" />
 

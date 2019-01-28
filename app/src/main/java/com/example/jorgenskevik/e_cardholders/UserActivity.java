@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
@@ -280,8 +281,6 @@ public class UserActivity extends AppCompatActivity {
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
         SimpleDateFormat simpleDateFormatTEST = new SimpleDateFormat("dd-MMm-yyyy", Locale.GERMANY);
 
-
-
         //View barcode
         TextView card_type = (TextView) findViewById(R.id.skolebevis);
         firstAndSirName = (TextView) findViewById(R.id.textView11);
@@ -301,6 +300,10 @@ public class UserActivity extends AppCompatActivity {
         String card_type_string = unit_details.get(SessionManager.KEY_CARD_TYPE);
         date_of_birth = userDetails.get(SessionManager.KEY_BIRTHDATE);
         studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
+
+        if(studentIDString.equals("")){
+            System.out.println("den er tom ja!");
+        }
 
         try{
             String first_four_numbers = date_of_birth.substring(0,4);
@@ -425,36 +428,52 @@ public class UserActivity extends AppCompatActivity {
         ActionSheet actionSheet = new ActionSheet(this);
         actionSheet.setTitle(getResources().getString(R.string.chooise));
         actionSheet.setSourceView(anchor);
-        actionSheet.addAction(getResources().getString(R.string.barcode), ActionSheet.Style.DEFAULT, new OnActionListener() {
-            @Override public void onSelected(ActionSheet actionSheet, String title) {
-                performAction(title);
-                Intent barcode = new Intent(UserActivity.this, Barcode_new.class);
-                startActivity(barcode);
-                actionSheet.dismiss();
-            }
-        });
-        actionSheet.addAction(getResources().getString(R.string.setPic), ActionSheet.Style.DEFAULT, new OnActionListener() {
-            @Override public void onSelected(ActionSheet actionSheet, String title) {
-                performAction(title);
 
-                //if (ActivityCompat.checkSelfPermission((Activity)context, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        userDetails = sessionManager.getUserDetails();
+        picture = userDetails.get(SessionManager.KEY_PICTURE);
 
-                        userDetails = sessionManager.getUserDetails();
-                        picture = userDetails.get(SessionManager.KEY_PICTURE);
+        if (picture != null && !picture.contains("/img/white_image.png") && !picture.contains("/img/avatar.png")) {
 
-                    if (picture != null && !picture.contains("/img/white_image.png") && !picture.contains("/img/avatar.png")) {
-                        context = getApplicationContext();
-                        duration = Toast.LENGTH_SHORT;
-                        toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
-                        toast.show();
-                    } else {
-                        Intent infoIntent = new Intent(UserActivity.this, BarCodeActivity.class);
-                        startActivity(infoIntent);
+        }else{
+            actionSheet.addAction(getResources().getString(R.string.setPic), ActionSheet.Style.DEFAULT, new OnActionListener() {
+                @Override public void onSelected(ActionSheet actionSheet, String title) {
+                    performAction(title);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            userDetails = sessionManager.getUserDetails();
+                            picture = userDetails.get(SessionManager.KEY_PICTURE);
+                            if (picture != null && !picture.contains("/img/white_image.png") && !picture.contains("/img/avatar.png")) {
+                                context = getApplicationContext();
+                                duration = Toast.LENGTH_SHORT;
+                                toast = Toast.makeText(context, getResources().getString(R.string.DenyPicture), duration);
+                                toast.show();
+                            } else {
+                                Intent infoIntent = new Intent(UserActivity.this, BarCodeActivity.class);
+                                startActivity(infoIntent);
+                            }
+                        }
                     }
+                    actionSheet.dismiss();
                 }
+            });
+        }
+
+        if(!studentIDString.equals("")){
+            actionSheet.addAction(getResources().getString(R.string.barcode), ActionSheet.Style.DEFAULT, new OnActionListener() {
+                @Override public void onSelected(ActionSheet actionSheet, String title) {
+                    performAction(title);
+                    Intent barcode = new Intent(UserActivity.this, Barcode_new.class);
+                    startActivity(barcode);
+                    actionSheet.dismiss();
                 }
+            });
+        }
+
+        actionSheet.addAction(getResources().getString(R.string.contactschool), ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                Intent contact = new Intent(UserActivity.this, Contact_info.class);
+                startActivity(contact);
                 actionSheet.dismiss();
             }
         });
@@ -467,8 +486,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-
-
         actionSheet.addAction(getResources().getString(R.string.Loggout), ActionSheet.Style.DESTRUCTIVE, new OnActionListener() {
             @Override public void onSelected(ActionSheet actionSheet, String title) {
                 performAction(title);
@@ -476,7 +493,6 @@ public class UserActivity extends AppCompatActivity {
                 actionSheet.dismiss();
             }
         });
-
         actionSheet.show();
     }
 
@@ -551,6 +567,7 @@ public class UserActivity extends AppCompatActivity {
             }
         }
     }
+
 
     public String hentString(Context context, String imageDir,String imageName){
         ContextWrapper cw = new ContextWrapper(context);

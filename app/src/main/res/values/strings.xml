@@ -5,7 +5,6 @@
     <string name="forKVT">for</string>
     <string name="Contactus">Contact us</string>
     <string name="Sendanemail">Email:</string>
-    <string name="Callus">Phone:</string>
     <string name="Terms">Terms</string>
     <string name="Picture">Picture</string>
     <string name="termsdescription1">This app will display your name, place of study and the validity of your digital student card. The app will display a photo of you if you choose to select one. The app will function as a student card and can be used as identification for services your place of study has an agreement with. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally on the app. KortFri does not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded on this app will be deleted from our database once you as a user are deleted from our systems. Users with admin-rights to the KortFri system have the possibility to delete users. Usually this will be the IT-responsible at? your place of study. The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01-31.07 and the fall semester from 01.08-31.12.</string>
@@ -49,7 +48,6 @@
     <string name="policy">Policy</string>
     <string name="acceptTerms">Click the "I accept" box to use the app</string>
     <string name="checkBox">I accept</string>
-    <string name="kortfriNorge">www.KortFri.no</string>
     <string name="updatePicture">Could not update picture</string>
     <string name="pictureMessage">You have to type in a code to change your profile picture. Your teacher or system administrator will give you this code.\n\nIMPORTANT INFORMATION: You can only use this code once!\n\nAfter using the code, only the system administrator can alter your profile picture. This is because the app is used as identification. Remember that using the identity of another person is illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>
     <string name="login">Login</string>
@@ -106,8 +104,11 @@
     <string name="Phone">Phone</string>
     <string name="Email">Email</string>
     <string name="ExpDate">Expiration date</string>
-
-
-
+    <string name="Acr">Acronym</string>
+    <string name="contactinformation">Contact information</string>
     <string name="allertMessage">STOP! If you are not pleased with the way the picture looks, go back and change it.</string>
+    <string name="Callus">Phone:</string>
+    <string name="contactschool">Contact school</string>
+
+    <string name="kortfriNorge">https://www.kortfri.no</string>
 </resources>

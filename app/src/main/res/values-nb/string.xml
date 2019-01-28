@@ -51,7 +51,7 @@
     <string name="moreInfo">Kontakt IT-avdelingen for å få din kode</string>
     <string name="policy">Personvern</string>
     <string name="acceptTerms">Huk av "jeg godtar" for å bruke appen</string>
-    <string name="kortfriNorge">www.KortFri.no</string>
+    <string name="kortfriNorge">https://www.kortfri.no</string>
     <string name="verification">Innlogging vellykket</string>
     <string name="landskode">Landskode:</string>
     <string name="login">Logg inn</string>
@@ -99,6 +99,8 @@
     <string name="Phone">Mobil</string>
     <string name="Email">E-post</string>
     <string name="ExpDate">Utgangsdato</string>
+
+    <string name="Acr">Akronym</string>
 
     <string name="school_sertifivcat">Skolebevis</string>
     <string name="student_sertificat">Studentbevis</string>

@@ -62,11 +62,14 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
 
+import in.myinnos.library.AppIconNameChanger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,6 +88,8 @@ public class LoginActivity extends AppCompatActivity  implements
     private static final int STATE_SIGNIN_FAILED = 5;
     private static final int STATE_SIGNIN_SUCCESS = 6;
     private static float one_degree_just_beacause = 0;
+    private static ArrayList<String> mProductArrayList = new ArrayList<String>();
+
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -443,6 +448,7 @@ public class LoginActivity extends AppCompatActivity  implements
                 // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
+                System.out.println("dette gikk!------------------------");
                 mDetailText.setText(R.string.status_verification_succeeded);
                 mDetailText.setTextColor(Color.parseColor("#43a047"));
                 progressBar.setVisibility(View.INVISIBLE);
@@ -531,6 +537,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String unit_logo = unit.getUnit_logo();
                                         String unit_logo_short = unit.getSmall_unit_logo();
                                         int unit_id = unit.getId();
+                                        //changeLogo(unit.getShort_name());
 
 
                                         java.util.Date dateToExpiration = unitMembership.getExpiration_date();
@@ -557,6 +564,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                     @Override
                                     public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                                         if (!response.isSuccessful()) {
+
                                             Context context = getApplicationContext();
                                             CharSequence text = response.message();
                                             int duration = Toast.LENGTH_SHORT;
@@ -659,6 +667,41 @@ public class LoginActivity extends AppCompatActivity  implements
             }
         });
 
+    }
+
+    public void changeLogo(final String logo_name){
+        System.out.println("kjører denne metoden?-----------");
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(KVTVariables.getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        UserAPI userapi = retrofit.create(UserAPI.class);
+        userapi.getSchools().enqueue(new Callback<List<Unit>>() {
+            @Override
+            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
+                List<Unit> unit = response.body();
+                for (int i = 0; i < unit.size() ; i++) {
+                    //mProductArrayList.add(unit.get(i).getShort_name());
+                    if (!logo_name.equals(unit.get(i).getShort_name())){
+                        mProductArrayList.add(unit.get(i).getShort_name());
+                    }
+                }
+                new AppIconNameChanger.Builder(LoginActivity.this)
+                        .activeName(logo_name) // String
+                        .disableNames(mProductArrayList) // List<String>
+                        .packageName(BuildConfig.APPLICATION_ID)
+                        .build()
+                        .setNow();
+            }
+
+            @Override
+            public void onFailure(Call<List<Unit>> call, Throwable t) {
+
+            }
+        });
     }
 
 

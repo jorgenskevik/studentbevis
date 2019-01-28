@@ -3,6 +3,7 @@ package com.example.jorgenskevik.e_cardholders;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -201,6 +203,8 @@ public class MainActivity extends Activity {
 
         private class ViewHolder {
             LinearLayout llContainer;
+            ImageView imageView;
+            TextView subtitle;
             TextView tvName;
         }
 
@@ -209,15 +213,19 @@ public class MainActivity extends Activity {
             ViewHolder holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.row, null);
+                convertView = inflater.inflate(R.layout.mylist, null);
                 holder.llContainer = (LinearLayout)convertView.findViewById(R.id.llContainer);
                 holder.tvName = (TextView) convertView.findViewById(R.id.mainTitle);
+                holder.imageView = convertView.findViewById(R.id.icon);
+                holder.subtitle = (TextView) convertView.findViewById(R.id.subtitle);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             picture = mDisplayedValues.get(position).getUnit_logo();
             holder.tvName.setText(mDisplayedValues.get(position).getName());
+            holder.subtitle.setText(getResources().getString(R.string.Acr) + ": " +  mDisplayedValues.get(position).getShort_name());
+            Picasso.get().load(mDisplayedValues.get(position).getUnit_logo()).into(holder.imageView);
             holder.llContainer.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
@@ -266,9 +274,9 @@ public class MainActivity extends Activity {
                     } else {
                         constraint = constraint.toString().toLowerCase();
                         for (int i = 0; i < mOriginalValues.size(); i++) {
-                            String data = mOriginalValues.get(i).getName();
-                            if (data.toLowerCase().startsWith(constraint.toString())) {
-                                FilteredArrList.add(new Unit(mOriginalValues.get(i).getName(), mOriginalValues.get(i).getId(),mOriginalValues.get(i).getShort_name()));
+                            String data_name = mOriginalValues.get(i).getName();
+                            if (data_name.toLowerCase().startsWith(constraint.toString())) {
+                                FilteredArrList.add(new Unit(mOriginalValues.get(i).getName(), mOriginalValues.get(i).getUnit_logo(), mOriginalValues.get(i).getShort_name(), mOriginalValues.get(i).getId(), mOriginalValues.get(i).getShort_name()));
                             }
                         }
                         // set the Filtered result to return
