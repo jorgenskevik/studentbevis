@@ -8,6 +8,7 @@ import com.example.jorgenskevik.e_cardholders.models.LoginModel;
 import com.example.jorgenskevik.e_cardholders.models.Login_model;
 import com.example.jorgenskevik.e_cardholders.models.Token;
 import com.example.jorgenskevik.e_cardholders.models.Unit;
+import com.example.jorgenskevik.e_cardholders.models.UnitLinks;
 import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.models.FirebaseLoginModel;
 import com.example.jorgenskevik.e_cardholders.models.UserDevice;
@@ -75,7 +76,9 @@ public interface UserAPI {
     @GET("units/search/")
     Call<List<Unit>> getSchools();
 
+    @GET("units/{unit_pk}/unit-links/")
+    Call<List<UnitLinks>> unitLinks(@Header("Authorization")  String auth, @Path("unit_pk") String unit_pk);
+
     @POST("users/user-device/")
     Call<Token> postToken(@Body UserDevice userDevice , @Header("Authorization") String authorization);
-
 }

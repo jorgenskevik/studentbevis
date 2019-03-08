@@ -74,7 +74,7 @@
     <string name="Fri">Fri</string>
     <string name="godkjenn">Accept &amp; Continue</string>
     <string name="not_supported">Sorry, KortFri does not support your mobile</string>
-    <string name="search_school">Search after your school</string>
+    <string name="search_school">Search after your institution</string>
     <string name="mobil">90012345</string>
     <string name="set_profil_picture">Set profile picture</string>
     <string name="four_digits">Write in four-digit picture code</string>
@@ -108,7 +108,11 @@
     <string name="contactinformation">Contact information</string>
     <string name="allertMessage">STOP! If you are not pleased with the way the picture looks, go back and change it.</string>
     <string name="Callus">Phone:</string>
-    <string name="contactschool">Contact school</string>
+    <string name="contactschool">Contact</string>
+    <string name="radio1">All</string>
+    <string name="radio2">Schools</string>
+    <string name="radio3">Member</string>
+    <string name="notmember">You are not a member</string>
 
     <string name="kortfriNorge">https://www.kortfri.no</string>
 </resources>

@@ -91,7 +91,7 @@ public class FlipActivity extends AppCompatActivity {
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent to_card_view = new Intent(FlipActivity.this, UserActivity.class);
+                Intent to_card_view = new Intent(FlipActivity.this, UserActivity1.class);
                 startActivity(to_card_view);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_up);
             }

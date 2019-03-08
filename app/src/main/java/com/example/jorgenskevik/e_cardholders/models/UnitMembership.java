@@ -43,6 +43,14 @@ public class UnitMembership {
     @Expose
     private int id;
 
+    @SerializedName("membership_number")
+    @Expose
+    private String membership_number;
+
+    @SerializedName("membership_type")
+    @Expose
+    private String membership_type;
+
     public Date getCreated_at() {
         return created_at;
     }
@@ -105,5 +113,21 @@ public class UnitMembership {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getMembership_number() {
+        return membership_number;
+    }
+
+    public void setMembership_number(String membership_number) {
+        this.membership_number = membership_number;
+    }
+
+    public String getMembership_type() {
+        return membership_type;
+    }
+
+    public void setMembership_type(String membership_type) {
+        this.membership_type = membership_type;
     }
 }

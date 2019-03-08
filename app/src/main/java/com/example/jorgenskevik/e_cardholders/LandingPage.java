@@ -2,6 +2,7 @@ package com.example.jorgenskevik.e_cardholders;
 
 import android.*;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -62,13 +63,16 @@ public class LandingPage extends Activity{
 
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
+        HashMap<String, String> unit = sessionManager.getUnitDetails();
+
 
         String name = user.get(SessionManager.KEY_FULL_NAME);
         String id = user.get(SessionManager.KEY_ID);
         String email = user.get(SessionManager.KEY_EMAIL);
         String token = user.get(SessionManager.KEY_TOKEN);
+        String card_type = unit.get(SessionManager.KEY_CARD_TYPE);
 
-        if (name == null || id == null || email == null || token == null) {
+        if (name == null || id == null || token == null) {
 
             open_href.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,8 +83,25 @@ public class LandingPage extends Activity{
                 }
             });
         }else{
-            Intent intent = new Intent(LandingPage.this, UserActivity.class);
-            startActivity(intent);
+            switch (card_type) {
+                case "student_card": {
+                    Intent intent = new Intent(LandingPage.this, UserActivity1.class);
+                    startActivity(intent);
+                    break;
+                }
+                case "school_card": {
+                    Intent intent = new Intent(LandingPage.this, UserActivity1.class);
+                    startActivity(intent);
+                    break;
+                }
+                case "membership_card": {
+                    Intent intent = new Intent(LandingPage.this, UserActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+            }
+            //Intent intent = new Intent(LandingPage.this, UserActivity.class);
+            //startActivity(intent);
         }
     }
 

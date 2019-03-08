@@ -13,6 +13,13 @@
     <color name="invalid_backgroud">#FF0028</color>
     <color name="valid_backgroud">#EBEFF5</color>
     <color name="line_color">#979797</color>
+    <color name="light_grey">#e4e4e4</color>
+    <color name="dark_blue">#2D414C</color>
+    <color name="gold">#C5B358</color>
+    <color name="black_ish">#282828</color>
+
+
+
 
 
 

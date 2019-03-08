@@ -135,8 +135,6 @@ public class LoginActivity extends AppCompatActivity  implements
 
         Intent mIntent = getIntent();
         unit_id = mIntent.getIntExtra("unit_id_i_need", 0);
-        //String photo = mIntent.getStringExtra("picture_from_loggin");
-
 
         JodaTimeAndroid.init(this);
         sessionManager = new SessionManager(getApplicationContext());
@@ -448,7 +446,6 @@ public class LoginActivity extends AppCompatActivity  implements
                 // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
-                System.out.println("dette gikk!------------------------");
                 mDetailText.setText(R.string.status_verification_succeeded);
                 mDetailText.setTextColor(Color.parseColor("#43a047"));
                 progressBar.setVisibility(View.INVISIBLE);
@@ -528,6 +525,9 @@ public class LoginActivity extends AppCompatActivity  implements
                                         int unitMembershipId = unitMembership.getId();
                                         String student_class = unitMembership.getStudent_class();
                                         String student_number = unitMembership.getStudent_number();
+                                        String membership_number = unitMembership.getMembership_number();
+                                        String membership_type = unitMembership.getMembership_type();
+
 
                                         String card_type = unit.getCard_type();
                                         String unit_name = unit.getName();
@@ -537,7 +537,6 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String unit_logo = unit.getUnit_logo();
                                         String unit_logo_short = unit.getSmall_unit_logo();
                                         int unit_id = unit.getId();
-                                        //changeLogo(unit.getShort_name());
 
 
                                         java.util.Date dateToExpiration = unitMembership.getExpiration_date();
@@ -557,18 +556,16 @@ public class LoginActivity extends AppCompatActivity  implements
                                         sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
                                                 public_contact_email, public_contact_phone, card_type);
 
-                                        sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId);
-
+                                        sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId
+                                        , membership_number,membership_type );
 
                                     }
                                     @Override
                                     public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                                         if (!response.isSuccessful()) {
-
                                             Context context = getApplicationContext();
-                                            CharSequence text = response.message();
                                             int duration = Toast.LENGTH_SHORT;
-                                            Toast toast = Toast.makeText(context, text, duration);
+                                            Toast toast = Toast.makeText(context,R.string.notmember , duration);
                                             toast.show();
                                             return;
                                         }
@@ -596,8 +593,29 @@ public class LoginActivity extends AppCompatActivity  implements
                                             return;
                                         }
 
-                                        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-                                        startActivity(intent);
+                                        switch (unit.getCard_type()) {
+                                            case "student_card": {
+                                                Intent intent = new Intent(LoginActivity.this, UserActivity1.class);
+                                                startActivity(intent);
+                                                break;
+                                            }
+                                            case "school_card": {
+                                                Intent intent = new Intent(LoginActivity.this, UserActivity1.class);
+                                                startActivity(intent);
+                                                break;
+                                            }
+                                            case "membership_card": {
+                                                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                                                startActivity(intent);
+                                                break;
+                                            }
+                                            default:
+                                                Context context = getApplicationContext();
+                                                int duration = Toast.LENGTH_SHORT;
+                                                Toast toast = Toast.makeText(context, R.string.wrongCode, duration);
+                                                toast.show();
+                                                break;
+                                        }
                                     }
 
                                     @Override
@@ -670,7 +688,6 @@ public class LoginActivity extends AppCompatActivity  implements
     }
 
     public void changeLogo(final String logo_name){
-        System.out.println("kjører denne metoden?-----------");
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -720,10 +737,6 @@ public class LoginActivity extends AppCompatActivity  implements
 
 
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-
-
-                /////////hide keyboard end
 
 
                 mStatusText.setText(R.string.Autoriserer);

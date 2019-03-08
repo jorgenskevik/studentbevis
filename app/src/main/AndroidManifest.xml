@@ -55,6 +55,10 @@
          </activity>
 
          <activity
+             android:name=".UserActivity1"
+             android:screenOrientation="portrait"
+             />
+         <activity
              android:name=".UserActivity"
              android:screenOrientation="portrait"
              />

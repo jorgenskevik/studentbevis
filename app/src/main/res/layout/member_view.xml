@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    android:background="@color/pf_white">
+
+    <TextView
+        android:id="@+id/compname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:elevation="2dp"
+        android:layout_alignTop="@+id/view"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif"
+        android:text="Danske Bank"
+        android:textColor="@color/gold"
+        android:textSize="22sp"
+        android:textStyle="italic"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignTop="@+id/view"
+        android:layout_marginTop="75dp"
+        android:layout_marginStart="25dp"
+        android:fontFamily="sans-serif"
+        android:text="Mark Smith"
+        android:textColor="@color/gold"
+        android:textSize="36sp"
+        />
+
+    <TextView
+        android:id="@+id/profession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:layout_alignEnd="@+id/name"
+            android:layout_below="@+id/name"
+        android:fontFamily="sans-serif"
+            android:layout_marginTop="-5dp"
+        android:text=""
+        android:textStyle="italic"
+        android:textColor="@color/gold"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:layout_alignBottom="@+id/view"
+        android:layout_alignStart="@+id/name"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif"
+        android:text="Nr. 245 546"
+        android:textColor="@color/gold"
+        android:textStyle="italic"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/cut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:text="Rabatt: 15 %"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        android:textSize="22sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginEnd="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/valid3"
+        android:elevation="1dp"
+        android:id="@+id/view">
+    </View>
+
+    <ImageView
+        android:id="@+id/settings"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:src="@drawable/settingsblack" />
+
+    <ImageView
+        android:id="@+id/swipe"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/view"
+        android:layout_alignEnd="@+id/view"
+        android:elevation="2dp"
+        android:src="@drawable/clicker" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_above="@+id/view"
+        android:layout_marginBottom="40dp"
+        android:layout_centerHorizontal="true"
+        android:elevation="2dp"
+        />
+
+    <ImageView
+        android:id="@+id/notValid"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="match_parent"
+        android:elevation="3dp"
+        />
+
+    <ImageView
+        android:id="@+id/barcode"
+        android:layout_below="@+id/compname"
+        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignEnd="@+id/view"
+        android:layout_alignBottom="@+id/view"
+        android:layout_margin="20dp"
+        android:elevation="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</RelativeLayout>

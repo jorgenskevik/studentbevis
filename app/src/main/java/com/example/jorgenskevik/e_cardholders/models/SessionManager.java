@@ -70,8 +70,8 @@ public class SessionManager {
     public static final String KEY_CARD_TYPE = "card_type";
     public static final String KEY_MEDIA_PATH = "media_path";
     public static final String KEY_HAS_SET_PICTURE = "has_set_picture";
-
-
+    public static final String KEY_MEMBERSHIP_NUMBER = "membership_number";
+    public static final String KEY_MEMBERSHIP_TYPE = "membership_type";
 
 
 
@@ -105,13 +105,15 @@ public class SessionManager {
         editor.commit();
     }
 
-
-    public void create_login_session_unit_member(String expiration_date, String student_class, String student_number, int unit_membership_id ){
+    public void create_login_session_unit_member(String expiration_date, String student_class,
+                                                 String student_number, int unit_membership_id, String membership_number, String membership_type){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_EXPERATIONDATE, expiration_date);
         editor.putString(KEY_STUDENT_CLASS, student_class);
         editor.putString(KEY_STUDENTNUMBER, student_number);
         editor.putInt(KEY_UNIT_MEMBERSHIP_ID, unit_membership_id);
+        editor.putString(KEY_MEMBERSHIP_NUMBER, membership_number);
+        editor.putString(KEY_MEMBERSHIP_TYPE, membership_type);
         editor.commit();
     }
 
@@ -234,47 +236,6 @@ public class SessionManager {
 
     }
 
-    public void updateCheck(String check){
-        // Storing login value as TRUE
-        editor.putBoolean(IS_LOGIN, true);
-
-        // Storing role in pref
-        editor.putString(KEY_CHECK, check);
-
-        // commit changes
-        editor.apply();
-
-    }
-
-    public void updateTurn(Float turn){
-        // Storing login value as TRUE
-        editor.putBoolean(IS_LOGIN, true);
-
-        // Storing role in pref
-        editor.putFloat(KEY_TURN, turn);
-
-        // commit changes
-        editor.apply();
-
-    }
-
-    /**
-     * Is logged in boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isLoggedIn(){
-        return pref.getBoolean(IS_LOGIN, false);
-    }
-
-
-
-    public HashMap<String, String> getTurn(){
-        HashMap<String, String> unitMember = new HashMap<String, String>();
-        unitMember.put(KEY_TURN, pref.getString(KEY_TURN, null));
-        return unitMember;
-    }
-
 
     public HashMap<String, String> getMedia_path(){
         HashMap<String, String> unitMember = new HashMap<String, String>();
@@ -295,6 +256,8 @@ public class SessionManager {
         unitMember.put(KEY_STUDENT_CLASS, pref.getString(KEY_STUDENT_CLASS, null));
         unitMember.put(KEY_STUDENTNUMBER, pref.getString(KEY_STUDENTNUMBER, null));
         unitMember.put(KEY_UNIT_MEMBERSHIP_ID, String.valueOf(pref.getInt(KEY_UNIT_MEMBERSHIP_ID, 0)));
+        unitMember.put(KEY_MEMBERSHIP_NUMBER, pref.getString(KEY_MEMBERSHIP_NUMBER, null));
+        unitMember.put(KEY_MEMBERSHIP_TYPE, pref.getString(KEY_MEMBERSHIP_TYPE, null));
 
         return unitMember;
     }
@@ -363,8 +326,6 @@ public class SessionManager {
 
         user.put(KEY_TURN, String.valueOf(pref.getFloat(KEY_TURN, 0)));
 
-        user.put(KEY_PHONE_NUMBER, pref.getString(KEY_PHONE_NUMBER, null));
-
         // return user
         return user;
     }
@@ -401,6 +362,8 @@ public class SessionManager {
         editor.remove(KEY_UNIT_SHORT_NAME);
         editor.remove(KEY_PHONE_NUMBER);
         editor.remove(KEY_CARD_TYPE);
+        editor.remove(KEY_MEMBERSHIP_TYPE);
+        editor.remove(KEY_MEMBERSHIP_NUMBER);
         editor.commit();
     }
 }

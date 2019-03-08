@@ -7,15 +7,11 @@ package com.example.jorgenskevik.e_cardholders;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
@@ -28,61 +24,6 @@ import com.google.zxing.common.BitMatrix;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Html;
-import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-
-
-import java.util.EnumMap;
-import java.util.Map;
-
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
-
-import com.example.jorgenskevik.e_cardholders.models.SessionManager;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-
-import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 
 
 /**
@@ -121,10 +62,10 @@ public class Barcode_new extends Activity {
         student_id.setText(helping_string);
 
         // barcode image
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         try {
 
-            bitmap = encodeAsBitmap(studentIDString, BarcodeFormat.CODE_39, 700, 200);
+            bitmap = encodeAsBitmap(studentIDString);
             barcode.setImageBitmap(bitmap);
 
         } catch (WriterException e) {
@@ -145,26 +86,23 @@ public class Barcode_new extends Activity {
     /**
      * Encode as bitmap bitmap.
      *
-     * @param format     the format
-     * @param img_width  the img width
-     * @param img_height the img height
      * @return the bitmap
      * @throws WriterException the writer exception
      */
-    Bitmap encodeAsBitmap(String contentsToEncode, BarcodeFormat format, int img_width, int img_height) throws WriterException {
+    Bitmap encodeAsBitmap(String contentsToEncode) throws WriterException {
         if (contentsToEncode == null) {
             return null;
         }
         Map<EncodeHintType, Object> hints = null;
         String encoding = guessAppropriateEncoding(contentsToEncode);
         if (encoding != null) {
-            hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+            hints = new EnumMap<>(EncodeHintType.class);
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
         }
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix result;
         try {
-            result = writer.encode(contentsToEncode, format, img_width, img_height, hints);
+            result = writer.encode(contentsToEncode, BarcodeFormat.CODE_39, 700, 200, hints);
         } catch (IllegalArgumentException iae) {
             return null;
         }

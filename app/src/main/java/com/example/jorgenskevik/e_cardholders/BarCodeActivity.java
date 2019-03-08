@@ -99,7 +99,7 @@ public class BarCodeActivity extends Activity{
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent back = new Intent(BarCodeActivity.this, UserActivity.class);
+                Intent back = new Intent(BarCodeActivity.this, UserActivity1.class);
                 startActivity(back);
             }
         });

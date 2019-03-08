@@ -36,14 +36,34 @@ public class Contact_info extends Activity {
         phone_string = unitDetails.get(SessionManager.KEY_PUBLIC_CONTACT_PHONE);
         email_string = unitDetails.get(SessionManager.KEY_PUBLIC_CONTACT_EMAIL);
 
+        final String card_type = unitDetails.get(SessionManager.KEY_CARD_TYPE);
+
         phone.setText(phone_string);
+        phone.setTextColor(getResources().getColor(R.color.gold));
         email.setText(email_string);
+        email.setTextColor(getResources().getColor(R.color.gold));
+        kortfri.setTextColor(getResources().getColor(R.color.gold));
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Contact_info.this, UserActivity.class);
-                startActivity(intent);
+                switch (card_type) {
+                    case "student_card": {
+                        Intent intent = new Intent(Contact_info.this, UserActivity1.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case "school_card": {
+                        Intent intent = new Intent(Contact_info.this, UserActivity1.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case "membership_card": {
+                        Intent intent = new Intent(Contact_info.this, UserActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
+                }
             }
         });
 

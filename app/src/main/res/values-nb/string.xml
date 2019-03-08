@@ -90,8 +90,7 @@
     <string name="pick_em_two">2. Trykk her for å beskjære bilde</string>
     <string name="set_your_picture">Sett ditt profilbilde</string>
     <string name="Autoriserer">Autentisering ...</string>
-    <string name="search_school">Søk etter din skole</string>
-
+    <string name="search_school">Søk etter din institusjon</string>
     <string name="Name">Navn</string>
     <string name="School">Skole</string>
     <string name="Student_number">Student nr.</string>
@@ -99,9 +98,12 @@
     <string name="Phone">Mobil</string>
     <string name="Email">E-post</string>
     <string name="ExpDate">Utgangsdato</string>
-
     <string name="Acr">Akronym</string>
-
+    <string name="radio1">Alle</string>
+    <string name="radio2">Skole</string>
+    <string name="radio3">Medlem</string>
+    <string name="contactschool">Kontakt</string>
+    <string name="notmember">Du er ikke medlem</string>
     <string name="school_sertifivcat">Skolebevis</string>
     <string name="student_sertificat">Studentbevis</string>
     <string name="four_digits">Skriv inn firesifret bildekode her</string>

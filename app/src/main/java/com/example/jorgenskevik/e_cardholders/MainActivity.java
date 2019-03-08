@@ -27,6 +27,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import co.ceryle.radiorealbutton.RadioRealButton;
+import co.ceryle.radiorealbutton.RadioRealButtonGroup;
+
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 import com.example.jorgenskevik.e_cardholders.models.Unit;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
@@ -42,6 +45,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.ceryle.radiorealbutton.RadioRealButton;
+import co.ceryle.radiorealbutton.RadioRealButtonGroup;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +65,7 @@ public class MainActivity extends Activity {
     private TextView is_logged_in;
     String picture;
 
+
     private static ArrayList<Unit> mProductArrayList = new ArrayList<Unit>();
     private MyAdapter adapter1;
 
@@ -69,18 +75,17 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
 
-
-        is_logged_in = (TextView) findViewById(R.id.textView18);
-        etSearch = (EditText) findViewById(R.id.etSearch);
-        lvProducts = (ListView)findViewById(R.id.lvProducts);
+        is_logged_in = findViewById(R.id.textView18);
+        etSearch = findViewById(R.id.etSearch);
+        lvProducts = findViewById(R.id.lvProducts);
 
         Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                try  {
+                try {
                     int selectedColor = Color.rgb(254, 0, 0);
-                    if(!hasActiveInternetConnection()){
+                    if (!hasActiveInternetConnection()) {
                         is_logged_in.setText(R.string.nonet);
                         is_logged_in.setTextColor(selectedColor);
                     }
@@ -93,7 +98,9 @@ public class MainActivity extends Activity {
         thread.start();
 
 
-        // Add Text Change Listener to EditText
+
+
+    // Add Text Change Listener to EditText
         etSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -105,7 +112,6 @@ public class MainActivity extends Activity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,int after) {
                 adapter1.getFilter().filter(s.toString());
-
             }
 
             @Override
@@ -122,6 +128,8 @@ public class MainActivity extends Activity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
+
+
 
     public boolean hasActiveInternetConnection() {
         if (isNetworkAvailable()) {
@@ -157,9 +165,7 @@ public class MainActivity extends Activity {
             @Override
             public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
                 List<Unit> unit = response.body();
-                for (int i = 0; i < unit.size() ; i++) {
-                    mProductArrayList.add(unit.get(i));
-                }
+                mProductArrayList.addAll(unit);
             }
 
             @Override
@@ -179,7 +185,7 @@ public class MainActivity extends Activity {
         private ArrayList<Unit> mDisplayedValues;    // Values to be displayed
         LayoutInflater inflater;
 
-        public MyAdapter(Context context, ArrayList<Unit> mProductArrayList) {
+        MyAdapter(Context context, ArrayList<Unit> mProductArrayList) {
             this.mOriginalValues = mProductArrayList;
             this.mDisplayedValues = mProductArrayList;
             inflater = LayoutInflater.from(context);
