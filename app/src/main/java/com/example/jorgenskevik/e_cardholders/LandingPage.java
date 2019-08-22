@@ -8,19 +8,17 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.text.Html;
 import android.text.Spannable;
-import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
@@ -95,13 +93,11 @@ public class LandingPage extends Activity{
                     break;
                 }
                 case "membership_card": {
-                    Intent intent = new Intent(LandingPage.this, UserActivity.class);
+                    Intent intent = new Intent(LandingPage.this, MemberActivity.class);
                     startActivity(intent);
                     break;
                 }
             }
-            //Intent intent = new Intent(LandingPage.this, UserActivity.class);
-            //startActivity(intent);
         }
     }
 

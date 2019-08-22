@@ -39,10 +39,10 @@ public class Contact_info extends Activity {
         final String card_type = unitDetails.get(SessionManager.KEY_CARD_TYPE);
 
         phone.setText(phone_string);
-        phone.setTextColor(getResources().getColor(R.color.gold));
+        phone.setTextColor(getResources().getColor(R.color.black));
         email.setText(email_string);
-        email.setTextColor(getResources().getColor(R.color.gold));
-        kortfri.setTextColor(getResources().getColor(R.color.gold));
+        email.setTextColor(getResources().getColor(R.color.black));
+        kortfri.setTextColor(getResources().getColor(R.color.black));
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,7 @@ public class Contact_info extends Activity {
                         break;
                     }
                     case "membership_card": {
-                        Intent intent = new Intent(Contact_info.this, UserActivity.class);
+                        Intent intent = new Intent(Contact_info.this, MemberActivity.class);
                         startActivity(intent);
                         break;
                     }

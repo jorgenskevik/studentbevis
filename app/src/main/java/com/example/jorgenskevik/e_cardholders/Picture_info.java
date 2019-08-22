@@ -1,6 +1,4 @@
 package com.example.jorgenskevik.e_cardholders;
-
-import android.*;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -9,45 +7,34 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.media.ExifInterface;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.system.ErrnoException;
-import android.util.Base64;
-import android.util.DisplayMetrics;
+
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
+
 import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -78,7 +65,7 @@ public class Picture_info extends Activity {
     String authToken, fourDigits;
     HashMap<String, String> userDetails, user, unit_member_ship;
     SessionManager sessionManager;
-    int user_id;
+    //int user_id;
     Uri imageUri;
     String photo_phat;
     User get_user;
@@ -174,74 +161,78 @@ public class Picture_info extends Activity {
         unit_member_ship = sessionManager.getUnitMemberDetails();
         final String student_number = unit_member_ship.get(SessionManager.KEY_STUDENTNUMBER);
         authToken = "token " + userDetails.get(SessionManager.KEY_TOKEN);
-        user_id = Integer.parseInt(userDetails.get(SessionManager.KEY_UNIT_ID));
         fourDigits = userDetails.get(SessionManager.KEY_PICTURETOKEN);
         user = sessionManager.getMedia_path();
         photo_phat = user.get(SessionManager.KEY_MEDIA_PATH);
 
 
-        final File file = new File(photo_phat);
+        try{
+            final File file = new File(photo_phat);
 
-        String mimeType = getMimeType(file);
+            String mimeType = getMimeType(file);
 
-        RequestBody reqFile = RequestBody.create(MediaType.parse(mimeType), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), reqFile);
-        RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
+            RequestBody reqFile = RequestBody.create(MediaType.parse(mimeType), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), fourDigits);
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(KVTVariables.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        UserAPI userapi = retrofit.create(UserAPI.class);
-
-
-        userapi.postPicture(authToken, body, name).enqueue(new Callback<User>() {
-
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()){
-                    get_user = response.body();
-                    SessionManager sess = new SessionManager(getApplicationContext());
-
-                    sess.updatePicture(get_user.getPicture());
-                    sess.updatePath(photo_phat);
-                    sess.update_boolean(true);
-                    SessionManager.set_has_set_picture(getApplicationContext(), true);
-                    ContextWrapper cw = new ContextWrapper(getApplicationContext());
-                    File directory = cw.getDir(student_number, Context.MODE_PRIVATE);
-                    File myImageFile = new File(directory, "my_image." + getMimeType(file));
-
-                    Picasso.get().invalidate(myImageFile);
-
-                    //lagre bildet lokalt
-                    Picasso.get().load(myImageFile).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
-                    Intent i = new Intent(Picture_info.this, UserActivity.class);
-                    startActivity(i);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(KVTVariables.getBaseUrl())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            UserAPI userapi = retrofit.create(UserAPI.class);
 
 
-                }else{
+            userapi.postPicture(authToken, body, name).enqueue(new Callback<User>() {
+
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()){
+                        get_user = response.body();
+                        SessionManager sess = new SessionManager(getApplicationContext());
+
+                        sess.updatePicture(get_user.getPicture());
+                        sess.updatePath(photo_phat);
+                        sess.update_boolean(true);
+                        SessionManager.set_has_set_picture(getApplicationContext(), true);
+                        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+                        File directory = cw.getDir(student_number, Context.MODE_PRIVATE);
+                        File myImageFile = new File(directory, "my_image." + getMimeType(file));
+
+                        Picasso.get().invalidate(myImageFile);
+
+                        //lagre bildet lokalt
+                        Picasso.get().load(myImageFile).into(picassoImageTarget(getApplicationContext(), student_number, "my_image.jpeg"));
+                        Intent i = new Intent(Picture_info.this, UserActivity1.class);
+                        startActivity(i);
+
+
+                    }else{
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, R.string.updatePicture, duration);
+                        toast.show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, R.string.updatePicture, duration);
+                    Toast toast = Toast.makeText(context, R.string.PictureNotUpdated, duration);
                     toast.show();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, R.string.PictureNotUpdated, duration);
-                toast.show();
-            }
+            });
 
-        });
+        }catch (NullPointerException e){
+            Intent intent = new Intent(Picture_info.this, LandingPage.class);
+            startActivity(intent);
+        }
     }
-
 
 
     public Intent getPickImageChooserIntent() {
@@ -281,6 +272,7 @@ public class Picture_info extends Activity {
 
         return chooserIntent;
     }
+
 
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;

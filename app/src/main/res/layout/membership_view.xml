@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    android:background="@color/background">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/valid6"
+        android:layout_marginEnd="30dp"
+        android:elevation="25dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/view">
+    </View>
+
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignEnd="@+id/view"
+        android:layout_alignTop="@+id/view"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:elevation="25dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageView
+        android:id="@+id/settings"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:elevation="25dp"
+        android:layout_alignEnd="@+id/view"
+        android:layout_alignTop="@+id/view"
+        android:src="@drawable/icon_settings"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="100dp"
+        android:layout_alignStart="@+id/view"
+        android:layout_marginStart="30dp"
+        android:layout_alignEnd="@+id/view"
+        android:background="@drawable/valid6"
+        android:layout_marginEnd="30dp"
+        android:elevation="30dp"
+        android:layout_alignBottom="@+id/view"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/coloring">
+    </View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="98dp"
+        android:layout_alignStart="@+id/view"
+        android:layout_marginStart="28dp"
+        android:layout_alignEnd="@+id/view"
+        android:background="@drawable/valid3"
+        android:layout_marginEnd="28dp"
+        android:elevation="25dp"
+        android:layout_alignBottom="@+id/view"
+        android:layout_marginBottom="28dp"
+        android:id="@+id/frame">
+    </View>
+
+    <TextView
+        android:id="@+id/medlemskort"
+        android:layout_centerHorizontal="true"
+        android:elevation="30dp"
+        android:textStyle="italic"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/pf_white"
+        android:textSize="26sp"
+        android:layout_alignTop="@+id/coloring"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/membershipcard" />
+    <TextView
+        android:id="@+id/compname"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_below="@+id/medlemskort"
+        android:layout_marginTop="50dp"
+        android:textSize="22sp"
+        android:layout_alignStart="@+id/coloring"
+        android:elevation="30dp"
+        android:textColor="@color/pf_white"
+        android:layout_height="wrap_content"
+        android:text="Liverbirds Trondheim" />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/compname"
+        android:layout_alignStart="@+id/compname"
+        android:elevation="30dp"
+        android:textSize="18sp"
+        android:textColor="@color/pf_white"
+        android:layout_height="wrap_content"
+        android:text="334 443 333" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/number"
+        android:layout_alignStart="@+id/compname"
+        android:elevation="30dp"
+        android:textColor="@color/pf_white"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:text="John Due" />
+
+    <TextView
+        android:id="@+id/valid"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:layout_height="wrap_content"
+        android:text="Gyldig 2019" />
+
+</RelativeLayout>

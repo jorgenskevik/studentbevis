@@ -11,11 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +19,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.aromajoin.actionsheet.ActionSheet;
 import com.aromajoin.actionsheet.OnActionListener;
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
@@ -33,6 +34,7 @@ import com.example.jorgenskevik.e_cardholders.models.Unit;
 import com.example.jorgenskevik.e_cardholders.models.UnitMembership;
 import com.example.jorgenskevik.e_cardholders.models.User;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -52,6 +54,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Scanner;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,7 +95,7 @@ public class UserActivity1 extends AppCompatActivity {
     /**
      * The Birth day.
      */
-    BirthDay;
+    BirthDay, validString;
     /**
      * The First and sir name string.
      */
@@ -127,6 +130,8 @@ public class UserActivity1 extends AppCompatActivity {
     mediaPath,
 
     short_school_name_string,
+
+    long_school_name_string,
     /**
      * The Formatted date.
      */
@@ -203,6 +208,7 @@ public class UserActivity1 extends AppCompatActivity {
         firstAndSirName = findViewById(R.id.textView11);
         short_school_name = findViewById(R.id.textView16);
         BirthDay = findViewById(R.id.textView2);
+        validString = findViewById(R.id.textView22);
         studentId = findViewById(R.id.textView17);
         birthToId = findViewById(R.id.textView13);
         settings_button = findViewById(R.id.settings);
@@ -210,6 +216,7 @@ public class UserActivity1 extends AppCompatActivity {
 
         //Get values from session manager
         short_school_name_string = unit_details.get(SessionManager.KEY_UNIT_SHORT_NAME);
+        long_school_name_string = unit_details.get(SessionManager.KEY_UNIT_NAME);
         small_logo = unit_details.get(SessionManager.KEY_UNIT_LOGO_SHORT);
         card_type_string = unit_details.get(SessionManager.KEY_CARD_TYPE);
         date_of_birth = userDetails.get(SessionManager.KEY_BIRTHDATE);
@@ -223,9 +230,16 @@ public class UserActivity1 extends AppCompatActivity {
 
         startDate = null;
 
+        if(STUDENT_CARD.equals("student_card")){
+            STUDENT_CARD = getResources().getString(R.string.studentcard);
+
+        } else if(STUDENT_CARD.equals("school_card")){
+            STUDENT_CARD = getResources().getString(R.string.schoolcard);
+        }
+
 
         set_attributes(date_of_birth, studentIDString, STUDENT_CARD, picture, path,
-                small_logo, firstAndSirNameString, short_school_name_string, startDate, expirationDateString, simpleDateFormat, r1);
+                small_logo, firstAndSirNameString, short_school_name_string, startDate, expirationDateString, simpleDateFormat, r1, long_school_name_string );
 
         info_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -440,7 +454,9 @@ public class UserActivity1 extends AppCompatActivity {
                     String unit_logo = unit.getUnit_logo();
                     String unit_logo_short = unit.getSmall_unit_logo();
                     int unit_id = unit.getId();
-                    STUDENT_CARD = unit.getCard_type();
+                    String prim_color = unit.getPrimary_color_rgba();
+                    String sec_color = unit.getSecondary_color_rgba();
+
 
                     java.util.Date dateToExpiration = unitMembership.getExpiration_date();
                     java.util.Date birthdayDate = user.getDate_of_birth();
@@ -457,7 +473,7 @@ public class UserActivity1 extends AppCompatActivity {
                     sessionManager.update_user(full_name, emailString, user_id, role, pictureToken, birthDateString, picture, user.isHas_set_picture(), phone);
 
                     sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
-                            public_contact_email, public_contact_phone, card_type);
+                            public_contact_email, public_contact_phone, card_type, prim_color, sec_color);
 
                     sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId,
                             membership_number_string_new, membership_type_string);
@@ -471,8 +487,16 @@ public class UserActivity1 extends AppCompatActivity {
 
                     }
 
-                    set_attributes(birthDateString, student_number, STUDENT_CARD, picture, path,
-                            unit_logo_short, full_name, unit_short_name, startDate, expirationString, simpleDateFormat, r1);
+                    if(card_type.equals("student_card")){
+                        card_type = getResources().getString(R.string.studentcard);
+
+                    } else if(card_type.equals("school_card")){
+                        card_type = getResources().getString(R.string.schoolcard);
+
+                    }
+
+                    set_attributes(birthDateString, student_number, card_type, picture, path,
+                            unit_logo_short, full_name, unit_short_name, startDate, expirationString, simpleDateFormat, r1, unit_name);
 
                     finish();
                     startActivity(getIntent());
@@ -536,7 +560,7 @@ public class UserActivity1 extends AppCompatActivity {
     private void set_attributes(String date_of_birth, String student_id, String set_card_type_String,
                                 String set_picture, String set_path, String set_small_logo, String set_name,
                                 String set_short_school_name, Date set_start_date, String set_experation,
-                                SimpleDateFormat s2, RelativeLayout set_r2){
+                                SimpleDateFormat s2, RelativeLayout set_r2, String set_long_school_name){
 
         if(set_picture != null){
             SessionManager.set_has_set_picture(getApplicationContext(), true);
@@ -556,9 +580,18 @@ public class UserActivity1 extends AppCompatActivity {
             }
         }
 
+        int length = set_long_school_name.length();
+
+        if(length > 25){
+            short_school_name.setText(set_short_school_name);
+
+        }else{
+            short_school_name.setText(set_long_school_name);
+
+        }
+
         Picasso.get().load(set_small_logo).into(short_logo_view);
         firstAndSirName.setText(set_name);
-        short_school_name.setText(set_short_school_name);
         card_type.setText(set_card_type_String);
 
         set_start_date = null;
@@ -571,17 +604,19 @@ public class UserActivity1 extends AppCompatActivity {
             //Ugyldig
             set_r2.setBackgroundColor(ContextCompat.getColor(this, R.color.invalid_backgroud));
             BirthDay.setText(R.string.expired);
+            validString.setText("");
         } else {
-            //gyldig
             //gyldig
             set_r2.setBackgroundColor(ContextCompat.getColor(this, R.color.valid_backgroud));
 
             targetFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.GERMANY);
             try {
-                if(Calendar.getInstance().get(Calendar.MONTH) + 1 < 8){
+                if(Calendar.getInstance().get(Calendar.MONTH) + 1 < 7){
                     set_r2.setBackgroundColor(ContextCompat.getColor(this, R.color.valid_backgroud));
                     help_string1 = getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR);
                     BirthDay.setText(help_string1);
+                    validString.setText(getResources().getString(R.string.whenvalidSpring));
+
 
                 }else{
                     set_r2.setBackgroundColor(ContextCompat.getColor(this, R.color.valid_backgroud));
@@ -590,6 +625,8 @@ public class UserActivity1 extends AppCompatActivity {
                     formattedDate = targetFormat.format(date);
                     help_string2 = getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR);
                     BirthDay.setText(help_string2);
+                    validString.setText(getResources().getString(R.string.whenvalidFall));
+
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

@@ -6,16 +6,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 import com.example.jorgenskevik.e_cardholders.models.FirebaseLoginModel;
@@ -38,6 +33,7 @@ import com.example.jorgenskevik.e_cardholders.models.UserDevice;
 import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
@@ -76,7 +72,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity  implements
+public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
@@ -157,7 +153,7 @@ public class LoginActivity extends AppCompatActivity  implements
         mResendButton = (Button) findViewById(R.id.button_resend);
         Button mSignOutButton = (Button) findViewById(R.id.sign_out_button);
 
-
+        freeMemory();
 
         // Assign click listeners
         mStartButton.setOnClickListener(this);
@@ -311,11 +307,12 @@ public class LoginActivity extends AppCompatActivity  implements
     }
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
+        freeMemory();
         // [START verify_with_code]
         try {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
             signInWithPhoneAuthCredential(credential);
-        }catch (NullPointerException e){
+        }catch (Exception e){
             Toast.makeText(this, R.string.Skrivinn, Toast.LENGTH_LONG).show();
         }
         // [END verify_with_code]
@@ -537,7 +534,8 @@ public class LoginActivity extends AppCompatActivity  implements
                                         String unit_logo = unit.getUnit_logo();
                                         String unit_logo_short = unit.getSmall_unit_logo();
                                         int unit_id = unit.getId();
-
+                                        String primary_color = unit.getPrimary_color_rgba();
+                                        String secondary_color = unit.getSecondary_color_rgba();
 
                                         java.util.Date dateToExpiration = unitMembership.getExpiration_date();
                                         java.util.Date birthdayDate = user.getDate_of_birth();
@@ -554,7 +552,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                                 token, user_id, role, pictureToken, birthDateString, picture, one_degree_just_beacause, phone);
 
                                         sessionManager.create_login_session_unit(unit_name, unit_short_name, unit_logo, unit_logo_short, unit_id,
-                                                public_contact_email, public_contact_phone, card_type);
+                                                public_contact_email, public_contact_phone, card_type, unit.getPrimary_color_rgba(), unit.getSecondary_color_rgba());
 
                                         sessionManager.create_login_session_unit_member(expirationString, student_class, student_number, unitMembershipId
                                         , membership_number,membership_type );
@@ -605,7 +603,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                                 break;
                                             }
                                             case "membership_card": {
-                                                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this, MemberActivity.class);
                                                 startActivity(intent);
                                                 break;
                                             }
@@ -766,6 +764,12 @@ public class LoginActivity extends AppCompatActivity  implements
                 signOut();
                 break;
         }
+    }
+
+    public void freeMemory(){
+        System.runFinalization();
+        Runtime.getRuntime().gc();
+        System.gc();
     }
 
 }

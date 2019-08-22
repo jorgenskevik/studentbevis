@@ -3,16 +3,15 @@ package com.example.jorgenskevik.e_cardholders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
 
@@ -26,7 +25,7 @@ import java.util.Locale;
 
 public class FlipActivity extends AppCompatActivity {
 
-    TextView Name, School, Student_number, Class, Phone, Email, Exp_date, Valid_card, date_of_birth;
+    TextView Name, School, Student_number, Class, Phone, Email, Exp_date, Valid_card, date_of_birth, validString;
     String Name_string, School_string, Student_number_string, Class_string,
             Phone_string, Email_string, Exp_date_string, Valid_date_string, formattedDate, date_of_birth_string, expirationDateString;
     SessionManager sessionManager;
@@ -61,6 +60,8 @@ public class FlipActivity extends AppCompatActivity {
         cancel_button = findViewById(R.id.imageView3);
         date_of_birth = findViewById(R.id.date_of_birth);
         r1 = findViewById(R.id.background);
+        validString = findViewById(R.id.textView123);
+
 
         sessionManager = new SessionManager(getApplicationContext());
 
@@ -123,6 +124,8 @@ public class FlipActivity extends AppCompatActivity {
                 if(Calendar.getInstance().get(Calendar.MONTH) + 1 < 8){
                     r1.setBackgroundColor(ContextCompat.getColor(this, R.color.valid_backgroud));
                     Valid_card.setText(getResources().getString(R.string.spring) + " " + Calendar.getInstance().get(Calendar.YEAR));
+                    validString.setText(getResources().getString(R.string.whenvalidSpring));
+
 
                 }else{
                     r1.setBackgroundColor(ContextCompat.getColor(this, R.color.valid_backgroud));
@@ -130,6 +133,8 @@ public class FlipActivity extends AppCompatActivity {
                     date = simpleDateFormat.parse(Valid_date_string);
                     formattedDate = targetFormat.format(date);
                     Valid_card.setText(getResources().getString(R.string.fall) + " " + Calendar.getInstance().get(Calendar.YEAR));
+                    validString.setText(getResources().getString(R.string.whenvalidFall));
+
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

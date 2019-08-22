@@ -76,6 +76,14 @@ public class Unit {
     @Expose
     private String tag;
 
+    @SerializedName("primary_color_rgba")
+    @Expose
+    private String primary_color_rgba;
+
+    @SerializedName("secondary_color_rgba")
+    @Expose
+    private String secondary_color_rgba;
+
     public Unit(String unit_name, String unit_logo, String tag, int id, String short_name){
         this.name = unit_name;
         this.unit_logo = unit_logo;
@@ -210,5 +218,21 @@ public class Unit {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getPrimary_color_rgba() {
+        return primary_color_rgba;
+    }
+
+    public void setPrimary_color_rgba(String primary_color_rgba) {
+        this.primary_color_rgba = primary_color_rgba;
+    }
+
+    public String getSecondary_color_rgba() {
+        return secondary_color_rgba;
+    }
+
+    public void setSecondary_color_rgba(String secondary_color_rgba) {
+        this.secondary_color_rgba = secondary_color_rgba;
     }
 }

@@ -3,11 +3,7 @@ package com.example.jorgenskevik.e_cardholders;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -23,12 +19,9 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import co.ceryle.radiorealbutton.RadioRealButton;
-import co.ceryle.radiorealbutton.RadioRealButtonGroup;
+import androidx.annotation.NonNull;
 
 import com.example.jorgenskevik.e_cardholders.Variables.KVTVariables;
 import com.example.jorgenskevik.e_cardholders.models.Unit;
@@ -36,17 +29,13 @@ import com.example.jorgenskevik.e_cardholders.remote.UserAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.ceryle.radiorealbutton.RadioRealButton;
-import co.ceryle.radiorealbutton.RadioRealButtonGroup;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,7 +53,6 @@ public class MainActivity extends Activity {
     private int unit_id;
     private TextView is_logged_in;
     String picture;
-
 
     private static ArrayList<Unit> mProductArrayList = new ArrayList<Unit>();
     private MyAdapter adapter1;
@@ -97,9 +85,6 @@ public class MainActivity extends Activity {
 
         thread.start();
 
-
-
-
     // Add Text Change Listener to EditText
         etSearch.addTextChangedListener(new TextWatcher() {
 
@@ -111,7 +96,9 @@ public class MainActivity extends Activity {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-                adapter1.getFilter().filter(s.toString());
+                if(adapter1 != null){
+                    adapter1.getFilter().filter(s.toString());
+                }
             }
 
             @Override
@@ -128,7 +115,6 @@ public class MainActivity extends Activity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
-
 
 
     public boolean hasActiveInternetConnection() {
@@ -163,13 +149,13 @@ public class MainActivity extends Activity {
         UserAPI userapi = retrofit.create(UserAPI.class);
         userapi.getSchools().enqueue(new Callback<List<Unit>>() {
             @Override
-            public void onResponse(Call<List<Unit>> call, Response<List<Unit>> response) {
+            public void onResponse(@NonNull Call<List<Unit>> call, @NonNull Response<List<Unit>> response) {
                 List<Unit> unit = response.body();
                 mProductArrayList.addAll(unit);
             }
 
             @Override
-            public void onFailure(Call<List<Unit>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Unit>> call, @NonNull Throwable t) {
             }
         });
 

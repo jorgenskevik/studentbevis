@@ -5,6 +5,7 @@ package com.example.jorgenskevik.e_cardholders;
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jorgenskevik.e_cardholders.models.SessionManager;
 import com.google.zxing.BarcodeFormat;
@@ -33,6 +35,8 @@ public class Barcode_new extends Activity {
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
+    String unit_type, studentIDString, card_type_string;
+    HashMap<String, String> unit_details, unit_membership_details;
 
 
     @Override
@@ -52,14 +56,29 @@ public class Barcode_new extends Activity {
 
         // get user data from session
         SessionManager sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> unit_membership = sessionManager.getUnitMemberDetails();
-        String studentIDString = unit_membership.get(SessionManager.KEY_STUDENTNUMBER);
+        unit_details = sessionManager.getUnitDetails();
+        unit_membership_details = sessionManager.getUnitMemberDetails();
+        card_type_string = unit_details.get(SessionManager.KEY_CARD_TYPE);
 
 
-        // name
+        switch (card_type_string) {
+            case "student_card": {
+                studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
+                break;
+            }
+            case "school_card": {
+                studentIDString = unit_membership_details.get(SessionManager.KEY_STUDENTNUMBER);
+                break;
+            }
+            case "membership_card": {
+                studentIDString= unit_membership_details.get(SessionManager.KEY_MEMBERSHIP_NUMBER);
+                break;
+            }
+            default:
 
-        String helping_string = getResources().getString(R.string.Student_number) + " " + studentIDString;
-        student_id.setText(helping_string);
+        }
+
+        student_id.setText(studentIDString);
 
         // barcode image
         Bitmap bitmap;
@@ -75,13 +94,29 @@ public class Barcode_new extends Activity {
         cancel.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view) {
-                Intent intent = new Intent(Barcode_new.this, UserActivity.class);
-                startActivity(intent);
+                switch (card_type_string) {
+                    case "student_card": {
+                        Intent intent = new Intent(Barcode_new.this, UserActivity1.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case "school_card": {
+                        Intent intent = new Intent(Barcode_new.this, UserActivity1.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case "membership_card": {
+                        Intent intent = new Intent(Barcode_new.this, MemberActivity.class);
+                        startActivity(intent);
+                    }
+                    default:
+
+                }
+
             }
         });
 
     }
-
 
     /**
      * Encode as bitmap bitmap.

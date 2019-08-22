@@ -3,6 +3,11 @@ package com.example.jorgenskevik.e_cardholders;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,12 +16,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.aromajoin.actionsheet.ActionSheet;
 import com.aromajoin.actionsheet.OnActionListener;
@@ -63,11 +70,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class UserActivity extends AppCompatActivity {
+public class MemberActivity extends AppCompatActivity {
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
     SessionManager sessionManager;
-    TextView company_name_tv, name_customer_tv, stilling_tv, rabatt_tv, membership_number_tv;
+    TextView company_name_tv, name_customer_tv, stilling_tv, membership_number_tv, membership, valid;
     View card;
     private static ArrayList<UnitLinks> mProductArrayList = new ArrayList<UnitLinks>();
 
@@ -82,7 +89,7 @@ public class UserActivity extends AppCompatActivity {
             name_customer_string, expirationDateString, authenticateString, email_string, picture_token_string, birth_date_string,
             picture_string, phone_string, expiration_string, public_contact_phone_string, public_contact_email_string,
             student_class_string, student_number_string, membership_number_string_new, membership_type_string, help_string,
-            contact_help_string;
+            contact_help_string, primary_color, secondary_color;
 
 
     @Override
@@ -97,28 +104,34 @@ public class UserActivity extends AppCompatActivity {
 //        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //        window.setStatusBarColor(ContextCompat.getColor(UserActivity.this,R.color.black));
 
-        setContentView(R.layout.member_view);
+        setContentView(R.layout.testmembership);
 
         sessionManager = new SessionManager(getApplicationContext());
+        //Logo of club
         comp_logo = findViewById(R.id.logo);
-        card = findViewById(R.id.view);
+        //The card
+        card = findViewById(R.id.coloring);
+        //the settings button
         settings = findViewById(R.id.settings);
-        swipe = findViewById(R.id.swipe);
+        //Text membership
+        membership = findViewById(R.id.medlemskort);
+        //Text name of club
         company_name_tv = findViewById(R.id.compname);
+        //Text member number
         membership_number_tv = findViewById(R.id.number);
+        //name of user
         name_customer_tv = findViewById(R.id.name);
-        stilling_tv = findViewById(R.id.profession);
-        //rabatt_tv = findViewById(R.id.cut);
-        not_valid = findViewById(R.id.notValid);
-        barcode = findViewById(R.id.barcode);
+        //If the card is valid or not
+        valid = findViewById(R.id.valid);
 
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 
         userDetails = sessionManager.getUserDetails();
         unit_details = sessionManager.getUnitDetails();
         unit_membership_details = sessionManager.getUnitMemberDetails();
-
         comp_name_string = unit_details.get(SessionManager.KEY_UNIT_NAME);
+        primary_color = unit_details.get(SessionManager.KEY_COLOR_PRIMARY);
+        secondary_color = unit_details.get(SessionManager.KEY_COLOR_SECONDARY);
         small_logo_string = unit_details.get(SessionManager.KEY_UNIT_LOGO_SHORT);
         card_type_string = unit_details.get(SessionManager.KEY_CARD_TYPE);
         membership_number_string_new = unit_membership_details.get(SessionManager.KEY_MEMBERSHIP_NUMBER);
@@ -127,6 +140,7 @@ public class UserActivity extends AppCompatActivity {
         logo_string = unit_details.get(SessionManager.KEY_UNIT_LOGO);
         membership_type_string = unit_membership_details.get(SessionManager.KEY_MEMBERSHIP_TYPE);
 
+
         if(membership_number_string_new == null){
             swipe.setImageBitmap(null);
             swipe.setOnClickListener(null);
@@ -134,53 +148,34 @@ public class UserActivity extends AppCompatActivity {
 
         JodaTimeAndroid.init(this);
 
-        swipe.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(dirY){
-                    v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.press));
-                    dirY = false;
-                    ObjectAnimator flip = ObjectAnimator.ofFloat(card, "rotationY", 0f, 180f);
-                    flip.setDuration(1000);
-                    flip.start();
-                    name_customer_tv.setText("");
-                    stilling_tv.setText("");
-                    try {
-                        bitmap = encodeAsBitmap(membership_number_string_new);
-                        barcode.setImageBitmap(bitmap);
-                    } catch (WriterException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.press));
-                    dirY = true;
-                    ObjectAnimator flip = ObjectAnimator.ofFloat(card, "rotationY", 0f, 180f);
-                    flip.setDuration(1000);
-                    flip.start();
-                    stilling_tv.setText(membership_type_string);
-                    name_customer_tv.setText(name_customer_string);
-                    company_name_tv.setText(comp_name_string);
-                    help_string = "Nr: " + membership_number_string_new;
-                    membership_number_tv.setText(help_string);
-                    barcode.setImageBitmap(null);
-                }
-            }
-        });
-
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.press));
-                showActionSheet(view);
-            }
-        });
-
+        //setting all the data
         Picasso.get().load(logo_string).memoryPolicy(MemoryPolicy.NO_CACHE )
                 .networkPolicy(NetworkPolicy.NO_CACHE).into(comp_logo);
         name_customer_tv.setText(name_customer_string);
         company_name_tv.setText(comp_name_string);
         help_string = "Nr: " + membership_number_string_new;
         membership_number_tv.setText(help_string);
-        stilling_tv.setText(membership_type_string);
+
+        //setting the color
+        try{
+            name_customer_tv.setTextColor(Color.parseColor(secondary_color));
+            company_name_tv.setTextColor(Color.parseColor(secondary_color));
+            membership_number_tv.setTextColor(Color.parseColor(secondary_color));
+            membership.setTextColor(Color.parseColor(secondary_color));
+        } catch (NullPointerException e){
+            name_customer_tv.setTextColor(BLACK);
+            company_name_tv.setTextColor(BLACK);
+            membership_number_tv.setTextColor(BLACK);
+            membership.setTextColor(BLACK);
+        }
+
+
+        DrawableCompat.setTint(card.getBackground(), Color.parseColor(primary_color));
+
+
+        //Drawable mDrawable = getApplicationContext().getResources().getDrawable(R.drawable.valid);
+        //mDrawable.setColorFilter(new PorterDuffColorFilter(0xffff00,PorterDuff.Mode.MULTIPLY));
+
 
         startDate = null;
         try {
@@ -190,8 +185,11 @@ public class UserActivity extends AppCompatActivity {
         }
         if (System.currentTimeMillis() > startDate.getTime()) {
             //Ugyldig
-            Picasso.get().load(R.drawable.norvalid).into(not_valid);
-            swipe.setImageBitmap(null);
+            valid.setText(getResources().getString(R.string.Not));
+            valid.setTextColor(ContextCompat.getColor(this, R.color.invalid_backgroud));
+        }else{
+            String helping = getResources().getString(R.string.ValidTil) + ": " + expirationDateString;
+            valid.setText(helping);
         }
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -216,6 +214,13 @@ public class UserActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<List<UnitLinks>> call, @NonNull Throwable t) {
             }
         });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.press));
+                showActionSheet(view);
+            }
+        });
     }
 
     private void changeStatusBarColor(){
@@ -223,9 +228,10 @@ public class UserActivity extends AppCompatActivity {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(UserActivity.this,R.color.black));
+            window.setStatusBarColor(ContextCompat.getColor(MemberActivity.this,R.color.black));
         }
     }
+
     private void showActionSheet(View anchor) {
         final ActionSheet actionSheet = new ActionSheet(this);
         actionSheet.setTitle(getResources().getString(R.string.chooise));
@@ -242,16 +248,6 @@ public class UserActivity extends AppCompatActivity {
                 }
             });
         }
-        contact_help_string = getResources().getString(R.string.contactschool) + " " + comp_name_string;
-
-        actionSheet.addAction(contact_help_string, ActionSheet.Style.DEFAULT, new OnActionListener() {
-            @Override public void onSelected(ActionSheet actionSheet, String title) {
-                performAction(title);
-                Intent contact = new Intent(UserActivity.this, Contact_info.class);
-                startActivity(contact);
-                actionSheet.dismiss();
-            }
-        });
 
         actionSheet.addAction(getResources().getString(R.string.updateProfile), ActionSheet.Style.DEFAULT, new OnActionListener() {
             @Override public void onSelected(ActionSheet actionSheet, String title) {
@@ -260,6 +256,36 @@ public class UserActivity extends AppCompatActivity {
                 actionSheet.dismiss();
             }
         });
+
+        actionSheet.addAction(getResources().getString(R.string.Privacy), ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.kortfri.no/privacypolicy.html"));
+                startActivity(browserIntent);
+                actionSheet.dismiss();
+            }
+        });
+
+        contact_help_string = getResources().getString(R.string.contactschool) + " " + comp_name_string;
+        actionSheet.addAction(contact_help_string, ActionSheet.Style.DEFAULT, new OnActionListener() {
+            @Override public void onSelected(ActionSheet actionSheet, String title) {
+                performAction(title);
+                Intent contact = new Intent(MemberActivity.this, Contact_info.class);
+                startActivity(contact);
+                actionSheet.dismiss();
+            }
+        });
+
+        if(!membership_number_string_new.equals("")){
+            actionSheet.addAction(getResources().getString(R.string.barcode), ActionSheet.Style.DEFAULT, new OnActionListener() {
+                @Override public void onSelected(ActionSheet actionSheet, String title) {
+                    performAction(title);
+                    Intent barcode = new Intent(MemberActivity.this, Barcode_new.class);
+                    startActivity(barcode);
+                    actionSheet.dismiss();
+                }
+            });
+        }
 
         actionSheet.addAction(getResources().getString(R.string.Loggout), ActionSheet.Style.DESTRUCTIVE, new OnActionListener() {
             @Override public void onSelected(ActionSheet actionSheet, String title) {
@@ -272,13 +298,13 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void performAction(String title) {
-        Snackbar.make(UserActivity.this.findViewById(android.R.id.content), title,
+        Snackbar.make(MemberActivity.this.findViewById(android.R.id.content), title,
                 Snackbar.LENGTH_SHORT).show();
     }
 
     public void logout_user(){
         sessionManager.logoutUser();
-        Intent intent = new Intent(UserActivity.this, LandingPage.class);
+        Intent intent = new Intent(MemberActivity.this, LandingPage.class);
         startActivity(intent);
     }
 
@@ -331,9 +357,8 @@ public class UserActivity extends AppCompatActivity {
                     logo_string = unit.getUnit_logo();
                     small_logo_string = unit.getSmall_unit_logo();
                     int unit_id = unit.getId();
-                    String prim_color = unit.getPrimary_color_rgba();
-                    String sec_color = unit.getSecondary_color_rgba();
-
+                    primary_color = unit.getPrimary_color_rgba();
+                    secondary_color = unit.getSecondary_color_rgba();
 
                     student_class_string = unitMembership.getStudent_class();
                     student_number_string = unitMembership.getStudent_number();
@@ -356,7 +381,7 @@ public class UserActivity extends AppCompatActivity {
                             picture_token_string, birth_date_string, picture_string, user.isHas_set_picture(), phone_string);
 
                     sessionManager.create_login_session_unit(comp_name_string, comp_name_short_string, logo_string,
-                            small_logo_string, unit_id, public_contact_email_string, public_contact_phone_string, card_type_string, prim_color,sec_color);
+                            small_logo_string, unit_id, public_contact_email_string, public_contact_phone_string, card_type_string, primary_color, secondary_color);
 
                     sessionManager.create_login_session_unit_member(expiration_string, student_class_string,
                             student_number_string, unit_membership_id_int, membership_number_string_new, membership_type_string);
@@ -369,8 +394,12 @@ public class UserActivity extends AppCompatActivity {
                     }
                     if (System.currentTimeMillis() > startDate.getTime()) {
                         //Ugyldig
-                        Picasso.get().load(R.drawable.norvalid).into(not_valid);
+                        valid.setText(getResources().getString(R.string.Not));
+                        valid.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.invalid_backgroud));
                     }else{
+                        String helping = getResources().getString(R.string.ValidTil) + ": " + expirationDateString;
+                        valid.setText(helping);
+                        valid.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
                         Picasso.get().load(logo_string).memoryPolicy(MemoryPolicy.NO_CACHE )
                                 .networkPolicy(NetworkPolicy.NO_CACHE).into(comp_logo);
                         name_customer_tv.setText(name_customer_string);

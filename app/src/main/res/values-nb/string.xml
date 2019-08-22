@@ -14,6 +14,9 @@
     <string name="termsdescription3">Kortet vil være gyldig et semester av gangen før det må oppdateres, vårsemestret strekker seg fra 01.01-31.07 og høstsemestret fra 01.08-31.12.</string>
     <string name="barcode">Barkode</string>
     <string name="studentcard">Studentbevis</string>
+    <string name="schoolcard">Skolebevis</string>
+    <string name="whenvalidSpring">Semesterkvitteringen er gyldig fra 01. Jan til 31. Jul</string>
+    <string name="whenvalidFall">Semesterkvitteringen er gyldig fra 01. Aug til 31. Des</string>
     <string name="digitsfail">Digits innlogging feilet</string>
     <string name="closeSettings">Avbryt</string>
     <string name="Loggout">Logg ut</string>
@@ -35,11 +38,14 @@
     <string name="companynameLong">Akademiet Trondheim</string>
     <string name="companyname">Aka trh</string>
     <string name="GyldigTil">Gyldig for </string>
+    <string name="ValidTil">Gyldig til</string>
     <string name="date_of_birth">Fødselsdato</string>
     <string name="expired">UTGÅTT</string>
     <string name="studentnumber">Studentnummer</string>
     <string name="Barcode">Barkode:</string>
     <string name="Not">Ugyldig</string>
+    <string name="Privacy">Personvern</string>
+    <string name="membershipcard">Medlemskort</string>
     <string name="school_this">Skole</string>
     <string name="yourPic">Ditt bilde:</string>
     <string name="writepictureToken">Skriv inn bildekode:</string>

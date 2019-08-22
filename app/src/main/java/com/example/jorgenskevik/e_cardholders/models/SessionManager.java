@@ -72,7 +72,8 @@ public class SessionManager {
     public static final String KEY_HAS_SET_PICTURE = "has_set_picture";
     public static final String KEY_MEMBERSHIP_NUMBER = "membership_number";
     public static final String KEY_MEMBERSHIP_TYPE = "membership_type";
-
+    public static final String KEY_COLOR_PRIMARY= "color_primary";
+    public static final String KEY_COLOR_SECONDARY= "color_secondary";
 
 
     /**
@@ -92,7 +93,7 @@ public class SessionManager {
     }
 
     public void create_login_session_unit(String unit_name, String unit_short_name, String unit_logo, String unit_logo_short, int unit_id,
-                                         String public_email, String public_phone, String card_type){
+                                         String public_email, String public_phone, String card_type, String color_primary, String color_secondary){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_UNIT_NAME, unit_name);
         editor.putString(KEY_UNIT_SHORT_NAME, unit_short_name);
@@ -102,6 +103,8 @@ public class SessionManager {
         editor.putString(KEY_PUBLIC_CONTACT_EMAIL, public_email);
         editor.putString(KEY_PUBLIC_CONTACT_PHONE, public_phone);
         editor.putString(KEY_CARD_TYPE, card_type);
+        editor.putString(KEY_COLOR_PRIMARY, color_primary);
+        editor.putString(KEY_COLOR_SECONDARY, color_secondary);
         editor.commit();
     }
 
@@ -273,7 +276,8 @@ public class SessionManager {
         unit.put(KEY_PUBLIC_CONTACT_EMAIL, pref.getString(KEY_PUBLIC_CONTACT_EMAIL, null));
         unit.put(KEY_PUBLIC_CONTACT_PHONE, pref.getString(KEY_PUBLIC_CONTACT_PHONE, null));
         unit.put(KEY_CARD_TYPE, pref.getString(KEY_CARD_TYPE, null));
-
+        unit.put(KEY_COLOR_PRIMARY, pref.getString(KEY_COLOR_PRIMARY, null));
+        unit.put(KEY_COLOR_SECONDARY, pref.getString(KEY_COLOR_SECONDARY, null));
         return unit;
     }
 
@@ -364,6 +368,8 @@ public class SessionManager {
         editor.remove(KEY_CARD_TYPE);
         editor.remove(KEY_MEMBERSHIP_TYPE);
         editor.remove(KEY_MEMBERSHIP_NUMBER);
+        editor.remove(KEY_COLOR_PRIMARY);
+        editor.remove(KEY_COLOR_SECONDARY);
         editor.commit();
     }
 }

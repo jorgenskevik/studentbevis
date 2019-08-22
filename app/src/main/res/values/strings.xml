@@ -12,10 +12,12 @@
     <string name="termsdescription3">The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01-31.07 and the fall semester from 01.08-31.12.</string>
     <string name="barcode">Barcode</string>
     <string name="studentcard">Student card</string>
+    <string name="schoolcard">School card</string>
     <string name="closeSettings">Cancel</string>
     <string name="Loggout">Log out</string>
     <string name="moreInfo">Contact IT support to get yur code</string>
     <string name="LogginButton">Login</string>
+    <string name="ValidTil">Valid until</string>
     <string name="digitsfail">Digits login failed</string>
     <string name="CancelBarCode">OK</string>
     <string name="GiveAccess">"Give the app access: settings/apps/KortFri/Storage"</string>
@@ -46,6 +48,8 @@
     <string name="spring">Valid Spring</string>
     <string name="fall">Valid Fall</string>
     <string name="policy">Policy</string>
+    <string name="whenvalidSpring">The semester receipt is valid from 01. Jan to 31. Jul</string>
+    <string name="whenvalidFall">The semester receipt is valid from 01. Aug to 31. Des</string>
     <string name="acceptTerms">Click the "I accept" box to use the app</string>
     <string name="checkBox">I accept</string>
     <string name="updatePicture">Could not update picture</string>
@@ -91,6 +95,8 @@
     <string name="school_sertifivcat">School Certificate</string>
     <string name="student_sertificat">Student Certificate</string>
     <string name="vilkar2">KortFri \&apos; s Terms of Use and Privacy</string>
+    <string name="Privacy">Privacy</string>
+
     <string name="vilkar">Press "Approve and Continue" to accept</string>
     <string name="Skrivinn">Write in phone number</string>
     <string name="Kort">KortFri</string>
@@ -112,7 +118,7 @@
     <string name="radio1">All</string>
     <string name="radio2">Schools</string>
     <string name="radio3">Member</string>
+    <string name="membershipcard">Member Card</string>
     <string name="notmember">You are not a member</string>
-
     <string name="kortfriNorge">https://www.kortfri.no</string>
 </resources>
